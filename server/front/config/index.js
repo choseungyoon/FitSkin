@@ -38,12 +38,17 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    // index: path.resolve(__dirname, '../dist/index.html'),
+    // Spring boot static Folder
+    index: path.resolve(__dirname, '../../../server/src/main/resources/static/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    //assetsRoot: path.resolve(__dirname, '../dist'),
+    // Spring boot static Folder
+    assetsRoot: path.resolve(__dirname, '../../../server/src/main/resources/static'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+
 
     /**
      * Source Maps
