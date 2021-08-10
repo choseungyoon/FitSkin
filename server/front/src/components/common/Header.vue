@@ -3,10 +3,9 @@
 		<h1><a href="#" class="logo"><img alt="Vue logo" src="../../assets/fitskin_logo.png" width="200px"></a></h1>
 		<div class="menuWrap">
 			<ul class="menu">
-				<li><a href="javascript:;">메뉴1</a></li>
-				<li><a href="javascript:;">메뉴2</a></li>
-				<li><a href="javascript:;">메뉴3</a></li>
-				<li><a href="javascript:;">메뉴4</a></li>
+				<li><a href="javascript:;">서비스 소개</a></li>
+				<li><a href="javascript:;">제품검색</a></li>
+				<li><a href="javascript:;">FAQ</a></li>
 			</ul>
 		</div>
 	</header>
