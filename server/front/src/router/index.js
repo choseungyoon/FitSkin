@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Main from '@/components/Main'
 import ProductSearch from '@/components/ProductSearch'
 import FAQ from '@/components/FAQ'
