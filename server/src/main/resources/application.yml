@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url : jdbc:mysql://localhost:3306/FITSKIN?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: changeme
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # mysql 사용
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+    properties:
+      hibernate:
+        # 하이버네이트가 실행한 모든 SQL문을 콘솔로 출력
+        show_sql: true
+        # SQL문을 가독성 있게 표현
+        format_sql: true
+        # 디버깅 정보 출력
+        use_sql_comments: true
+  # logging
+  logging:
+    level:
+      org:
+        hibernate: info

@@ -27,6 +27,9 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.5.2'
 }
 
 test {
