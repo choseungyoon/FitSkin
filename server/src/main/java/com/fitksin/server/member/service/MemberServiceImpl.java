@@ -33,16 +33,15 @@ public class MemberServiceImpl implements MemberService {
         String userName = member.getUserName();
         this.validate(userName);
         this.setupForSave(member);
-        return this.memberRepository.save(member);
+        Member createdMember = this.memberRepository.save(member);
+        return createdMember;
     }
 
     private void setupForSave(Member member){
         String password = member.getPasswordHashed();
         String encodedPassword = BCrypt.hashpw(password,BCrypt.gensalt());
         member.setPasswordHashed(encodedPassword);
-
         EntityUtils.initializeInviteAndLastLoginDate(member);
-
     }
 
     @Override
