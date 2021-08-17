@@ -1,7 +1,6 @@
 package com.fitksin.server.member.controller;
 
 import com.fitksin.server.common.domain.Result;
-import com.fitksin.server.common.serice.jwt.JwtService;
 import com.fitksin.server.member.domain.Member;
 import com.fitksin.server.member.domain.testDto;
 import com.fitksin.server.member.service.MemberService;
@@ -18,9 +17,6 @@ import java.util.HashMap;
 public class MemberController {
 
     @Autowired
-    private JwtService jwtService;
-
-    @Autowired
     private MemberService memberService;
 
     @PostMapping("/test")
@@ -30,22 +26,22 @@ public class MemberController {
     }
 
     @PostMapping(value = "/signup")
-    public Result signup(){
+    public Result signup(@RequestBody Member member){
         log.info("signUp");
         Result result = Result.successInstance();
-        //Member createdMember = this.memberService.signup(member);
-        //result.setData(createdMember);
+        Member createdMember = this.memberService.signup(member);
+        result.setData(createdMember);
         return result;
     }
 
     @PostMapping("/signIn")
     public boolean signIn(String userName, String password, HttpServletResponse response){
         log.info("signIn");
-        Result result = Result.successInstance();
+/*        Result result = Result.successInstance();
         Member loginMember = this.memberService.signin(userName,password);
         String token = this.jwtService.create("member",loginMember,"user");
         response.setHeader("Authorization",token);
-        result.setData(loginMember);
+        result.setData(loginMember);*/
         return true;
     }
 

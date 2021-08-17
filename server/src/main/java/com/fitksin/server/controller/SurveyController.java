@@ -21,4 +21,15 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
+    @GetMapping("/get")
+    public boolean getTest(){
+        return true;
+    }
+
+
+    @PostMapping(path = "/post")
+    public boolean postTest(){
+        return true;
+    }
+
 }
