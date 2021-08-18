@@ -1,6 +1,6 @@
 <template>
 	<footer>
-		<p>copyRight fyzh99.tistory.com</p>
+		<p>@Copyright FitSkin since 2021</p>
 	</footer>
 </template>
 

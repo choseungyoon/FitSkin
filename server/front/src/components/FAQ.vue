@@ -1,8 +1,5 @@
 <template>
     <div class="faq">
-        FAQ Page
-        fsdfsdfds
-        fsdfsdfdsfsdf
-        fsdfs
+        서비스 준비중입니다.
     </div>
 </template>
