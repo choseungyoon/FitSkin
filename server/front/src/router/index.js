@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import ProductSearch from '@/components/ProductSearch'
 import FAQ from '@/components/FAQ'
-
+import SurveyComponent from '@/components/SurveyComponent'
 
 Vue.use(Router)
 
@@ -22,6 +22,10 @@ export default new Router({
       path: '/FAQ',
       name: 'FAQ',
       component: FAQ
+    },{
+      path: '/survey',
+      name: 'SURVEY',
+      component: SurveyComponent
     }
   ]
 })
