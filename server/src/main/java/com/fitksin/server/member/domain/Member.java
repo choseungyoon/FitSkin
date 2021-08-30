@@ -17,12 +17,12 @@ import java.util.Date;
 @Table(name = "users")
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
 
     @Column(name = "username")
-    private String userName;
+    private String userName;  @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "password_hashed")
     @Basic(fetch = FetchType.LAZY)
