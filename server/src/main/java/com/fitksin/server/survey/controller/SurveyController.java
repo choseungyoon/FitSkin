@@ -1,6 +1,8 @@
 package com.fitksin.server.survey.controller;
 
 import com.fitksin.server.common.domain.Result;
+import com.fitksin.server.survey.domain.OptionChoices;
+import com.fitksin.server.survey.domain.Questions;
 import com.fitksin.server.survey.domain.SurveyHeaders;
 import com.fitksin.server.survey.domain.SurveySections;
 import com.fitksin.server.survey.service.SurveyService;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -115,7 +118,21 @@ public class SurveyController {
         else {
             int headerId = getSurvey.getId();
             List<SurveySections> sections = this.surveyService.getSectionByHeaderId(headerId);
-            if(sections!=null) getSurvey.setPages(sections);
+            if(sections!=null){
+                for (SurveySections section: sections) {
+                    List<Questions> questions = this.surveyService.getQuestions(section.getId());
+                    for (Questions question:questions) {
+                        List<OptionChoices> optionChoices = this.surveyService.getOptionChoice(question.getId());
+                        List<String> choices = new ArrayList<>();
+                        for (OptionChoices option: optionChoices) {
+                            choices.add(option.getOptionChoiceName());
+                        }
+                        question.setChoices(choices);
+                    }
+                    section.setElements(questions);
+                }
+                getSurvey.setPages(sections);
+            }
 
             result.setData(getSurvey);
         }
@@ -140,6 +157,20 @@ public class SurveyController {
         return result;
     }
 
+    @PostMapping("/question")
+    public Result createQuestion(@RequestBody Questions questions){
+        log.info(questions.toString());
+        Result result = Result.successInstance();
+        Questions createdQuestion = this.surveyService.createQuestion(questions);
+        if(createdQuestion == null) result.fail();
+        return result;
+    }
 
-
+    @PostMapping("/option")
+    public Result createOptionChoice(@RequestBody OptionChoices optionChoices){
+        log.info(optionChoices.toString());
+        Result result = Result.successInstance();
+        OptionChoices createdOptionChoice = this.surveyService.createOptionChoices(optionChoices);
+        return result;
+    }
 }

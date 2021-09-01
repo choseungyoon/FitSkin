@@ -43,7 +43,11 @@
             };
         },
         created(){
-            axios.get('http://localhost:9000/survey/form')
+            axios.get('http://localhost:9000/survey/header', {
+                params : {
+                    surveyId : 1
+                }
+            })
             .then( response => {
                 this.json = response.data.data;
                 console.log("created");
