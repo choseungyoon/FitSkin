@@ -2,10 +2,13 @@ package com.fitksin.server.survey.controller;
 
 import com.fitksin.server.common.domain.Result;
 import com.fitksin.server.survey.domain.SurveyHeaders;
+import com.fitksin.server.survey.domain.SurveySections;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -109,8 +112,34 @@ public class SurveyController {
         Result result = Result.successInstance();
         SurveyHeaders getSurvey = this.surveyService.getSurvey(surveyId);
         if(getSurvey==null) result.fail();
-        else result.setData(getSurvey);
+        else {
+            int headerId = getSurvey.getId();
+            List<SurveySections> sections = this.surveyService.getSectionByHeaderId(headerId);
+            if(sections!=null) getSurvey.setPages(sections);
+
+            result.setData(getSurvey);
+        }
         return result;
     }
+
+    @PostMapping("/section")
+    public Result createSection(@RequestBody SurveySections surveySections) throws Exception{
+        log.info(surveySections.toString());
+        Result result = Result.successInstance();
+        SurveySections createdSection = this.surveyService.createSection(surveySections);
+        return result;
+    }
+
+    @GetMapping("/section")
+    public Result getSectionByName(@RequestParam(name = "name") String name) throws  Exception{
+        log.info("name : " + name);
+        Result result = Result.successInstance();
+        List<SurveySections> getSection = this.surveyService.getSectionBySectionName(name);
+        if(getSection == null) result.fail();
+        else result.setData(getSection);
+        return result;
+    }
+
+
 
 }

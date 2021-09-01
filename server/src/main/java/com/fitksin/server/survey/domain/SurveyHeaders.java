@@ -7,6 +7,7 @@ import com.sun.istack.Nullable;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +31,9 @@ public class SurveyHeaders {
 
     @Column(name = "other_header_info") @Nullable
     private String otherInfo;
+
+    @Transient
+    private List<SurveySections> pages;
 
     @JsonCreator
     public SurveyHeaders(@JsonProperty("title") String title,
