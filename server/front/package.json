@@ -16,10 +16,13 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "bootstrap-vue": "^2.21.2",
+    "sass": "^1.39.0",
     "survey-vue": "^1.8.61",
+    "vee-validate": "^3.4.12",
     "vue": "^2.6.14",
     "vue-router": "^3.0.1",
-    "vue-videobg": "^2.0.0"
+    "vue-videobg": "^2.0.0",
+    "vuetify": "^2.5.8"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

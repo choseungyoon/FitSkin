@@ -18,7 +18,7 @@
                     약 5분의 시간이 소요됩니다. 
                 </b-card-text>
 
-                <b-button href="#" variant="primary">피부진단 시작하기</b-button>
+                <b-button to="/survey" variant="primary">피부진단 시작하기</b-button>
             </b-card>
         </div>
         <div class="item">

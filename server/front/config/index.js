@@ -4,6 +4,7 @@
 
 const path = require('path')
 
+
 module.exports = {
   dev: {
 
@@ -72,3 +73,5 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   }
 }
+
+
