@@ -172,6 +172,14 @@ public class SurveyController {
                 "   ]\n" +
                 "  }\n" +
                 " ],\n" +
+                " \"showCompletedPage\": false,\n" +
+                " \"navigateToUrl\": \"http://localhost:8080/result\",\n" +
+                " \"navigateToUrlOnCondition\": [\n" +
+                "  {\n" +
+                "   \"expression\": \"abc\",\n" +
+                "   \"url\": \"key\"\n" +
+                "  }\n" +
+                " ],\n" +
                 " \"showQuestionNumbers\": \"off\",\n" +
                 " \"showProgressBar\": \"top\",\n" +
                 " \"goNextPageAutomatic\": true,\n" +
