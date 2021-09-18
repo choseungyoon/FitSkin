@@ -5,6 +5,7 @@ import com.fitksin.server.member.domain.Member;
 import com.fitksin.server.member.repository.MemberRepository;
 import com.fitksin.server.member.service.MemberService;
 import lombok.val;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +30,20 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public  Member signup(Member member){
-        String userName = member.getUserName();
-        this.validate(userName);
-        this.setupForSave(member);
+        String email = member.getEmail();
+        this.validate(email);
+        member.setPassword(hashPassword(member.getPassword()));
         Member createdMember = this.memberRepository.save(member);
         return createdMember;
     }
 
-    private void setupForSave(Member member){
-        String password = member.getPasswordHashed();
-        //member.setPasswordHashed(encodedPassword);
-        EntityUtils.initializeInviteAndLastLoginDate(member);
+    private String hashPassword(String plainTextPassword) {
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 
     @Override
-    public Member signin(String username, String password){
-        Member member = this.memberRepository.findByUserName(username);
+    public Member signin(String name, String password){
+        Member member = this.memberRepository.findByEmail(name);
         Objects.requireNonNull(member, SIGNIN_EXCEPTION_MSG);
 
         if(!this.isAccordPassword(member,password)){
@@ -54,9 +53,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean isExist(String userName){
+    public boolean isExist(String email){
         boolean isExist = false;
-        Member member = this.memberRepository.findByUserName(userName);
+        Member member = this.memberRepository.findByEmail(email);
         if(member != null) {
             isExist = true;
         }
@@ -64,15 +63,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void validate(String userName){
-        if(this.isExist(userName)){
+    public void validate(String email){
+        if(this.isExist(email)){
             throw new IllegalStateException(USER_EXIST_EXCEPTION_MSG);
         }
     }
 
     private boolean isAccordPassword(Member member, String password){
-        String encodedPassword = member.getPasswordHashed();
-        //return BCrypt.checkpw(password,encodedPassword);
-        return true;
+        String encodedPassword = member.getPassword();
+        return BCrypt.checkpw(password,encodedPassword);
     }
 }

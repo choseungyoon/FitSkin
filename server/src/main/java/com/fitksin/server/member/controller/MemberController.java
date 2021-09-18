@@ -2,14 +2,12 @@ package com.fitksin.server.member.controller;
 
 import com.fitksin.server.common.domain.Result;
 import com.fitksin.server.member.domain.Member;
-import com.fitksin.server.member.domain.testDto;
 import com.fitksin.server.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -18,12 +16,6 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
-
-    @PostMapping("/test")
-    public boolean test(@RequestBody testDto tt){
-        log.info(tt.toString());
-        return false;
-    }
 
     @PostMapping(value = "/signup")
     public Result signup(@RequestBody Member member){

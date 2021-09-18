@@ -13,7 +13,8 @@ spring:
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         # 하이버네이트가 실행한 모든 SQL문을 콘솔로 출력
@@ -22,6 +23,7 @@ spring:
         format_sql: true
         # 디버깅 정보 출력
         use_sql_comments: true
+
   # logging
   logging:
     level:

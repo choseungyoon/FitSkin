@@ -17,65 +17,30 @@ import java.util.Date;
 @Table(name = "users")
 public class Member {
 
-
-
-    @Column(name = "username")
-    private String userName;  @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "password_hashed")
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "password")
     @Basic(fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String passwordHashed;
+    private String password;
 
     private String email;
 
     private boolean admin;
 
-    @Column(name = "invite_dt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date inviteDt;
-
-    @Column(name = "last_login_dt")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastLoginDt;
-
-    @Column(name = "inviter_user_id")
-    @Nullable
-    private String inviterUserId;
-
     public Member(){}
 
-    public Member(String userName, String passwordHashed, String email, boolean admin, Date inviteDt, Date lastLoginDt, String inviterUserId) {
-        this.userName = userName;
-        this.passwordHashed = passwordHashed;
+    public Member(String name, String password, String email) {
+        this.name = name;
+        this.password = password;
         this.email = email;
-        this.admin = admin;
-        this.inviteDt = inviteDt;
-        this.lastLoginDt = lastLoginDt;
-        this.inviterUserId = inviterUserId;
+        this.admin = true;
     }
 
-    public String getInviteDate(){
-
-        if(inviteDt == null){
-            return null;
-        }
-        else{
-            String formattedDate = new SimpleDateFormat("yyyy-MM-dd GG:MM").format(inviteDt);
-            return formattedDate;
-        }
-    }
-
-    public String getLastLoginDate(){
-        if(lastLoginDt == null){
-            return null;
-        }
-        else{
-            String formattedDate = new SimpleDateFormat("yyyy-MM-dd GG:MM").format(lastLoginDt);
-            return formattedDate;
-        }
-    }
 
 }
