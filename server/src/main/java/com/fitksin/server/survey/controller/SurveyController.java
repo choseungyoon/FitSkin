@@ -173,7 +173,7 @@ public class SurveyController {
                 "  }\n" +
                 " ],\n" +
                 " \"showCompletedPage\": false,\n" +
-                " \"navigateToUrl\": \"http://localhost:8080/result\",\n" +
+                " \"navigateToUrl\": \"http://localhost:8080/#/customer_profile/skin_analysis\",\n" +
                 " \"navigateToUrlOnCondition\": [\n" +
                 "  {\n" +
                 "   \"expression\": \"abc\",\n" +

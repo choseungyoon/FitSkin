@@ -14,21 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/member")
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    //private MemberService memberService;
+
 
     @PostMapping(value = "/signup")
     public Result signup(@RequestBody Member member){
         log.info("signUp");
         Result result = Result.successInstance();
-        Member createdMember = this.memberService.signup(member);
-        result.setData(createdMember);
+        //Member createdMember = this.memberService.signup(member);
+        //result.setData(createdMember);
         return result;
     }
 
-    @PostMapping("/signIn")
-    public boolean signIn(String userName, String password, HttpServletResponse response){
+    @PostMapping(value = "/login")
+    public boolean signIn(@RequestBody Member member){
         log.info("signIn");
+        log.info("email : " + member.getEmail());
+        log.info(("password : " + member.getPassword()));
 /*        Result result = Result.successInstance();
         Member loginMember = this.memberService.signin(userName,password);
         String token = this.jwtService.create("member",loginMember,"user");
@@ -37,6 +39,20 @@ public class MemberController {
         return true;
     }
 
+    @RequestMapping(value = "/")
+    public String handlePublic(){
+        return "Public page";
+    }
+
+    @RequestMapping(value = "/private")
+    public String handlePrivate(){
+        return "private page";
+    }
+
+    @RequestMapping(value = "/admin")
+    public String handleAdmin(){
+        return "Admin page";
+    }
 
 
 }
