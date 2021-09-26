@@ -29,8 +29,7 @@ spring:
     level:
       org:
         hibernate: info
-
-  security:
-    user:
-      name: user
-      password: password
+bezkoder:
+  app:
+    jwtSecret: bezKoderSecretKey
+    jwtExpirationMs: 86400000
