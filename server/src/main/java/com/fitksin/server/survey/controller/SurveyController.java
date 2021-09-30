@@ -7,17 +7,23 @@ import com.fitksin.server.survey.domain.SurveyHeaders;
 import com.fitksin.server.survey.domain.SurveySections;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/survey")
+@RequestMapping("/api/survey")
 public class SurveyController {
 
     private final SurveyService surveyService;
@@ -476,10 +482,77 @@ public class SurveyController {
     }
 
     @PostMapping("/result")
-    public Result getSurveyResult(@RequestBody HashMap<String,Object> result){
+    public Result getSurveyResult(@RequestBody HashMap<String,Object> result) throws Exception{
         log.info(result.toString());
-        return null;
+
+        Result retrunResult = Result.successInstance();
+
+        boolean sex = Boolean.parseBoolean(null);
+        int age = 0;
+        int Moisturizing = 0;
+        int sebum = 0;
+        int sensitivity = 0;
+        int elasticity = 0;
+        int pigmentation = 0;
+        int trouble = 0;
+
+        var t = result.get("result");
+        //2. Parser
+        JSONParser jsonParser = new JSONParser();
+        //3. To Object
+        JSONObject resultJson = (JSONObject)jsonParser.parse(result.get("result").toString());
+
+        if(resultJson.get("sex").toString().contains("all")){
+            sex = true;
+            Moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+        }
+
+        if(resultJson.get("makeup_times").toString().contains("all")){
+            sex = true;
+            Moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+        }
+
+        age = Integer.parseInt(resultJson.get("age").toString());
+
+
+        JSONArray series = new JSONArray();
+
+        JSONObject myResult = new JSONObject();
+        myResult.put("name" , "you");
+        int[] myResult_score = {Moisturizing,sebum,sensitivity,elasticity,pigmentation,trouble};
+        myResult.put("data" , myResult_score);
+
+        JSONObject sexAvg = new JSONObject();
+        if(sex) sexAvg.put("name" , "여성 평균");
+        else sexAvg.put("name" , "남성 평균");
+        int[] sexAvg_score = {20, 30, 40, 80, 20, 80};
+        sexAvg.put("data" , sexAvg_score);
+
+        JSONObject ageAvg = new JSONObject();
+        ageAvg.put("name" , age/10 + "0대 평균");
+        int[] ageAvg_score = {44, 76, 78, 13, 43, 10};
+        ageAvg.put("data" , ageAvg_score);
+
+        series.add(myResult);
+        series.add(sexAvg);
+        series.add(ageAvg);
+
+        retrunResult.setData(series);
+        log.info("Survey result : " + series.toString());
+        return retrunResult;
     }
+
+
 
     @PostMapping("/header")
     public Result createSurvey(@RequestBody SurveyHeaders surveyHeaders) throws Exception{
