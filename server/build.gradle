@@ -37,7 +37,10 @@ dependencies {
 	//testImplementation('org.springframework.security:spring-security-test')
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'}
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.0.0'
+
+}
 
 test {
 	useJUnitPlatform()

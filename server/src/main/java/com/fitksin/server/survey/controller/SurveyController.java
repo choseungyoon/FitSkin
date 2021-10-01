@@ -1,10 +1,7 @@
 package com.fitksin.server.survey.controller;
 
 import com.fitksin.server.common.domain.Result;
-import com.fitksin.server.survey.domain.OptionChoices;
-import com.fitksin.server.survey.domain.Questions;
-import com.fitksin.server.survey.domain.SurveyHeaders;
-import com.fitksin.server.survey.domain.SurveySections;
+import com.fitksin.server.survey.domain.*;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -21,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {
@@ -462,7 +459,7 @@ public class SurveyController {
                 "  }\n" +
                 " ],\n" +
                 " \"showCompletedPage\": false,\n" +
-                " \"navigateToUrl\": \"http://localhost:8080/#/customer_profile/skin_analysis\",\n" +
+               // " \"navigateToUrl\": \"http://localhost:8080/customer_profile/skin_analysis\",\n" +
                 " \"navigateToUrlOnCondition\": [\n" +
                 "  {\n" +
                 "   \"expression\": \"abc\",\n" +
@@ -482,51 +479,14 @@ public class SurveyController {
     }
 
     @PostMapping("/result")
-    public Result getSurveyResult(@RequestBody HashMap<String,Object> result) throws Exception{
+    public Result insertSurveyResult(@RequestBody HashMap<String,Object> result) throws Exception{
         log.info(result.toString());
-
         Result retrunResult = Result.successInstance();
+        retrunResult.setData(this.surveyService.insertResult(result));
+        return retrunResult;
 
-        boolean sex = Boolean.parseBoolean(null);
-        int age = 0;
-        int Moisturizing = 0;
-        int sebum = 0;
-        int sensitivity = 0;
-        int elasticity = 0;
-        int pigmentation = 0;
-        int trouble = 0;
-
-        var t = result.get("result");
-        //2. Parser
-        JSONParser jsonParser = new JSONParser();
-        //3. To Object
-        JSONObject resultJson = (JSONObject)jsonParser.parse(result.get("result").toString());
-
-        if(resultJson.get("sex").toString().contains("all")){
-            sex = true;
-            Moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-        }
-
-        if(resultJson.get("makeup_times").toString().contains("all")){
-            sex = true;
-            Moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-        }
-
-        age = Integer.parseInt(resultJson.get("age").toString());
-
-
+/*
         JSONArray series = new JSONArray();
-
         JSONObject myResult = new JSONObject();
         myResult.put("name" , "you");
         int[] myResult_score = {Moisturizing,sebum,sensitivity,elasticity,pigmentation,trouble};
@@ -549,82 +509,14 @@ public class SurveyController {
 
         retrunResult.setData(series);
         log.info("Survey result : " + series.toString());
-        return retrunResult;
+       */
     }
 
 
 
-    @PostMapping("/header")
-    public Result createSurvey(@RequestBody SurveyHeaders surveyHeaders) throws Exception{
-        log.info(surveyHeaders.toString());
-        Result result = Result.successInstance();
-        SurveyHeaders createdSurvey = this.surveyService.createSurvey(surveyHeaders);
-        return result;
-    }
 
-    @GetMapping("/header")
-    public Result getSurvey(@RequestParam int surveyId) throws Exception{
-        Result result = Result.successInstance();
-        SurveyHeaders getSurvey = this.surveyService.getSurvey(surveyId);
-        if(getSurvey==null) result.fail();
-        else {
-            int headerId = getSurvey.getId();
-            List<SurveySections> sections = this.surveyService.getSectionByHeaderId(headerId);
-            if(sections!=null){
-                for (SurveySections section: sections) {
-                    List<Questions> questions = this.surveyService.getQuestions(section.getId());
-                    for (Questions question:questions) {
-                        List<OptionChoices> optionChoices = this.surveyService.getOptionChoice(question.getId());
-                        List<String> choices = new ArrayList<>();
-                        for (OptionChoices option: optionChoices) {
-                            choices.add(option.getOptionChoiceName());
-                        }
-                        question.setChoices(choices);
-                    }
-                    section.setElements(questions);
-                }
-                getSurvey.setPages(sections);
-            }
 
-            result.setData(getSurvey);
-        }
-        return result;
-    }
 
-    @PostMapping("/section")
-    public Result createSection(@RequestBody SurveySections surveySections) throws Exception{
-        log.info(surveySections.toString());
-        Result result = Result.successInstance();
-        SurveySections createdSection = this.surveyService.createSection(surveySections);
-        return result;
-    }
-
-    @GetMapping("/section")
-    public Result getSectionByName(@RequestParam(name = "name") String name) throws  Exception{
-        log.info("name : " + name);
-        Result result = Result.successInstance();
-        List<SurveySections> getSection = this.surveyService.getSectionBySectionName(name);
-        if(getSection == null) result.fail();
-        else result.setData(getSection);
-        return result;
-    }
-
-    @PostMapping("/question")
-    public Result createQuestion(@RequestBody Questions questions){
-        log.info(questions.toString());
-        Result result = Result.successInstance();
-        Questions createdQuestion = this.surveyService.createQuestion(questions);
-        if(createdQuestion == null) result.fail();
-        return result;
-    }
-
-    @PostMapping("/option")
-    public Result createOptionChoice(@RequestBody OptionChoices optionChoices){
-        log.info(optionChoices.toString());
-        Result result = Result.successInstance();
-        OptionChoices createdOptionChoice = this.surveyService.createOptionChoices(optionChoices);
-        return result;
-    }
 
 
 }
