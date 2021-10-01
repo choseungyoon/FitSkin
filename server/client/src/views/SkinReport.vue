@@ -57,33 +57,27 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
+import SurveyDataService from "../services/SurveyDataService";
+
 export default {
   name: "App",
   components: {
     apexcharts: VueApexCharts,
   },
-  computed: {
-    seriesData() {
-      console.log(this.$store.state.auth.seriesData);
-      return this.$store.state.auth.seriesData;
-    },
+  created: function() {
+    console.log("param : " + this.$route.params.id);
+    SurveyDataService.getResult(this.$route.params.id)
+      .then((response) => {
+        console.log(response.data.data);
+        this.series = response.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   data() {
     return {
-      series: [
-        {
-          name: "You",
-          data: [80, 50, 30, 40, 100, 20],
-        },
-        {
-          name: "20대 평균",
-          data: [20, 30, 40, 80, 20, 80],
-        },
-        {
-          name: "남자 평균",
-          data: [44, 76, 78, 13, 43, 10],
-        },
-      ],
+      series: "",
       chartOptions: {
         chart: {
           align: "center",

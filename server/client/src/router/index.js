@@ -28,7 +28,7 @@ const routes = [
         component: MyProduct,
       },
       {
-        path: "/customer_profile/skin_analysis",
+        path: "/customer_profile/skin_analysis/:id",
         name: "SkinReport",
         component: SkinReport,
       },

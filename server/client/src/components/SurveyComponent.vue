@@ -48,10 +48,13 @@ export default {
   },
   methods: {
     completedSurvey: function(resultData) {
-      SurveyDataService.getResult(resultData)
+      SurveyDataService.insertResult(resultData)
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/customer_profile/skin_analysis");
+
+          this.$router.push({
+            path: `/customer_profile/skin_analysis/${response.data.data}`,
+          });
         })
         .catch((err) => {
           console.log(err);
