@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:9000/api/auth/";
+const API_URL = "https://fitskin.loca.lt/api/auth/";
 
 class AuthService {
   login(user) {
