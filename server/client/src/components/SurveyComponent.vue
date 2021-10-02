@@ -19,6 +19,11 @@ Survey.StylesManager.applyTheme("modern");
 
 export default {
   name: "surveyjs-component",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   data() {
     return {
       json: "",
@@ -48,7 +53,10 @@ export default {
   },
   methods: {
     completedSurvey: function(resultData) {
-      SurveyDataService.insertResult(resultData)
+      SurveyDataService.insertResult(
+        resultData,
+        this.currentUser != null ? this.currentUser.email : "none"
+      )
         .then((response) => {
           console.log(response.data);
 

@@ -41,7 +41,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
 
     @Override
-    public UUID insertResult(HashMap<String,Object> result){
+    public UUID insertResult(HashMap<String,Object> result, String email){
 
         try{
             boolean sex = Boolean.parseBoolean(null);
@@ -471,7 +471,7 @@ public class SurveyServiceImpl implements SurveyService {
                 pigmentation *=0.9;
             }
 
-            SurveyResult surveyResult = this.resultRepository.save( new SurveyResult(null,sex,age,moisturizing,sebum
+            SurveyResult surveyResult = this.resultRepository.save( new SurveyResult(email,sex,age,moisturizing,sebum
                     ,sensitivity,elasticity,pigmentation,trouble));
 
             return surveyResult.getId();

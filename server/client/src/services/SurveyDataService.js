@@ -5,8 +5,8 @@ class SurveyDataService {
     return http.get("/survey/form");
   }
 
-  insertResult(data) {
-    return http.post("/survey/result", { result: data });
+  insertResult(data, email) {
+    return http.post("/survey/result", { result: data, user: email });
   }
 
   getResult(data) {

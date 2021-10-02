@@ -1,5 +1,6 @@
 package com.fitksin.server.survey.controller;
 
+import com.fitksin.server.auth.security.jwt.JwtUtils;
 import com.fitksin.server.common.domain.Result;
 import com.fitksin.server.survey.domain.*;
 import com.fitksin.server.survey.service.SurveyService;
@@ -470,8 +471,11 @@ public class SurveyController {
     @PostMapping("/result")
     public Result insertSurveyResult(@RequestBody HashMap<String,Object> result) throws Exception{
         log.info(result.toString());
+        log.info(result.get("user").toString());
         Result retrunResult = Result.successInstance();
-        retrunResult.setData(this.surveyService.insertResult(result));
+        retrunResult.setData(
+                this.surveyService.insertResult(result,result.get("user").toString().equals("none") ? null : result.get("user").toString())
+        );
         return retrunResult;
     }
 

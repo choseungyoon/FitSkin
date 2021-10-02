@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface SurveyService {
     boolean insertSurvey(SurveyForm surveyForm);
-    UUID insertResult(HashMap<String,Object> result);
+    UUID insertResult(HashMap<String,Object> result, String email);
     JSONArray selectResult(UUID id);
 }
