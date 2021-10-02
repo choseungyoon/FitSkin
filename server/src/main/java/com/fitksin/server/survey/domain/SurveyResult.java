@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Setter
@@ -47,6 +49,9 @@ public class SurveyResult {
     @NotBlank
     private int trouble;
 
+    @NotBlank
+    private LocalDateTime createdAt;
+
     @Builder
     public SurveyResult(String email, @NotBlank boolean sex, @NotBlank int age, @NotBlank int moisturizing, @NotBlank int sebum, @NotBlank int sensitivity, @NotBlank int elasticity, @NotBlank int pigmentation, @NotBlank int trouble) {
         this.email = email;
@@ -58,6 +63,7 @@ public class SurveyResult {
         this.elasticity = elasticity;
         this.pigmentation = pigmentation;
         this.trouble = trouble;
+        this.createdAt = LocalDateTime.now();
     }
 
 }

@@ -5,6 +5,8 @@ import com.fitksin.server.survey.repository.ResultRepository;
 import com.fitksin.server.survey.repository.SurveyFormRepository;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,31 +59,467 @@ public class SurveyServiceImpl implements SurveyService {
             //3. To Object
             JSONObject resultJson = (JSONObject)jsonParser.parse(result.get("result").toString());
 
-            if(resultJson.get("sex").toString().contains("all")){
-                sex = true;
-                moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            // sex
+            if(Integer.parseInt(resultJson.get("sex").toString().split("_")[1]) > 0) sex = true;
+            moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+
+            // makeup_times
+            int value_score = Integer.parseInt(
+                    resultJson.get("makeup_times").toString().split("-")[1]
+                            .split("_")[1]
+            );
+            moisturizing+=value_score;
+            sebum+=value_score;
+            sensitivity+=value_score;
+            elasticity+=value_score;
+            pigmentation+=value_score;
+            trouble+=value_score;
+
+            // age
+            age = Integer.parseInt(resultJson.get("age").toString());
+            int age_value = 0;
+            if(age >=30 && age <= 35 ) age_value = 1;
+            else if(age >=36 && age <= 40) age_value = 2;
+            else if(age >=41 && age <= 50) age_value = 3;
+            else if(age > 50) age_value = 4;
+
+            moisturizing+=age_value;
+            sebum+=age_value;
+            sensitivity+=age_value;
+            elasticity+=age_value;
+            pigmentation+=age_value;
+            trouble+=age_value;
+
+            if(sex){
+                // pregnant
+                moisturizing+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+                sebum+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+                sensitivity+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+                elasticity+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+                pigmentation+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+                trouble+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
+
+                // Symptom_menstruation
+                moisturizing+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+                sebum+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+                sensitivity+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+                elasticity+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+                pigmentation+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+                trouble+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
+
+                // lactation
+                moisturizing+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+                sebum+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+                sensitivity+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+                elasticity+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+                pigmentation+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+                trouble+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
+
             }
 
-            if(resultJson.get("makeup_times").toString().contains("all")){
-                sex = true;
-                moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-                trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
+            // skintype
+
+            String valueType = resultJson.get("skintype").toString().split("-")[1];
+            for (String val:
+                    valueType.split(",")) {
+                val = val.trim();
+                String index = val.split("_")[0];
+                int index_score = Integer.parseInt(val.split("_")[1]);
+                switch (index) {
+                    case "Moisturizing" :
+                        moisturizing+=index_score;
+                        break;
+                    case "sebum" :
+                        sebum+=index_score;
+                        break;
+                    case "pigmentation" :
+                        pigmentation+=index_score;
+                        break;
+                    case "elasticity" :
+                        elasticity+=index_score;
+                        break;
+                    case "sensitivity" :
+                        sensitivity+=index_score;
+                        break;
+                    case "trouble" :
+                        trouble+=index_score;
+                        break;
+                }
             }
-            age = Integer.parseInt(resultJson.get("age").toString());
+
+            // outActivity
+            valueType = resultJson.get("outActivity").toString().split("-")[1];
+            for (String val:
+                    valueType.split(",")) {
+                val = val.trim();
+                String index = val.split("_")[0];
+                int index_score = Integer.parseInt(val.split("_")[1]);
+                switch (index) {
+                    case "Moisturizing" :
+                        moisturizing+=index_score;
+                        break;
+                    case "sebum" :
+                        sebum+=index_score;
+                        break;
+                    case "pigmentation" :
+                        pigmentation+=index_score;
+                        break;
+                    case "elasticity" :
+                        elasticity+=index_score;
+                        break;
+                    case "sensitivity" :
+                        sensitivity+=index_score;
+                        break;
+                    case "trouble" :
+                        trouble+=index_score;
+                        break;
+                }
+            }
+
+            // sleep
+            moisturizing+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+            sebum+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+            sensitivity+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+            elasticity+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+            trouble+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
+
+            // skinAge
+            valueType = resultJson.get("skinAge").toString().split("-")[1];
+            for (String val:
+                    valueType.split(",")) {
+                val = val.trim();
+                String index = val.split("_")[0];
+                int index_score = Integer.parseInt(val.split("_")[1]);
+                switch (index) {
+                    case "Moisturizing" :
+                        moisturizing+=index_score;
+                        break;
+                    case "sebum" :
+                        sebum+=index_score;
+                        break;
+                    case "pigmentation" :
+                        pigmentation+=index_score;
+                        break;
+                    case "elasticity" :
+                        elasticity+=index_score;
+                        break;
+                    case "sensitivity" :
+                        sensitivity+=index_score;
+                        break;
+                    case "trouble" :
+                        trouble+=index_score;
+                        break;
+                }
+            }
+
+            // smoke
+            moisturizing+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+            sebum+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+            sensitivity+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+            elasticity+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+            trouble+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
+
+            // eatinghabits
+            var eatinghabits = jsonParser.parse(resultJson.get("eatinghabits").toString());
+
+            for (var row:
+                    (JSONArray)eatinghabits) {
+                String habitValue = row.toString().split("-")[1];
+
+                for (String habit:
+                habitValue.split(",")) {
+                    String index = habit.split("_")[0];
+                    int index_score = Integer.parseInt(habit.toString().split("_")[1]);
+                    switch (index) {
+                        case "Moisturizing" :
+                            moisturizing+=index_score;
+                            break;
+                        case "sebum" :
+                            sebum+=index_score;
+                            break;
+                        case "pigmentation" :
+                            pigmentation+=index_score;
+                            break;
+                        case "elasticity" :
+                            elasticity+=index_score;
+                            break;
+                        case "sensitivity" :
+                            sensitivity+=index_score;
+                            break;
+                        case "trouble" :
+                            trouble+=index_score;
+                            break;
+                    }
+                }
+            }
+
+            // troubleTimes
+            valueType = resultJson.get("troubleTimes").toString().split("-")[1];
+            for (String val:
+                    valueType.split(",")) {
+                val = val.trim();
+                val = val.trim();
+                String index = val.split("_")[0];
+                int index_score = Integer.parseInt(val.split("_")[1]);
+                switch (index) {
+                    case "Moisturizing" :
+                        moisturizing+=index_score;
+                        break;
+                    case "sebum" :
+                        sebum+=index_score;
+                        break;
+                    case "pigmentation" :
+                        pigmentation+=index_score;
+                        break;
+                    case "elasticity" :
+                        elasticity+=index_score;
+                        break;
+                    case "sensitivity" :
+                        sensitivity+=index_score;
+                        break;
+                    case "trouble" :
+                        trouble+=index_score;
+                        break;
+                }
+            }
+
+            // pigmentation
+            pigmentation+=Integer.parseInt(resultJson.get("pigmentation").toString().split("_")[1]);
+
+            int makeupTimes = Integer.parseInt(resultJson.get("makeup_times").toString().split("-")[1]
+                    .split("_")[1]);
+
+            if(makeupTimes > 0){
+                // pigmentation
+                moisturizing+=makeupTimes;
+                sebum+=makeupTimes;
+                sensitivity+=makeupTimes;
+                elasticity+=makeupTimes;
+                pigmentation+=makeupTimes;
+                trouble+=makeupTimes;
+
+                // makeup_side_effect
+                if(!resultJson.get("makeup_side_effect").toString().contains("all")){
+                    valueType = resultJson.get("makeup_side_effect").toString().split("-")[1];
+                    for (String val:
+                            valueType.split(",")) {
+                        val = val.trim();
+                        val = val.trim();
+                        String index = val.split("_")[0];
+                        int index_score = Integer.parseInt(val.split("_")[1]);
+                        switch (index) {
+                            case "Moisturizing" :
+                                moisturizing+=index_score;
+                                break;
+                            case "sebum" :
+                                sebum+=index_score;
+                                break;
+                            case "pigmentation" :
+                                pigmentation+=index_score;
+                                break;
+                            case "elasticity" :
+                                elasticity+=index_score;
+                                break;
+                            case "sensitivity" :
+                                sensitivity+=index_score;
+                                break;
+                            case "trouble" :
+                                trouble+=index_score;
+                                break;
+                        }
+                    }
+                }
+
+                // makeupTool
+                var makeupTools = jsonParser.parse(resultJson.get("makeupTool").toString());
+
+                for (var row:
+                        (JSONArray)makeupTools) {
+                    String toolValue = row.toString().split("-")[1];
+
+                    for (String tool:
+                            toolValue.split(",")) {
+                        String index = tool.split("_")[0];
+                        int index_score = Integer.parseInt(tool.toString().split("_")[1]);
+                        switch (index) {
+                            case "Moisturizing" :
+                                moisturizing+=index_score;
+                                break;
+                            case "sebum" :
+                                sebum+=index_score;
+                                break;
+                            case "pigmentation" :
+                                pigmentation+=index_score;
+                                break;
+                            case "elasticity" :
+                                elasticity+=index_score;
+                                break;
+                            case "sensitivity" :
+                                sensitivity+=index_score;
+                                break;
+                            case "trouble" :
+                                trouble+=index_score;
+                                break;
+                        }
+                    }
+                }
+
+                valueType = resultJson.get("how_dry").toString().split("-")[1];
+                for (String val:
+                        valueType.split(",")) {
+                    val = val.trim();
+                    val = val.trim();
+                    String index = val.split("_")[0];
+                    int index_score = Integer.parseInt(val.split("_")[1]);
+                    switch (index) {
+                        case "Moisturizing" :
+                            moisturizing+=index_score;
+                            break;
+                        case "sebum" :
+                            sebum+=index_score;
+                            break;
+                        case "pigmentation" :
+                            pigmentation+=index_score;
+                            break;
+                        case "elasticity" :
+                            elasticity+=index_score;
+                            break;
+                        case "sensitivity" :
+                            sensitivity+=index_score;
+                            break;
+                        case "trouble" :
+                            trouble+=index_score;
+                            break;
+                    }
+                }
+
+                // skin_worry
+                var skin_worrys = jsonParser.parse(resultJson.get("skin_worry").toString());
+                for (var row:
+                        (JSONArray)skin_worrys) {
+                    String worryValue = row.toString().split("-")[1];
+
+                    for (String worry:
+                            worryValue.split(",")) {
+                        String index = worry.split("_")[0];
+                        int index_score = Integer.parseInt(worry.toString().split("_")[1]);
+                        switch (index) {
+                            case "Moisturizing" :
+                                moisturizing+=index_score;
+                                break;
+                            case "sebum" :
+                                sebum+=index_score;
+                                break;
+                            case "pigmentation" :
+                                pigmentation+=index_score;
+                                break;
+                            case "elasticity" :
+                                elasticity+=index_score;
+                                break;
+                            case "sensitivity" :
+                                sensitivity+=index_score;
+                                break;
+                            case "trouble" :
+                                trouble+=index_score;
+                                break;
+                        }
+                    }
+                }
+            }
+
+
+
+
+            // look_pore
+            sebum+=Integer.parseInt(resultJson.get("look_pore").toString().split("_")[1]);
+
+            // look_old
+            moisturizing+=Integer.parseInt(resultJson.get("look_old").toString().split(",")[1].split("_")[1]);
+            pigmentation+=Integer.parseInt(resultJson.get("look_old").toString().split(",")[1].split("_")[1]);
+
+            // wrinkle
+            valueType = resultJson.get("wrinkle").toString().split("-")[1];
+            for (String val:
+                    valueType.split(",")) {
+                val = val.trim();
+                val = val.trim();
+                String index = val.split("_")[0];
+                int index_score = Integer.parseInt(val.split("_")[1]);
+                switch (index) {
+                    case "Moisturizing" :
+                        moisturizing+=index_score;
+                        break;
+                    case "sebum" :
+                        sebum+=index_score;
+                        break;
+                    case "pigmentation" :
+                        pigmentation+=index_score;
+                        break;
+                    case "elasticity" :
+                        elasticity+=index_score;
+                        break;
+                    case "sensitivity" :
+                        sensitivity+=index_score;
+                        break;
+                    case "trouble" :
+                        trouble+=index_score;
+                        break;
+                }
+            }
 
             SurveyResult surveyResult = this.resultRepository.save( new SurveyResult(null,sex,age,moisturizing,sebum
                     ,sensitivity,elasticity,pigmentation,trouble));
 
             return surveyResult.getId();
+        }
+        catch (Exception ex){
+            return null;
+        }
+    }
+
+    @Override
+    public JSONArray selectResult(UUID id){
+        try{
+            SurveyResult result = this.resultRepository.findById(id).get();
+
+            JSONArray series = new JSONArray();
+            JSONObject myResult = new JSONObject();
+            myResult.put("name" , "you");
+            int[] myResult_score = {
+                    result.getMoisturizing(),
+                    result.getSebum(),
+                    result.getSensitivity(),
+                    result.getElasticity(),
+                    result.getPigmentation(),
+                    result.getTrouble()};
+            myResult.put("data" , myResult_score);
+
+            JSONObject sexAvg = new JSONObject();
+
+            if(result.isSex()) {
+                sexAvg.put("name" , "여성 평균");}
+            else {
+                sexAvg.put("name" , "남성 평균");
+            }
+            int[] sexAvg_score = {10, 14, 17, 10, 8, 19};
+            sexAvg.put("data" , sexAvg_score);
+
+            JSONObject ageAvg = new JSONObject();
+            ageAvg.put("name" , result.getAge()/10 + "0대 평균");
+            int[] ageAvg_score = {12, 8, 10, 24, 6, 14};
+            ageAvg.put("data" , ageAvg_score);
+
+            series.add(myResult);
+            series.add(sexAvg);
+            series.add(ageAvg);
+            return series;
         }
         catch (Exception ex){
             return null;

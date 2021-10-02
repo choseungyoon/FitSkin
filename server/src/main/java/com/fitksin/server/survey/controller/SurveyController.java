@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,7 +50,7 @@ public class SurveyController {
                 "     \"labelTrue\": \"여성\\n\",\n" +
                 "     \"labelFalse\": \"남성\\n\",\n" +
                 "     \"valueTrue\": \"all_1\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
@@ -58,23 +59,23 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"1-all_0\",\n" +
                 "       \"text\": \"전혀하지 않음\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"all_1\",\n" +
+                "       \"value\": \"2-all_1\",\n" +
                 "       \"text\": \"주1회 이하\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"all_2\",\n" +
+                "       \"value\": \"3-all_2\",\n" +
                 "       \"text\": \"주 2~3회\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"all_3\",\n" +
+                "       \"value\": \"4-all_3\",\n" +
                 "       \"text\": \"주 4~5회\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"all_4\",\n" +
+                "       \"value\": \"5-all_4\",\n" +
                 "       \"text\": \"매일\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -98,11 +99,11 @@ public class SurveyController {
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"all_3\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
-                "     \"name\": \"Symptom_ menstruation\",\n" +
+                "     \"name\": \"Symptom_menstruation\",\n" +
                 "     \"visibleIf\": \"{sex} = true\",\n" +
                 "     \"title\": \"생리 전 증후군이 있나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
@@ -110,7 +111,7 @@ public class SurveyController {
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"all_2\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
@@ -122,7 +123,7 @@ public class SurveyController {
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"all_1\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
@@ -131,23 +132,23 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_2\",\n" +
+                "       \"value\": \"1-Moisturizing_2\",\n" +
                 "       \"text\": \"건성\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_2, sebum_2\",\n" +
+                "       \"value\": \"2-Moisturizing_2, sebum_2\",\n" +
                 "       \"text\": \"중성\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_4\",\n" +
+                "       \"value\": \"3-sebum_4\",\n" +
                 "       \"text\": \"지성\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_4, sebum_4\",\n" +
+                "       \"value\": \"4-Moisturizing_4, sebum_4\",\n" +
                 "       \"text\": \"복합성\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"trouble_4\",\n" +
+                "       \"value\": \"5-trouble_4\",\n" +
                 "       \"text\": \"민감성\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -159,27 +160,27 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"pigmentation_5, elasticity_5\",\n" +
+                "       \"value\": \"1-pigmentation_5, elasticity_5\",\n" +
                 "       \"text\": \"일상생활 대부분\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"pigmentation_4, elasticity_4\",\n" +
+                "       \"value\": \"2-pigmentation_4, elasticity_4\",\n" +
                 "       \"text\": \"3시간 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"pigmentation_3, elasticity_3\",\n" +
+                "       \"value\": \"3-pigmentation_3, elasticity_3\",\n" +
                 "       \"text\": \"2시간 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"pigmentation_2, elasticity_2\",\n" +
+                "       \"value\": \"4-pigmentation_2, elasticity_2\",\n" +
                 "       \"text\": \"1시간 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"pigmentation_1, elasticity_1\",\n" +
+                "       \"value\": \"5-pigmentation_1, elasticity_1\",\n" +
                 "       \"text\": \"1시간 이하\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"6-all_0\",\n" +
                 "       \"text\": \"거의 없음\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -199,7 +200,7 @@ public class SurveyController {
                 "       \"text\": \"5~7시간\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"all_0\",\n" +
                 "       \"text\": \"8시간 이상\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -211,47 +212,47 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_5, elasticity_5\",\n" +
+                "       \"value\": \"1-Moisturizing_5, elasticity_5\",\n" +
                 "       \"text\": \"5년 이상 더 들어 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_3, elasticity_3\",\n" +
+                "       \"value\": \"2-Moisturizing_3, elasticity_3\",\n" +
                 "       \"text\": \"1~3년 더 들어 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_2, elasticity_2\",\n" +
+                "       \"value\": \"3-Moisturizing_2, elasticity_2\",\n" +
                 "       \"text\": \"실제 나이대로 보이는 것 같다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_1, elasticity_1\",\n" +
+                "       \"value\": \"4-Moisturizing_1, elasticity_1\",\n" +
                 "       \"text\": \"1~3년 더 어려 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"5-all_0\",\n" +
                 "       \"text\": \"5년이상 더 어려 보인다\"\n" +
                 "      }\n" +
                 "     ]\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"checkbox\",\n" +
-                "     \"name\": \"question3\",\n" +
-                "     \"visibleIf\": \"{makeup_times} <> 0\",\n" +
+                "     \"name\": \"makeupTool\",\n" +
+                "     \"visibleIf\": \"{makeup_times} <> '1-all_0'\",\n" +
                 "     \"title\": \"피부화장을 한다면 어떤 것을 사용하나요? (중복선택 가능)\",\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"sensitivity_1, trouble_1\",\n" +
+                "       \"value\": \"1-sensitivity_1, trouble_1\",\n" +
                 "       \"text\": \"선크림\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sensitivity_2, trouble_2\",\n" +
+                "       \"value\": \"2-sensitivity_2, trouble_2\",\n" +
                 "       \"text\": \"베이스\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sensitivity_3, trouble_3\",\n" +
+                "       \"value\": \"3-sensitivity_3, trouble_3\",\n" +
                 "       \"text\": \"파운데이션\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sensitivity_4, trouble_4\",\n" +
+                "       \"value\": \"4-sensitivity_4, trouble_4\",\n" +
                 "       \"text\": \"비비크림\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -259,14 +260,13 @@ public class SurveyController {
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
                 "     \"name\": \"smoke\",\n" +
-                "     \"visibleIf\": \"{sex} = true\",\n" +
                 "     \"title\": \"흡연 하시나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
-                "     \"labelTrue\": \"있어요\",\n" +
-                "     \"labelFalse\": \"없어요\",\n" +
+                "     \"labelTrue\": \"하고 있어요\",\n" +
+                "     \"labelFalse\": \"비흡연이에요\",\n" +
                 "     \"valueTrue\": \"all_5\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"checkbox\",\n" +
@@ -274,15 +274,15 @@ public class SurveyController {
                 "     \"title\": \"평소 식습관에 해당되면 골라주세요(복수선택 가능)\",\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_3\",\n" +
+                "       \"value\": \"1-Moisturizing_3\",\n" +
                 "       \"text\": \"음주(주2회이상)\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_3, sensitivity_3\",\n" +
+                "       \"value\": \"2-sebum_3, sensitivity_3\",\n" +
                 "       \"text\": \"규칙적인 식사(하루 3끼)를 하지 못함\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_3, trouble_3\",\n" +
+                "       \"value\": \"3-sebum_3, trouble_3\",\n" +
                 "       \"text\": \"패스트푸드 섭취빈도 높음\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -294,19 +294,19 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_5, trouble_5\",\n" +
+                "       \"value\": \"1-sebum_5, trouble_5\",\n" +
                 "       \"text\": \"주 5회 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_3, trouble_3\",\n" +
+                "       \"value\": \"2-sebum_3, trouble_3\",\n" +
                 "       \"text\": \"주 3회 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_2, trouble_2\",\n" +
+                "       \"value\": \"3-sebum_2, trouble_2\",\n" +
                 "       \"text\": \"주 1회 이상\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_1, trouble_1\",\n" +
+                "       \"value\": \"4-sebum_1, trouble_1\",\n" +
                 "       \"text\": \"없음\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -314,26 +314,26 @@ public class SurveyController {
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
                 "     \"name\": \"pigmentation\",\n" +
-                "     \"visibleIf\": \"{sex} = true\",\n" +
+                "     \"visibleIf\": \"{makeup_times} <> 0\",\n" +
                 "     \"title\": \"최근 얼굴이나 피부에 점이나 갈색반점이 생긴적 있나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"pigmentation_5\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
                 "     \"name\": \"makeup_side_effect\",\n" +
-                "     \"visibleIf\": \"{sex} = true\",\n" +
+                "     \"visibleIf\": \"{makeup_times} <> '1-all_0'\",\n" +
                 "     \"title\": \"클렌저, 보습제, 색조화장품, 기타 다른 화장품이 얼굴피부를 돋아 오르게 하거나 발진, 가려움증 혹은 따끔거리는 증상 등을 유발했던 경험이 있나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"trouble_5, sebum_3\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
@@ -342,23 +342,23 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_5\",\n" +
+                "       \"value\": \"1-Moisturizing_5\",\n" +
                 "       \"text\": \"매우 건조한 느낌이 들거나 갈라진다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_3\",\n" +
+                "       \"value\": \"2-Moisturizing_3\",\n" +
                 "       \"text\": \"다소 건조함을 느낀다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_1\",\n" +
+                "       \"value\": \"3-Moisturizing_1\",\n" +
                 "       \"text\": \"적당한 밸런스가 유지되는 것 같다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"4-all_0\",\n" +
                 "       \"text\": \"항상 윤기가 흐르며, 세안 직후에도 당기지 않는다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_1\",\n" +
+                "       \"value\": \"5-Moisturizing_1\",\n" +
                 "       \"text\": \"잘 모르겠다\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -366,39 +366,40 @@ public class SurveyController {
                 "    {\n" +
                 "     \"type\": \"checkbox\",\n" +
                 "     \"name\": \"skin_worry\",\n" +
+                "     \"visibleIf\": \"{makeup_times} <> '1-all_0'\",\n" +
                 "     \"title\": \"가장 큰 피부 고민은 무엇인가요? (복수선택 가능)\",\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_5, sensitivity_5\",\n" +
+                "       \"value\": \"1-Moisturizing_5, sensitivity_5\",\n" +
                 "       \"text\": \"각질\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_5\",\n" +
+                "       \"value\": \"2-elasticity_5\",\n" +
                 "       \"text\": \"탄력\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_5,pigmentation_5\",\n" +
+                "       \"value\": \"3-elasticity_5,pigmentation_5\",\n" +
                 "       \"text\": \"주름\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sebum_5\",\n" +
+                "       \"value\": \"4-sebum_5\",\n" +
                 "       \"text\": \"모공\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_5,sensitivity_5\",\n" +
+                "       \"value\": \"5-Moisturizing_5,sensitivity_5\",\n" +
                 "       \"text\": \"건조함\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"sensitivity_5, trouble_5\",\n" +
+                "       \"value\": \"6-sensitivity_5, trouble_5\",\n" +
                 "       \"text\": \"잦은 트러블\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"trouble_5,sebum_5\",\n" +
+                "       \"value\": \"7-trouble_5,sebum_5\",\n" +
                 "       \"text\": \"여드름\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"Moisturizing_5\",\n" +
+                "       \"value\": \"8-Moisturizing_5\",\n" +
                 "       \"text\": \"입술 갈라짐\"\n" +
                 "      }\n" +
                 "     ],\n" +
@@ -406,26 +407,25 @@ public class SurveyController {
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
-                "     \"name\": \"look_ pore\",\n" +
-                "     \"visibleIf\": \"{sex} = true\",\n" +
+                "     \"name\": \"look_pore\",\n" +
                 "     \"title\": \"현재 거울을 봤을 때 모공이 눈에 띄게 보이나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
                 "     \"valueTrue\": \"sebum_3\",\n" +
-                "     \"valueFalse\": \"0\"\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
-                "     \"name\": \"question2\",\n" +
-                "     \"visibleIf\": \"{sex} = true\",\n" +
+                "     \"name\": \"look_old\",\n" +
                 "     \"title\": \"지금 거울을 봤을 때 피부상태가 현재 나이보다 더 늙어보이나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"있어요\",\n" +
                 "     \"labelFalse\": \"없어요\",\n" +
-                "     \"valueTrue\": \"Moisturizing_3, pigmentation_3\"\n" +
+                "     \"valueTrue\": \"Moisturizing_3, pigmentation_3\",\n" +
+                "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
@@ -434,23 +434,23 @@ public class SurveyController {
                 "     \"isRequired\": true,\n" +
                 "     \"choices\": [\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_3\",\n" +
+                "       \"value\": \"1-elasticity_3\",\n" +
                 "       \"text\": \"굵은 눈가주름과 입가 팔자주름이 확연히 눈에 띈다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_3\",\n" +
+                "       \"value\": \"2-elasticity_3\",\n" +
                 "       \"text\": \"웃거나 찡그리거나 눈썹으로 치켜 올리지 않아도 주름이 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_1\",\n" +
+                "       \"value\": \"3-elasticity_1\",\n" +
                 "       \"text\": \"얼굴에 움직임이 있는 상태에서 약간 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"elasticity_1\",\n" +
+                "       \"value\": \"4-elasticity_1\",\n" +
                 "       \"text\": \"눈가와 입가에 미세한 얇은 주름이 보인다\"\n" +
                 "      },\n" +
                 "      {\n" +
-                "       \"value\": \"0\",\n" +
+                "       \"value\": \"5-all_0\",\n" +
                 "       \"text\": \"없다\"\n" +
                 "      }\n" +
                 "     ]\n" +
@@ -459,13 +459,6 @@ public class SurveyController {
                 "  }\n" +
                 " ],\n" +
                 " \"showCompletedPage\": false,\n" +
-               // " \"navigateToUrl\": \"http://localhost:8080/customer_profile/skin_analysis\",\n" +
-                " \"navigateToUrlOnCondition\": [\n" +
-                "  {\n" +
-                "   \"expression\": \"abc\",\n" +
-                "   \"url\": \"key\"\n" +
-                "  }\n" +
-                " ],\n" +
                 " \"showQuestionNumbers\": \"off\",\n" +
                 " \"showProgressBar\": \"top\",\n" +
                 " \"goNextPageAutomatic\": true,\n" +
@@ -484,39 +477,13 @@ public class SurveyController {
         Result retrunResult = Result.successInstance();
         retrunResult.setData(this.surveyService.insertResult(result));
         return retrunResult;
-
-/*
-        JSONArray series = new JSONArray();
-        JSONObject myResult = new JSONObject();
-        myResult.put("name" , "you");
-        int[] myResult_score = {Moisturizing,sebum,sensitivity,elasticity,pigmentation,trouble};
-        myResult.put("data" , myResult_score);
-
-        JSONObject sexAvg = new JSONObject();
-        if(sex) sexAvg.put("name" , "여성 평균");
-        else sexAvg.put("name" , "남성 평균");
-        int[] sexAvg_score = {20, 30, 40, 80, 20, 80};
-        sexAvg.put("data" , sexAvg_score);
-
-        JSONObject ageAvg = new JSONObject();
-        ageAvg.put("name" , age/10 + "0대 평균");
-        int[] ageAvg_score = {44, 76, 78, 13, 43, 10};
-        ageAvg.put("data" , ageAvg_score);
-
-        series.add(myResult);
-        series.add(sexAvg);
-        series.add(ageAvg);
-
-        retrunResult.setData(series);
-        log.info("Survey result : " + series.toString());
-       */
     }
 
 
-
-
-
-
-
-
+    @GetMapping(value = "/result")
+    public Result getSurveyResult(@RequestParam UUID id) throws Exception {
+        Result retrunResult = Result.successInstance();
+        retrunResult.setData(this.surveyService.selectResult(id));
+        return retrunResult;
+    }
 }
