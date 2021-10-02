@@ -48,9 +48,7 @@ public class SurveyController {
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"여성\\n\",\n" +
-                "     \"labelFalse\": \"남성\\n\",\n" +
-                "     \"valueTrue\": \"all_1\",\n" +
-                "     \"valueFalse\": \"all_0\"\n" +
+                "     \"labelFalse\": \"남성\\n\"" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
@@ -91,7 +89,7 @@ public class SurveyController {
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"boolean\",\n" +
-                "     \"name\": \"pregnent\",\n" +
+                "     \"name\": \"pregnant\",\n" +
                 "     \"visibleIf\": \"{sex} = true\",\n" +
                 "     \"title\": \"임신 혹은 임신 이력이 있으신가요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
@@ -423,9 +421,7 @@ public class SurveyController {
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
                 "     \"labelTrue\": \"있어요\",\n" +
-                "     \"labelFalse\": \"없어요\",\n" +
-                "     \"valueTrue\": \"Moisturizing_3, pigmentation_3\",\n" +
-                "     \"valueFalse\": \"all_0\"\n" +
+                "     \"labelFalse\": \"없어요\"" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +

@@ -1,5 +1,5 @@
 package com.fitksin.server.auth.security;
-/*
+
 import com.fitksin.server.auth.security.jwt.AuthEntryPointJwt;
 import com.fitksin.server.auth.security.jwt.AuthTokenFilter;
 import com.fitksin.server.auth.security.services.UserDetailsServiceImpl;
@@ -72,8 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-
-        configuration.addAllowedOrigin("https://fitskin-front.loca.lt/");
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedOrigin("http://localhost:9000");
         configuration.addAllowedOrigin("https://fitskin.loca.lt");
@@ -87,4 +85,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 }
-*/

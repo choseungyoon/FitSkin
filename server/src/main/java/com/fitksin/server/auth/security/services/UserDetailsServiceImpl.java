@@ -3,7 +3,6 @@ package com.fitksin.server.auth.security.services;
 import com.fitksin.server.auth.models.User;
 import com.fitksin.server.auth.repository.UserRepository;
 import org.springframework.stereotype.Service;
-/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,4 +25,3 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         return UserDetailsImpl.build(user);
     }
 }
-*/

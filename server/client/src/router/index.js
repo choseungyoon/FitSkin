@@ -5,6 +5,8 @@ import Home from "../views/Home.vue";
 import MyProduct from "../views/MyProduct.vue";
 import SurveyComponent from "../components/SurveyComponent";
 import SkinReport from "../views/SkinReport";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 Vue.use(VueRouter);
 
@@ -32,6 +34,12 @@ const routes = [
         name: "SkinReport",
         component: SkinReport,
       },
+      {
+        path: "/profile",
+        name: "profile",
+        // lazy-loaded
+        component: () => import("@/components/Profile.vue"),
+      },
     ],
   },
   {
@@ -48,6 +56,16 @@ const routes = [
     path: "/survey",
     name: "SURVEY",
     component: SurveyComponent,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
   },
 ];
 

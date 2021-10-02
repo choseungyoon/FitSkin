@@ -59,28 +59,19 @@ public class SurveyServiceImpl implements SurveyService {
             //3. To Object
             JSONObject resultJson = (JSONObject)jsonParser.parse(result.get("result").toString());
 
-            // sex
-            if(Integer.parseInt(resultJson.get("sex").toString().split("_")[1]) > 0) sex = true;
-            moisturizing+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sebum+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            sensitivity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            elasticity+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            pigmentation+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
-            trouble+=Integer.parseInt(resultJson.get("sex").toString().split("_")[1]);
 
-            // makeup_times
-            int value_score = Integer.parseInt(
-                    resultJson.get("makeup_times").toString().split("-")[1]
-                            .split("_")[1]
-            );
-            moisturizing+=value_score;
-            sebum+=value_score;
-            sensitivity+=value_score;
-            elasticity+=value_score;
-            pigmentation+=value_score;
-            trouble+=value_score;
+            // sex
+            log.info("Confirm sex");
+            if(resultJson.get("sex").toString().equals("true")) sex = true;
+            moisturizing+=1;
+            sebum+=1;
+            sensitivity+=1;
+            elasticity+=1;
+            pigmentation+=1;
+            trouble+=1;
 
             // age
+            log.info("Confirm Age");
             age = Integer.parseInt(resultJson.get("age").toString());
             int age_value = 0;
             if(age >=30 && age <= 35 ) age_value = 1;
@@ -97,6 +88,7 @@ public class SurveyServiceImpl implements SurveyService {
 
             if(sex){
                 // pregnant
+                log.info("Confirm Pregnant");
                 moisturizing+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
                 sebum+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
                 sensitivity+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
@@ -105,6 +97,7 @@ public class SurveyServiceImpl implements SurveyService {
                 trouble+=Integer.parseInt(resultJson.get("pregnant").toString().split("_")[1]);
 
                 // Symptom_menstruation
+                log.info("Confirm Sysptom_memstruation");
                 moisturizing+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
                 sebum+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
                 sensitivity+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
@@ -113,6 +106,7 @@ public class SurveyServiceImpl implements SurveyService {
                 trouble+=Integer.parseInt(resultJson.get("Symptom_menstruation").toString().split("_")[1]);
 
                 // lactation
+                log.info("Confirm lactation");
                 moisturizing+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
                 sebum+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
                 sensitivity+=Integer.parseInt(resultJson.get("lactation").toString().split("_")[1]);
@@ -123,7 +117,7 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // skintype
-
+            log.info("Confirm skintype");
             String valueType = resultJson.get("skintype").toString().split("-")[1];
             for (String val:
                     valueType.split(",")) {
@@ -153,6 +147,7 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // outActivity
+            log.info("Confirm outActivity");
             valueType = resultJson.get("outActivity").toString().split("-")[1];
             for (String val:
                     valueType.split(",")) {
@@ -182,6 +177,7 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // sleep
+            log.info("Confirm sleep");
             moisturizing+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
             sebum+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
             sensitivity+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
@@ -190,6 +186,7 @@ public class SurveyServiceImpl implements SurveyService {
             trouble+=Integer.parseInt(resultJson.get("sleep").toString().split("_")[1]);
 
             // skinAge
+            log.info("Confirm look skin age");
             valueType = resultJson.get("skinAge").toString().split("-")[1];
             for (String val:
                     valueType.split(",")) {
@@ -219,6 +216,7 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // smoke
+            log.info("Confirm smoke");
             moisturizing+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
             sebum+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
             sensitivity+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
@@ -227,6 +225,7 @@ public class SurveyServiceImpl implements SurveyService {
             trouble+=Integer.parseInt(resultJson.get("smoke").toString().split("_")[1]);
 
             // eatinghabits
+            log.info("Confirm habbit of eating");
             var eatinghabits = jsonParser.parse(resultJson.get("eatinghabits").toString());
 
             for (var row:
@@ -261,6 +260,7 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // troubleTimes
+            log.info("Confirm how many times trouble");
             valueType = resultJson.get("troubleTimes").toString().split("-")[1];
             for (String val:
                     valueType.split(",")) {
@@ -291,13 +291,16 @@ public class SurveyServiceImpl implements SurveyService {
             }
 
             // pigmentation
+            log.info("Confirm usaully pigmentation");
             pigmentation+=Integer.parseInt(resultJson.get("pigmentation").toString().split("_")[1]);
 
+            // makeup_times
+            log.info("Confirm Makeup times");
             int makeupTimes = Integer.parseInt(resultJson.get("makeup_times").toString().split("-")[1]
                     .split("_")[1]);
 
             if(makeupTimes > 0){
-                // pigmentation
+                // makeup times
                 moisturizing+=makeupTimes;
                 sebum+=makeupTimes;
                 sensitivity+=makeupTimes;
@@ -306,38 +309,14 @@ public class SurveyServiceImpl implements SurveyService {
                 trouble+=makeupTimes;
 
                 // makeup_side_effect
+                log.info("Confirm Makeup side effect");
                 if(!resultJson.get("makeup_side_effect").toString().contains("all")){
-                    valueType = resultJson.get("makeup_side_effect").toString().split("-")[1];
-                    for (String val:
-                            valueType.split(",")) {
-                        val = val.trim();
-                        val = val.trim();
-                        String index = val.split("_")[0];
-                        int index_score = Integer.parseInt(val.split("_")[1]);
-                        switch (index) {
-                            case "Moisturizing" :
-                                moisturizing+=index_score;
-                                break;
-                            case "sebum" :
-                                sebum+=index_score;
-                                break;
-                            case "pigmentation" :
-                                pigmentation+=index_score;
-                                break;
-                            case "elasticity" :
-                                elasticity+=index_score;
-                                break;
-                            case "sensitivity" :
-                                sensitivity+=index_score;
-                                break;
-                            case "trouble" :
-                                trouble+=index_score;
-                                break;
-                        }
-                    }
+                    sebum+=3;
+                    trouble+=5;
                 }
 
                 // makeupTool
+                log.info("Confirm makeup tool");
                 var makeupTools = jsonParser.parse(resultJson.get("makeupTool").toString());
 
                 for (var row:
@@ -371,6 +350,7 @@ public class SurveyServiceImpl implements SurveyService {
                     }
                 }
 
+                log.info("Confirm how dry");
                 valueType = resultJson.get("how_dry").toString().split("-")[1];
                 for (String val:
                         valueType.split(",")) {
@@ -400,6 +380,7 @@ public class SurveyServiceImpl implements SurveyService {
                     }
                 }
 
+                log.info("Confirm skin worrris");
                 // skin_worry
                 var skin_worrys = jsonParser.parse(resultJson.get("skin_worry").toString());
                 for (var row:
@@ -438,13 +419,18 @@ public class SurveyServiceImpl implements SurveyService {
 
 
             // look_pore
+            log.info("Confirm look pore");
             sebum+=Integer.parseInt(resultJson.get("look_pore").toString().split("_")[1]);
 
             // look_old
-            moisturizing+=Integer.parseInt(resultJson.get("look_old").toString().split(",")[1].split("_")[1]);
-            pigmentation+=Integer.parseInt(resultJson.get("look_old").toString().split(",")[1].split("_")[1]);
+            log.info("Confirm look old");
+            if(resultJson.get("look_old").toString().equals("true")){
+                moisturizing+=3;
+                pigmentation+=3;
+            }
 
             // wrinkle
+            log.info("Confirm look wrinkle");
             valueType = resultJson.get("wrinkle").toString().split("-")[1];
             for (String val:
                     valueType.split(",")) {
@@ -472,6 +458,17 @@ public class SurveyServiceImpl implements SurveyService {
                         trouble+=index_score;
                         break;
                 }
+            }
+
+            if(makeupTimes == 1 || makeupTimes == 2) {
+                sensitivity *= 1.1;
+                trouble *= 1.1;
+                pigmentation *=0.9;
+            }
+            else if(makeupTimes == 3 || makeupTimes == 4){
+                sensitivity *= 1.2;
+                trouble *= 1.2;
+                pigmentation *=0.9;
             }
 
             SurveyResult surveyResult = this.resultRepository.save( new SurveyResult(null,sex,age,moisturizing,sebum

@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-/*
+
 import com.fitksin.server.auth.models.ERole;
 import com.fitksin.server.auth.models.Role;
 import com.fitksin.server.auth.models.User;
@@ -128,4 +128,3 @@ public class AuthController {
     }
 
 }
-*/

@@ -7,6 +7,7 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import VueApexChart from "vue-apexcharts";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import VeeValidate from "vee-validate";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -25,6 +26,7 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueApexChart);
+Vue.use(VeeValidate);
 
 Vue.component("apexchart", VueApexChart);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
