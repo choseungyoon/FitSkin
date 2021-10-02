@@ -522,4 +522,25 @@ public class SurveyServiceImpl implements SurveyService {
             return null;
         }
     }
+
+    public JSONArray selectResultAll(String email){
+
+        List<SurveyResult> results = this.resultRepository.findByEmail(email);
+        JSONArray allSurvey = new JSONArray();
+
+        for (SurveyResult result:
+             results) {
+            JSONObject survey = new JSONObject();
+            survey.put("date",result.getCreatedAt());
+            survey.put("moisturizing",result.getMoisturizing());
+            survey.put("sebum",result.getSebum());
+            survey.put("sensitivity",result.getSensitivity());
+            survey.put("elasticity",result.getElasticity());
+            survey.put("pigmentation",result.getPigmentation());
+            survey.put("trouble",result.getTrouble());
+            allSurvey.add(survey);
+        }
+        return allSurvey;
+    }
+
 }

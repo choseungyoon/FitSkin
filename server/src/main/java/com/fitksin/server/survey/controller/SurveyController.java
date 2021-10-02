@@ -486,4 +486,12 @@ public class SurveyController {
         retrunResult.setData(this.surveyService.selectResult(id));
         return retrunResult;
     }
+
+    @GetMapping(value = "/result/all")
+    public Result getSurveyResultAll(@RequestParam String email) throws Exception {
+        Result retrunResult = Result.successInstance();
+        retrunResult.setData(this.surveyService.selectResultAll(email));
+        return retrunResult;
+    }
+
 }

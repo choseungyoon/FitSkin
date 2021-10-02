@@ -12,6 +12,10 @@ class SurveyDataService {
   getResult(data) {
     return http.get(`/survey/result?id=${data}`);
   }
+
+  getAllResult(data) {
+    return http.get(`/survey/result/all?email=${data}`);
+  }
 }
 
 export default new SurveyDataService();
