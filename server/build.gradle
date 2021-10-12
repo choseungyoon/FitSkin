@@ -2,10 +2,11 @@ plugins {
 	id 'org.springframework.boot' version '2.6.0-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'war'
 }
 
 group = 'com.fitksin'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
@@ -40,8 +41,14 @@ dependencies {
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.0.0'
 
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 test {
 	useJUnitPlatform()
 }
+
+bootWar {
+	archiveName("fitskin-web.war")
+}
+

@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url : jdbc:mysql://localhost:3306/FITSKIN?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url : jdbc:mysql://34.64.253.121:3306/FITSKIN?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true
 
-    username: root
+    username: fitskin_user
     password: changeme
     driver-class-name: com.mysql.cj.jdbc.Driver
 

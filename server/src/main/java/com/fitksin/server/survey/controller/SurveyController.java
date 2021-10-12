@@ -116,11 +116,11 @@ public class SurveyController {
                 "     \"type\": \"boolean\",\n" +
                 "     \"name\": \"lactation\",\n" +
                 "     \"visibleIf\": \"{sex} = true\",\n" +
-                "     \"title\": \"수유증이 있으신가요?\",\n" +
+                "     \"title\": \"수유중이신가요??\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
-                "     \"labelTrue\": \"있어요\",\n" +
-                "     \"labelFalse\": \"없어요\",\n" +
+                "     \"labelTrue\": \"맞아요\",\n" +
+                "     \"labelFalse\": \"아니에\",\n" +
                 "     \"valueTrue\": \"all_1\",\n" +
                 "     \"valueFalse\": \"all_0\"\n" +
                 "    },\n" +
@@ -421,8 +421,8 @@ public class SurveyController {
                 "     \"title\": \"지금 거울을 봤을 때 피부상태가 현재 나이보다 더 늙어보이나요?\",\n" +
                 "     \"correctAnswer\": true,\n" +
                 "     \"isRequired\": true,\n" +
-                "     \"labelTrue\": \"있어요\",\n" +
-                "     \"labelFalse\": \"없어요\"" +
+                "     \"labelTrue\": \"맞아요\",\n" +
+                "     \"labelFalse\": \"아니에요\"" +
                 "    },\n" +
                 "    {\n" +
                 "     \"type\": \"radiogroup\",\n" +
