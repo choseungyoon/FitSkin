@@ -76,47 +76,6 @@
     </section>
 
     <section>
-      <v-row>
-        <v-img
-          :min-height="'calc(50vh - ' + $vuetify.application.top + 'px)'"
-          lazy-src="../assets/img/main_1.png"
-        >
-          <v-theme-provider dark>
-            <v-container fill-height>
-              <v-row
-                align="center"
-                class="white--text mx-auto"
-                justify="center"
-              >
-                <v-col class="black--text text-center" cols="12" tag="h1">
-                  <span
-                    :class="[
-                      $vuetify.breakpoint.smAndDown ? 'display-2' : 'display-3',
-                    ]"
-                    class="font-weight-bold"
-                  >
-                    당신의 피부건강
-                  </span>
-
-                  <br />
-                  <br />
-                  <span
-                    :class="[
-                      $vuetify.breakpoint.smAndDown ? 'display-1' : 'display-2',
-                    ]"
-                    class="font-weight-bold"
-                  >
-                    어떻게 관리하고 있나요?
-                  </span>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-theme-provider>
-        </v-img>
-      </v-row>
-    </section>
-
-    <section>
       <v-row align="center" justify="center">
         <v-col cols="6" class="left">
           <v-img
@@ -136,29 +95,6 @@
           </v-responsive>
         </v-col>
       </v-row>
-    </section>
-
-    <section id="section_2">
-      <v-container class="text-center">
-        <v-row align="center" justify="center">
-          <v-col cols="6" class="left">
-            <v-img
-              :min-height="'calc(50vh - ' + $vuetify.application.top + 'px)'"
-              src="../assets/img/main_1.png"
-            >
-            </v-img>
-          </v-col>
-          <v-col cols="6" class="right">
-            <v-responsive
-              class="mx-auto title font-weight-black"
-              max-width="900"
-            >
-              당신의 피부건강 <br />
-              어떻게 관리하고 있나요? <br />
-            </v-responsive>
-          </v-col>
-        </v-row>
-      </v-container>
     </section>
 
     <section id="section_4">
