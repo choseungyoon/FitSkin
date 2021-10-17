@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ResultRepository extends JpaRepository<SurveyResult, UUID> {
 
-    List<SurveyResult> findByEmail(String email);
+    List<SurveyResult> findByEmailOrderByCreatedAtAsc(String email);
 }

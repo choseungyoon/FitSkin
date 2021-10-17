@@ -77,7 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         configuration.addAllowedOrigin("http://34.64.253.121:9000");
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedOrigin("http://localhost:9000");
-        configuration.addAllowedOrigin("https://fitskin.loca.lt");
+        configuration.addAllowedOrigin("http://fitskin.co.kr");
+
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
