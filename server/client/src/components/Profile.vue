@@ -21,7 +21,14 @@
         </v-row>
         <v-row class="survey_result">
           <v-col cols="6">
-            나의 최근 피부 분석 결과
+            <apexcharts
+              type="radar"
+              width="400px"
+              height="400px"
+              align="center"
+              :options="chartOptions"
+              :series="radarseries"
+            ></apexcharts>
           </v-col>
           <v-col cols="6">
             <apexcharts
@@ -156,6 +163,39 @@ export default {
           borderColor: "#f1f1f1",
         },
       },
+      radarseries: "",
+      chartOptions: {
+        chart: {
+          align: "center",
+          height: 350,
+          type: "radar",
+          dropShadow: {
+            enabled: true,
+            blur: 1,
+            left: 1,
+            top: 1,
+          },
+        },
+        stroke: {
+          width: 2,
+        },
+        fill: {
+          opacity: 0.1,
+        },
+        markers: {
+          size: 0,
+        },
+        xaxis: {
+          categories: [
+            "보습",
+            "피지분비",
+            "민감성",
+            "탄력",
+            "색소침착",
+            "트러블",
+          ],
+        },
+      },
     };
   },
   mounted() {
@@ -171,7 +211,7 @@ export default {
     SurveyDataService.getAllResult(this.currentUser.email)
       .then((response) => {
         this.surveyresults = response.data.data;
-
+        var recentUUID;
         response.data.data.forEach(function(element) {
           ref.series[0].data.push(element.elasticity);
           ref.series[1].data.push(element.moisturizing);
@@ -179,11 +219,21 @@ export default {
           ref.series[3].data.push(element.sensitivity);
           ref.series[4].data.push(element.sebum);
           ref.series[5].data.push(element.trouble);
+          recentUUID = element.UUID;
           ref.lineChartOptions.xaxis.categories.push(element.date.toString());
         });
 
         console.log(this.lineChartOptions.xaxis.categories);
         console.log(this.series);
+        console.log("UUID : " + recentUUID);
+        SurveyDataService.getResult(recentUUID)
+          .then((response) => {
+            console.log(response.data.data);
+            ref.radarseries = response.data.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
