@@ -538,6 +538,7 @@ public class SurveyServiceImpl implements SurveyService {
             survey.put("elasticity",result.getElasticity());
             survey.put("pigmentation",result.getPigmentation());
             survey.put("trouble",result.getTrouble());
+            survey.put("UUID",result.getId());
             allSurvey.add(survey);
         }
         return allSurvey;
