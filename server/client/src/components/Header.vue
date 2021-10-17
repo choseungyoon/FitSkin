@@ -10,7 +10,7 @@
     <b-nav align="center">
       <b-nav-item to="/" exact>서비스소개</b-nav-item>
       <b-nav-item to="/product/my">나만의 제품</b-nav-item>
-      <b-nav-item to="/product/search">핏스킨인증제품</b-nav-item>
+      <b-nav-item to="/product">핏스킨인증제품</b-nav-item>
       <b-nav-item to="/FAQ">FAQ</b-nav-item>
     </b-nav>
 

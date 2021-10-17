@@ -7,6 +7,7 @@ import SurveyComponent from "../components/SurveyComponent";
 import SkinReport from "../views/SkinReport";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import ProductSearch from "../views/ProductSearch";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
         name: "profile",
         // lazy-loaded
         component: () => import("@/components/Profile.vue"),
+      },
+      {
+        path: "/product",
+        name: "ProductSearch",
+        component: ProductSearch,
       },
     ],
   },

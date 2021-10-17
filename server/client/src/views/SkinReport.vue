@@ -125,6 +125,22 @@
           </div>
         </v-col>
       </v-container>
+      <v-container>
+        <v-row>
+          <v-col cols="2"></v-col>
+          <v-col cols="8">
+            <v-textarea
+              filled
+              name="input-7-4"
+              readonly="true"
+              value="주식회사 라이크팜에서 제공하는 정보는 신뢰할 만한 자료 및 정보로부터 얻어진 것이나 그 정확성이나 완전성을 보장 할 수 없으며, 시간이 경과함에 따라 변경될 수 있습니다.
+
+따라서 정보의 오류, 누락에 대하여 주식회사 라이크팜 또는 주식회사 라이크팜에 자료를 제공하는 기관에서는 그 결과에 대해 법적인 책임을 지지 않습니다. 모든 콘텐츠에 대한 저작권은 주식회사 라이크팜에 있으며 사전 허가없이 이를 무단으로 사용하거나, 데이터베이스화 할 경우 민형사상 책임을 물을 수 있습니다."
+            ></v-textarea>
+          </v-col>
+          <v-col cols="2"></v-col>
+        </v-row>
+      </v-container>
     </section>
   </div>
 </template>

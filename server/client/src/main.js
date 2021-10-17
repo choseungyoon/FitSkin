@@ -22,7 +22,6 @@ Vue.config.productionTip = false;
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
-// Install BootstrapVue
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueApexChart);
