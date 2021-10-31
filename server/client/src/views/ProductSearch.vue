@@ -4,8 +4,8 @@
       <v-col cols="12">
         <v-card>
           <v-row>
-            <v-col cols="2"></v-col>
-            <v-col cols="8">
+            <v-col cols="1"></v-col>
+            <v-col cols="10">
               <v-card-title>
                 <v-text-field
                   v-model="search"
@@ -15,13 +15,129 @@
                   hide-details
                 ></v-text-field>
               </v-card-title>
-              <v-data-table
-                :headers="headers"
-                :items="desserts"
-                :search="search"
-              ></v-data-table>
+              <v-row justify="center">
+                <v-dialog v-model="dialog" persistent max-width="600px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      Open Dialog
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="text-h5">User Profile</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              label="Legal first name*"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              label="Legal middle name"
+                              hint="example of helper text only on focus"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              label="Legal last name*"
+                              hint="example of persistent helper text"
+                              persistent-hint
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Email*"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Password*"
+                              type="password"
+                              required
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-select
+                              :items="['0-17', '18-29', '30-54', '54+']"
+                              label="Age*"
+                              required
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-autocomplete
+                              :items="[
+                                'Skiing',
+                                'Ice hockey',
+                                'Soccer',
+                                'Basketball',
+                                'Hockey',
+                                'Reading',
+                                'Writing',
+                                'Coding',
+                                'Basejump',
+                              ]"
+                              label="Interests"
+                              multiple
+                            ></v-autocomplete>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small>*indicates required field</small>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialog = false">
+                        Close
+                      </v-btn>
+                      <v-btn color="blue darken-1" text @click="dialog = false">
+                        Save
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
+
+              <v-layout row wrap>
+                <v-flex
+                  v-for="item in itemlist"
+                  :key="item.itemId"
+                  xs12
+                  md6
+                  lg3
+                >
+                  <v-card class="mx-auto my-5" max-width="250" width="95%">
+                    <v-img height="250" :src="item.image"></v-img>
+
+                    <v-card-title v-text="item.name"></v-card-title>
+                    <v-card-text>
+                      <div>
+                        주요성분: L.sakei Probio65
+                      </div>
+                    </v-card-text>
+
+                    <v-divider class="mx-4"></v-divider>
+
+                    <v-card-text>
+                      <v-chip-group
+                        v-model="selection"
+                        active-class="deep-purple accent-4 white--text"
+                        column
+                      >
+                        <v-chip color="blue lighten-4">수분</v-chip>
+                        <v-chip>민감성</v-chip>
+                      </v-chip-group>
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+              </v-layout>
             </v-col>
-            <v-col cols="2"></v-col>
+            <v-col cols="1"></v-col>
           </v-row>
           <v-row>
             <v-col cols="2"></v-col>
@@ -48,6 +164,45 @@ export default {
   name: "product",
   data() {
     return {
+      dialog: false,
+      itemlist: [
+        {
+          name: "토트랑 피부유산균키즈",
+          image:
+            "https://shopping-phinf.pstatic.net/main_8245820/82458207022.5.jpg",
+          ingredient: "L.sakei Probio65",
+        },
+        {
+          name: "에버콜라겐 인앤업비오틴 셀",
+          image:
+            "https://shopping-phinf.pstatic.net/main_2066453/20664531803.20201126141751.jpg",
+          ingredient: "L-아스코브산나트륨,비오틴,산화아연",
+        },
+        {
+          name: "면역엔 알로에 스틱",
+          image:
+            "https://shopping-phinf.pstatic.net/main_2678831/26788316525.20210420154532.jpg",
+          ingredient: "비타민B1질산염,비타민 B6 염산염",
+        },
+        {
+          name: "면역근원 베타글루칸",
+          image:
+            "https://shopping-phinf.pstatic.net/main_8245820/82458207022.5.jpg",
+          ingredient: "베타글루칸분말",
+        },
+        {
+          name: "뉴트리키즈 비타민 무기질",
+          image:
+            "https://shopping-phinf.pstatic.net/main_1693687/16936874310.1.jpg",
+          ingredient: "비타민 B6 염산염,비타민 C",
+        },
+        {
+          name: "헬스원 멀티비타민 포 우먼",
+          image:
+            "https://shopping-phinf.pstatic.net/main_8302185/83021855448.jpg",
+          ingredient: "판토텐산칼슘,비타민E혼합제제",
+        },
+      ],
       search: "",
       headers: [
         {
