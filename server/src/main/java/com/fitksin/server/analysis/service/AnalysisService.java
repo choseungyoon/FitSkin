@@ -1,2 +1,4 @@
-package com.fitksin.server.analysis.service;public class AnalysisService {
+package com.fitksin.server.analysis.service;
+
+public interface AnalysisService {
 }

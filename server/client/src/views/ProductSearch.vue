@@ -6,6 +6,165 @@
           <v-row>
             <v-col cols="1"></v-col>
             <v-col cols="10">
+              <v-row justify="center">
+                <v-col class="text-right">
+                  <v-dialog
+                    v-model="dialog"
+                    persistent
+                    max-width="600px"
+                    ref="form"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                        Add Product
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">New Product</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="12" md="12">
+                              <v-text-field
+                                v-model="product.name"
+                                :rules="[
+                                  () => !!name || 'This field is required',
+                                ]"
+                                label="제품명*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="12">
+                              <v-select
+                                v-model="product.ingredientCode"
+                                :items="ingredientCodeList"
+                                :rules="[(v) => !!v || 'Item is required']"
+                                label="성분 분류코드(주성분)*"
+                                chips
+                                required
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                                v-model="product.subIngredient"
+                                label="주성분 외 성분"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6">
+                              <v-text-field
+                                v-model="product.origin"
+                                label="주원료 원산지*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6">
+                              <v-text-field
+                                v-model="product.perContent"
+                                label="1단위당 주성분 함량*"
+                                required
+                                suffix="mg"
+                              ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" sm="3">
+                              <v-text-field
+                                v-model="product.formulation"
+                                label="제형*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" sm="9">
+                              <v-menu
+                                v-model="menu2"
+                                :close-on-content-click="false"
+                                :nudge-right="20"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                              >
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-text-field
+                                    v-model="product.registeredDate"
+                                    label="건기식 인증*"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                  v-model="product.registeredDate"
+                                  @input="menu2 = false"
+                                ></v-date-picker>
+                              </v-menu>
+                            </v-col>
+
+                            <v-col cols="12" sm="4">
+                              <v-text-field
+                                v-model="product.price"
+                                label="가격*"
+                                required
+                                suffix="원"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                              <v-text-field
+                                v-model="product.totalVolume"
+                                label="제품 총 용량*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                              <v-text-field
+                                v-model="product.dayVolume"
+                                label="1일 용량*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="12">
+                              <v-text-field
+                                v-model="product.image"
+                                label="Image"
+                                prefix="URL"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="12">
+                              <v-text-field
+                                v-model="product.etcIngredient"
+                                label="기타 첨가물(상위 5개)"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="12">
+                              <v-textarea
+                                v-model="product.description"
+                                clear-icon="mdi-close-circle"
+                                label="Description"
+                              ></v-textarea>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                        <small>*indicates required field</small>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialog = false"
+                        >
+                          Close
+                        </v-btn>
+                        <v-btn color="blue darken-1" text @click="submit">
+                          Save
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-col>
+              </v-row>
               <v-card-title>
                 <v-text-field
                   v-model="search"
@@ -15,94 +174,6 @@
                   hide-details
                 ></v-text-field>
               </v-card-title>
-              <v-row justify="center">
-                <v-dialog v-model="dialog" persistent max-width="600px">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                      Open Dialog
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="text-h5">User Profile</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              label="Legal first name*"
-                              required
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              label="Legal middle name"
-                              hint="example of helper text only on focus"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              label="Legal last name*"
-                              hint="example of persistent helper text"
-                              persistent-hint
-                              required
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Email*"
-                              required
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Password*"
-                              type="password"
-                              required
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <v-select
-                              :items="['0-17', '18-29', '30-54', '54+']"
-                              label="Age*"
-                              required
-                            ></v-select>
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <v-autocomplete
-                              :items="[
-                                'Skiing',
-                                'Ice hockey',
-                                'Soccer',
-                                'Basketball',
-                                'Hockey',
-                                'Reading',
-                                'Writing',
-                                'Coding',
-                                'Basejump',
-                              ]"
-                              label="Interests"
-                              multiple
-                            ></v-autocomplete>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                      <small>*indicates required field</small>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="dialog = false">
-                        Close
-                      </v-btn>
-                      <v-btn color="blue darken-1" text @click="dialog = false">
-                        Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-row>
-
               <v-layout row wrap>
                 <v-flex
                   v-for="item in itemlist"
@@ -160,11 +231,121 @@
 </template>
 
 <script>
+import ProductService from "../services/productService";
+
 export default {
   name: "product",
   data() {
     return {
       dialog: false,
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+      product: {
+        name: "",
+        ingredientCode: null,
+        subIngredient: "",
+        formulation: "",
+        registeredDate: "",
+        origin: "",
+        perContent: 0,
+        price: 0,
+        totalVolume: 0,
+        dayVolume: 0,
+        image: "",
+        etcIngredient: "",
+        description: "",
+      },
+      ingredientCodeList: [
+        "M1 (히알루론산)",
+        "M2 (비타민B7)",
+        "M3 (세라마이드)",
+        "M3-1 (곤약감자추출물)",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P8-1",
+        "P8-2",
+        "P8-3",
+        "P9",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22",
+        "P23",
+        "P24",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T4-1",
+        "T5",
+        "T5-1",
+        "T6",
+        "T7",
+        "T7-1",
+        "W1",
+        "W1-1",
+        "W1-2",
+        "W1-3",
+        "W1-4",
+        "W1-5",
+        "W2",
+        "W2-1",
+        "W2-2",
+        "W3",
+        "W3-1",
+        "W3-2",
+        "W3-3",
+        "W3-4",
+        "W3-5",
+        "W3-6",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8",
+        "W9",
+        "W10",
+        "W11",
+        "W12",
+        "W13",
+        "W14",
+        "W15",
+        "W16",
+        "W17 (마그네슘)",
+        "W18 (알로에베라분말)",
+      ],
       itemlist: [
         {
           name: "토트랑 피부유산균키즈",
@@ -304,6 +485,19 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    submit() {
+      console.log(this.product);
+      ProductService.insertProduct(this.product)
+        .then((response) => {
+          this.dialog = false;
+        })
+        .catch((err) => {
+          alert("Sorry for fail");
+          console.log(err);
+        });
+    },
   },
 };
 </script>
