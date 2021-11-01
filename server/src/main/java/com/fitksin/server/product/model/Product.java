@@ -42,7 +42,7 @@ public class Product {
     private String origin;
 
     @Column(name = "perContent")
-    private int perContent;
+    private double perContent;
 
     @Column(name = "price")
     private int price;
@@ -53,7 +53,7 @@ public class Product {
     @Column(name = "dayVolume")
     private int dayVolume;
 
-    @Column(name = "image")
+    @Column(name = "image" ,columnDefinition = "LONGTEXT")
     private String image;
 
     @Column(name = "etcIngredient")

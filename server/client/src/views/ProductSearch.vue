@@ -15,7 +15,13 @@
                     ref="form"
                   >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      <v-btn
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="clearAll"
+                      >
                         Add Product
                       </v-btn>
                     </template>
@@ -29,9 +35,6 @@
                             <v-col cols="12" sm="12" md="12">
                               <v-text-field
                                 v-model="product.name"
-                                :rules="[
-                                  () => !!name || 'This field is required',
-                                ]"
                                 label="제품명*"
                                 required
                               ></v-text-field>
@@ -65,6 +68,7 @@
                                 label="1단위당 주성분 함량*"
                                 required
                                 suffix="mg"
+                                type="number"
                               ></v-text-field>
                             </v-col>
 
@@ -108,6 +112,7 @@
                                 label="가격*"
                                 required
                                 suffix="원"
+                                type="number"
                               ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="4">
@@ -115,12 +120,14 @@
                                 v-model="product.totalVolume"
                                 label="제품 총 용량*"
                                 required
+                                type="number"
                               ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="4">
                               <v-text-field
                                 v-model="product.dayVolume"
                                 label="1일 용량*"
+                                type="number"
                                 required
                               ></v-text-field>
                             </v-col>
@@ -388,6 +395,21 @@ export default {
     };
   },
   methods: {
+    clearAll() {
+      (this.product.name = ""),
+        (this.product.ingredientCode = null),
+        (this.product.subIngredient = ""),
+        (this.product.formulation = ""),
+        (this.product.registeredDate = ""),
+        (this.product.origin = ""),
+        (this.product.perContent = 0),
+        (this.product.price = 0),
+        (this.product.totalVolume = 0),
+        (this.product.dayVolume = 0),
+        (this.product.image = ""),
+        (this.product.etcIngredient = ""),
+        (this.product.description = "");
+    },
     submit() {
       console.log(this.product);
       ProductService.insertProduct(this.product)
