@@ -206,8 +206,7 @@
                         active-class="deep-purple accent-4 white--text"
                         column
                       >
-                        <v-chip color="blue lighten-4">수분</v-chip>
-                        <v-chip>민감성</v-chip>
+                        <v-chip color="blue lighten-4">{{ item.index }}</v-chip>
                       </v-chip-group>
                     </v-card-text>
                   </v-card>
@@ -279,10 +278,29 @@ export default {
         ref.itemlist = [];
 
         response.data.forEach(function(element) {
+          var index;
+          switch (element.ingredientCode.charAt(0)) {
+            case "M":
+              index = "보습";
+              break;
+            case "P":
+              index = "색소침착";
+              break;
+            case "R":
+              index = "민감성";
+              break;
+            case "T":
+              index = "트러블 완화";
+              break;
+            case "W":
+              index = "탄력";
+              break;
+          }
           ref.itemlist.push({
             name: element.name,
             image: element.image,
             ingredient: element.ingredientCode,
+            index: index,
           });
         });
       })
@@ -335,10 +353,29 @@ export default {
           ref.itemlist = [];
 
           response.data.forEach(function(element) {
+            var index;
+            switch (element.ingredientCode.charAt(0)) {
+              case "M":
+                index = "보습";
+                break;
+              case "P":
+                index = "색소침착";
+                break;
+              case "R":
+                index = "민감성";
+                break;
+              case "T":
+                index = "트러블 완화";
+                break;
+              case "W":
+                index = "탄력";
+                break;
+            }
             ref.itemlist.push({
               name: element.name,
               image: element.image,
               ingredient: element.ingredientCode,
+              index: index,
             });
           });
         })
