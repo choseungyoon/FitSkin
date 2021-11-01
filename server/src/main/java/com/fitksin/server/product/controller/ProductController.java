@@ -22,10 +22,10 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping(value = "")
     public List<Product> getProductList(@RequestParam String param){
         return this.productService.getProductList(param);
     }
-
 
     @PostMapping(value = "")
     public Result insertProduct(@RequestBody final Product product){

@@ -20,7 +20,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getProductList(String param){
-        return null;
+        try {
+            return this.productRepository.findByNameContaining(param);
+        }
+        catch (Exception ex){
+            return null;
+        }
     }
 
     @Override
