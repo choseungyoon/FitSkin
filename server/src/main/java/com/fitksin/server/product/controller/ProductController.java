@@ -27,6 +27,11 @@ public class ProductController {
         return this.productService.getProductList(param);
     }
 
+    @GetMapping(value = "/all")
+    public List<Product> getProductAll(){
+        return this.productService.getProductAll();
+    }
+
     @PostMapping(value = "")
     public Result insertProduct(@RequestBody final Product product){
         log.info("param : " + product.getName());
@@ -36,4 +41,14 @@ public class ProductController {
         );
         return result;
     }
+
+    @GetMapping(value = "/ingredient")
+    public Result getIngredientAll(){
+        Result result = Result.successInstance();
+        result.setData(
+                this.productService.getIngredientAll()
+        );
+        return result;
+    }
+
 }
