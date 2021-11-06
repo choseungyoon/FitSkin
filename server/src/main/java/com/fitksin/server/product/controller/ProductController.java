@@ -22,7 +22,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/search")
     public List<Product> getProductList(@RequestParam String param){
         return this.productService.getProductList(param);
     }
@@ -32,12 +32,32 @@ public class ProductController {
         return this.productService.getProductAll();
     }
 
+    @GetMapping(value = "")
+    public Result getProduct(@RequestParam String id){
+        log.info("param : " + id);
+        Result result = Result.successInstance();
+        result.setData(
+                this.productService.getProduct(id)
+        );
+        return result;
+    }
+
     @PostMapping(value = "")
     public Result insertProduct(@RequestBody final Product product){
         log.info("param : " + product.getName());
         Result result = Result.successInstance();
         result.setData(
                 this.productService.insertProduct(product)
+        );
+        return result;
+    }
+
+    @PutMapping(value = "")
+    public Result updateProduct(@RequestBody final Product product){
+        log.info("param : " + product.getName());
+        Result result = Result.successInstance();
+        result.setData(
+                this.productService.updateProduct(product)
         );
         return result;
     }

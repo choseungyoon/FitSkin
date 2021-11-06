@@ -20,14 +20,14 @@
                         dark
                         v-bind="attrs"
                         v-on="on"
-                        @click="clearAll"
+                        @click="editProduct(0)"
                       >
                         Add Product
                       </v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
-                        <span class="text-h5">New Product</span>
+                        <span class="text-h5">{{ dialogName }}</span>
                       </v-card-title>
                       <v-card-text>
                         <v-container>
@@ -184,13 +184,18 @@
               </v-card-title>
               <v-layout row wrap>
                 <v-flex
-                  v-for="item in itemlist"
+                  v-for="item in paginatedData"
                   :key="item.itemId"
                   xs12
                   md6
                   lg3
                 >
-                  <v-card class="mx-auto my-5" max-width="250" width="95%">
+                  <v-card
+                    class="mx-auto my-5"
+                    max-width="250"
+                    width="95%"
+                    @click.stop="editProduct(item.id)"
+                  >
                     <v-img height="250" :src="item.image"></v-img>
 
                     <v-card-title v-text="item.name"></v-card-title>
@@ -215,6 +220,32 @@
             </v-col>
             <v-col cols="1"></v-col>
           </v-row>
+          <v-row>
+            <v-col cols="4"></v-col>
+            <v-col cols="4">
+              <div class="btn-cover" style="text-align: center;">
+                <v-btn
+                  :disabled="pageNum === 0"
+                  @click="prevPage"
+                  class="page-btn"
+                >
+                  이전
+                </v-btn>
+                <span class="page-count"
+                  >{{ pageNum + 1 }} / {{ pageCount }} 페이지</span
+                >
+                <v-btn
+                  :disabled="pageNum >= pageCount - 1"
+                  @click="nextPage"
+                  class="page-btn"
+                >
+                  다음
+                </v-btn>
+              </div>
+            </v-col>
+            <v-col cols="4"></v-col>
+          </v-row>
+          <v-row> <br /><br /> </v-row>
           <v-row>
             <v-col cols="2"></v-col>
             <v-col cols="8">
@@ -243,6 +274,7 @@ export default {
   data() {
     return {
       dialog: false,
+      dialogName: "",
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -250,6 +282,7 @@ export default {
       modal: false,
       menu2: false,
       product: {
+        productId: "",
         name: "",
         ingredientCode: null,
         subIngredient: "",
@@ -267,57 +300,88 @@ export default {
       ingredientCodeList: [],
       itemlist: [],
       search: "",
+      pageNum: 0,
+      editId: 0,
     };
+  },
+  props: {
+    pageSize: {
+      type: Number,
+      required: false,
+      default: 12,
+    },
+  },
+  computed: {
+    pageCount() {
+      let listLeng = this.itemlist.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+      if (listLeng % listSize > 0) page += 1;
+
+      /*
+      아니면 page = Math.floor((listLeng - 1) / listSize) + 1;
+      이런식으로 if 문 없이 고칠 수도 있다!
+      */
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.itemlist.slice(start, end);
+    },
   },
   created() {
     var ref = this;
-
-    ProductService.getProductAll()
-      .then((response) => {
-        console.log(response.data);
-        ref.itemlist = [];
-
-        response.data.forEach(function(element) {
-          var index;
-          switch (element.ingredientCode.charAt(0)) {
-            case "M":
-              index = "보습";
-              break;
-            case "P":
-              index = "색소침착";
-              break;
-            case "R":
-              index = "민감성";
-              break;
-            case "T":
-              index = "트러블 완화";
-              break;
-            case "W":
-              index = "탄력";
-              break;
-          }
-          ref.itemlist.push({
-            name: element.name,
-            image: element.image,
-            ingredient: element.ingredientCode,
-            index: index,
-          });
-        });
-      })
-      .catch((err) => {
-        alert("Sorry for fail");
-        console.log(err);
-      });
-
+    this.getAllProduct();
     ProductService.getIngredientAll().then((response) => {
       ref.ingredientCodeList = [];
 
       response.data.data.forEach(function(element) {
-        ref.ingredientCodeList.push(element.code + "(" + element.name + ")");
+        ref.ingredientCodeList.push(element.code);
       });
     });
   },
   methods: {
+    getAllProduct() {
+      var ref = this;
+      ProductService.getProductAll()
+        .then((response) => {
+          console.log(response.data);
+          ref.itemlist = [];
+
+          response.data.forEach(function(element) {
+            var index;
+            switch (element.ingredientCode.charAt(0)) {
+              case "M":
+                index = "보습";
+                break;
+              case "P":
+                index = "색소침착";
+                break;
+              case "R":
+                index = "민감성";
+                break;
+              case "T":
+                index = "트러블 완화";
+                break;
+              case "W":
+                index = "탄력";
+                break;
+            }
+            ref.itemlist.push({
+              id: element.productId,
+              name: element.name,
+              image: element.image,
+              ingredient: element.ingredientCode,
+              index: index,
+            });
+          });
+        })
+        .catch((err) => {
+          alert("Sorry for fail!!!");
+          console.log(err);
+        });
+    },
     clearAll() {
       (this.product.name = ""),
         (this.product.ingredientCode = null),
@@ -335,19 +399,35 @@ export default {
     },
     submit() {
       console.log(this.product);
-      ProductService.insertProduct(this.product)
-        .then((response) => {
-          this.dialog = false;
-        })
-        .catch((err) => {
-          alert("Sorry for fail");
-          console.log(err);
-        });
+      if (this.product.productId == "new") {
+        this.clearAll();
+        ProductService.insertProduct(this.product)
+          .then((response) => {
+            console.log(response.data);
+            this.dialog = false;
+            this.getAllProduct();
+          })
+          .catch((err) => {
+            alert("Sorry for fail");
+            console.log(err);
+          });
+      } else {
+        ProductService.updateProduct(this.product)
+          .then((response) => {
+            console.log(response.data);
+            this.dialog = false;
+            this.getAllProduct();
+          })
+          .catch((err) => {
+            alert("Sorry for fail");
+            console.log(err);
+          });
+      }
     },
     searchProduct(param) {
       console.log(param);
       var ref = this;
-      ProductService.getProduct(param)
+      ProductService.searchProduct(param)
         .then((response) => {
           console.log(response.data);
           ref.itemlist = [];
@@ -384,6 +464,50 @@ export default {
           console.log(err);
         });
     },
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    editProduct(id) {
+      if (id == 0) {
+        this.dialogName = "New Product";
+        this.product.productId = "new";
+      } else {
+        this.dialogName = "Edit Product";
+        this.editId = id;
+        console.log("id : " + id);
+        ProductService.getProduct(id)
+          .then((response) => {
+            console.log(response.data);
+            this.product.productId = response.data.data.productId;
+            this.product.name = response.data.data.name;
+            this.product.image = response.data.data.image;
+            this.product.ingredientCode = response.data.data.ingredientCode;
+            this.product.formulation = response.data.data.formulation;
+            this.product.registeredDate = response.data.data.registeredDate;
+            this.product.origin = response.data.data.origin;
+            this.product.perContent = response.data.data.perContent;
+            this.product.price = response.data.data.price;
+            this.product.totalVolume = response.data.data.totalVolume;
+            this.product.dayVolume = response.data.data.dayVolume;
+            this.product.description = response.data.data.description;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      this.dialog = true;
+    },
   },
 };
 </script>
+
+<style scoped>
+.page-count {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+</style>

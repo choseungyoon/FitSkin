@@ -23,15 +23,34 @@ class ProductService {
   }
 
   updateProduct(data) {
-    return axios.put(API_URL, { product: data });
+    return axios.put(API_URL, {
+      productId: data.productId,
+      name: data.name,
+      ingredientCode: data.ingredientCode,
+      subIngredient: data.subIngredient,
+      formulation: data.formulation,
+      registeredDate: data.registeredDate,
+      origin: data.origin,
+      perContent: data.perContent,
+      price: data.price,
+      totalVolume: data.totalVolume,
+      dayVolume: data.dayVolume,
+      image: data.image,
+      etcIngredient: data.etcIngredient,
+      description: data.description,
+    });
   }
 
   deleteProduct(data) {
     return axios.delete(API_URL, { id: data });
   }
 
+  searchProduct(data) {
+    return axios.get(API_URL + `/search?param=${data}`);
+  }
+
   getProduct(data) {
-    return axios.get(API_URL + `?param=${data}`);
+    return axios.get(API_URL + `?id=${data}`);
   }
 
   getProductAll() {

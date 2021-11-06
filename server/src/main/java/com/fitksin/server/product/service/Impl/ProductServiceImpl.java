@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -52,10 +53,27 @@ public class ProductServiceImpl implements ProductService{
             return false;
         }
     }
+    @Override
+    public boolean updateProduct(Product product){
+        try {
+            this.productRepository.save(product);
+            return true;
+        }
+        catch (Exception ex){
+            return false;
+        }
+    }
+
+    @Override
+    public Product getProduct(String id){
+        Optional<Product> product = this.productRepository.findById(id);
+        return product.isPresent() ? product.get() : null;
+    }
 
     @Override
     public List<Ingredient> getIngredientAll(){
         return this.ingredientRepository.findAll();
     }
+
 
 }

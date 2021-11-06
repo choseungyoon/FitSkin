@@ -9,8 +9,10 @@ public interface ProductService {
     List<Product> getProductList(String param);
 
     boolean insertProduct(Product product);
-
+    boolean updateProduct(Product product);
     List<Product> getProductAll();
+
+    Product getProduct(String id);
 
     List<Ingredient> getIngredientAll();
 }

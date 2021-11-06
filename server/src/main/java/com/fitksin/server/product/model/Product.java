@@ -1,6 +1,4 @@
 package com.fitksin.server.product.model;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +17,8 @@ import java.util.Date;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "productId")
+    private String productId;
 
     @Column(name = "name")
     private String name;
@@ -28,8 +26,8 @@ public class Product {
     @Column(name = "ingredientCode")
     private String ingredientCode;
 
-    @Column(name = "subIngredient")
-    private String subIngredient;
+    //@Column(name = "subIngredient")
+    //private String subIngredient;
 
     @Column(name = "formulation")
     private String formulation;
@@ -55,10 +53,13 @@ public class Product {
     @Column(name = "image" ,columnDefinition = "LONGTEXT")
     private String image;
 
-    @Column(name = "etcIngredient")
-    private String etcIngredient;
+    //@Column(name = "etcIngredient")
+    //private String etcIngredient;
 
     @Column(name = "description")
     private String description;
+
+    @Column(name ="unit")
+    private String unit;
 
 }

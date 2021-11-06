@@ -415,9 +415,6 @@ public class SurveyServiceImpl implements SurveyService {
                 }
             }
 
-
-
-
             // look_pore
             log.info("Confirm look pore");
             sebum+=Integer.parseInt(resultJson.get("look_pore").toString().split("_")[1]);
