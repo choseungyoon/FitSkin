@@ -2,6 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 const API_URL = "http://34.64.253.121:9000/api/product";
+//const API_URL = "http://localhost:9000/api/product";
 
 class ProductService {
   insertProduct(data) {
@@ -57,8 +58,15 @@ class ProductService {
     return axios.get(API_URL + "/all");
   }
 
+  getProductByIndex(data) {
+    return axios.get(API_URL + `/search/index?index=${data}`);
+  }
+
   getIngredientAll() {
     return axios.get(API_URL + "/ingredient");
+  }
+  recommendIngredient(data) {
+    return axios.get(API_URL + `/ingredient/recommend?index=${data}`);
   }
 }
 

@@ -33,7 +33,7 @@ while True:
             continue
         if(json_obj['items'][0]["category1"] in category) :
             #print(value[0] + "\t" + value[1] + "\t" + value[2] + "\t" + json_obj['items'][0]["link"]+ "\t" + json_obj['items'][0]["image"]) # prints the string with 'source_name' key
-            print(num)
+            print(json_obj)
             num = num + 1
             w.write(value[0] + "\t" + value[1] + "\t" + value[2] + "\t" + json_obj['items'][0]["link"]+ "\t" + json_obj['items'][0]["image"]+"\n")
     else:

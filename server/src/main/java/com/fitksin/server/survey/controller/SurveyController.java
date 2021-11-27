@@ -1,26 +1,16 @@
 package com.fitksin.server.survey.controller;
 
-import com.fitksin.server.auth.security.jwt.JwtUtils;
 import com.fitksin.server.common.domain.Result;
-import com.fitksin.server.survey.domain.*;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
-@CrossOrigin(origins = "https://fitskin.loca.lt")
 @RestController
 @RequestMapping("/api/survey")
 public class SurveyController {

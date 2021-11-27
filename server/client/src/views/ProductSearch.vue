@@ -452,11 +452,13 @@ export default {
                 break;
             }
             ref.itemlist.push({
+              id: element.productId,
               name: element.name,
               image: element.image,
               ingredient: element.ingredientCode,
               index: index,
             });
+            console.log(ref.itemlist);
           });
         })
         .catch((err) => {

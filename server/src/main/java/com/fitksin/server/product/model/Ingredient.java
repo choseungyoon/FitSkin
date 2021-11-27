@@ -24,4 +24,25 @@ public class Ingredient {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name="moisturizing")
+    private int moisturizing;
+
+    @Column(name="sebum")
+    private int sebum;
+
+    @Column(name="sensitivity")
+    private int sensitivity;
+
+    @Column(name="elasticity")
+    private int elasticity;
+
+    @Column(name="pigmentation")
+    private int pigmentation;
+
+    @Column(name="trouble")
+    private int trouble;
+
 }

@@ -1,6 +1,7 @@
 package com.fitksin.server.product.controller;
 
 import com.fitksin.server.common.domain.Result;
+import com.fitksin.server.product.model.Ingredient;
 import com.fitksin.server.product.model.Product;
 import com.fitksin.server.product.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,16 @@ public class ProductController {
     @GetMapping(value = "/all")
     public List<Product> getProductAll(){
         return this.productService.getProductAll();
+    }
+
+    @GetMapping(value = "/search/index")
+    public List<Product> getProductByIndex(@RequestParam String index){
+        return this.productService.getProductByIndex(index);
+    }
+
+    @GetMapping(value = "/ingredient/recommend")
+    public List<Ingredient> recommendIngredient(@RequestParam String index){
+        return this.productService.getIngredientByCode(index);
     }
 
     @GetMapping(value = "")

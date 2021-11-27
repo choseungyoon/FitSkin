@@ -32,6 +32,9 @@ public class SurveyResult {
     private int age;
 
     @NotBlank
+    private int total;
+
+    @NotBlank
     private int moisturizing;
 
     @NotBlank
@@ -53,10 +56,11 @@ public class SurveyResult {
     private LocalDateTime createdAt;
 
     @Builder
-    public SurveyResult(String email, @NotBlank boolean sex, @NotBlank int age, @NotBlank int moisturizing, @NotBlank int sebum, @NotBlank int sensitivity, @NotBlank int elasticity, @NotBlank int pigmentation, @NotBlank int trouble) {
+    public SurveyResult(String email, @NotBlank boolean sex, @NotBlank int age,@NotBlank int total ,@NotBlank int moisturizing, @NotBlank int sebum, @NotBlank int sensitivity, @NotBlank int elasticity, @NotBlank int pigmentation, @NotBlank int trouble) {
         this.email = email;
         this.sex = sex;
         this.age = age;
+        this.total = total;
         this.moisturizing = moisturizing;
         this.sebum = sebum;
         this.sensitivity = sensitivity;

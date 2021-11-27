@@ -16,6 +16,14 @@ class SurveyDataService {
   getAllResult(data) {
     return http.get(`/survey/result/all?email=${data}`);
   }
+
+  getBestIndex(data) {
+    return http.get(`/analysis/index/best?id=${data}`);
+  }
+
+  getWorstIndex(data) {
+    return http.get(`/analysis/index/worst?id=${data}`);
+  }
 }
 
 export default new SurveyDataService();

@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService{
             return false;
         }
     }
+
     @Override
     public boolean updateProduct(Product product){
         try {
@@ -71,9 +72,57 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> getProductByIndex(String index){
+        if(index.equals("피부보습")){
+            index = "M";
+        }
+        else if(index.equals("피부 색소침착")){
+            index = "P";
+        }
+        else if(index.equals("피부민감성")){
+            //index = "R";
+            index = "";
+        }
+        else if(index.equals("피부 트러블빈도")){
+            index = "T";
+        }
+        else if(index.equals("피부탄력")){
+            index = "W";
+        }
+        else{
+            index = "";
+        }
+
+        return this.productRepository.findTop5ByIngredientCodeContains(index);
+    }
+
+    @Override
     public List<Ingredient> getIngredientAll(){
         return this.ingredientRepository.findAll();
     }
 
+    @Override
+    public List<Ingredient> getIngredientByCode(String index){
+        if(index.equals("피부보습")){
+            index = "M";
+        }
+        else if(index.equals("피부 색소침착")){
+            index = "P";
+        }
+        else if(index.equals("피부민감성")){
+            //index = "R";
+            index = "";
+        }
+        else if(index.equals("피부 트러블빈도")){
+            index = "T";
+        }
+        else if(index.equals("피부탄력")){
+            index = "W";
+        }
+        else{
+            index = "";
+        }
+        return this.ingredientRepository.findTop3ByCodeContains(index);
 
+    }
 }
