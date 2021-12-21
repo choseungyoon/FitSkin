@@ -2,13 +2,16 @@ package com.fitksin.server.survey.service.Impl;
 
 import com.fitksin.server.analysis.model.TypeScore;
 import com.fitksin.server.analysis.service.AnalysisService;
+
 import com.fitksin.server.survey.domain.IndexDto;
 import com.fitksin.server.survey.domain.SurveyForm;
 import com.fitksin.server.survey.domain.SurveyResult;
+
 import com.fitksin.server.survey.repository.ResultRepository;
 import com.fitksin.server.survey.repository.SurveyFormRepository;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
 
 @Slf4j
 @Service

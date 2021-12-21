@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://34.64.253.121:9000/api/product'
-// const API_URL = 'http://localhost:9000/api/product'
+// const API_URL = 'http://34.64.253.121:9000/api/product'
+ const API_URL = 'http://localhost:9000/api/product'
 
 class ProductService {
   insertProduct (data) {
@@ -23,7 +23,7 @@ class ProductService {
   }
 
   updateProduct (data) {
-    return axios.put(API_URL, {
+   return axios.put(API_URL, {
       productId: data.productId,
       name: data.name,
       ingredientCode: data.ingredientCode,
@@ -47,7 +47,7 @@ class ProductService {
 
   searchProduct (data) {
     return axios.get(API_URL + `/search?param=${data}`)
-  }
+ }
 
   getProduct (data) {
     return axios.get(API_URL + `?id=${data}`)
@@ -67,7 +67,7 @@ class ProductService {
 
   recommendIngredient (data) {
     return axios.get(API_URL + `/ingredient/recommend?index=${data}`)
-  }
+ }
 }
 
 export default new ProductService()
