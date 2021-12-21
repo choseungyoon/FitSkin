@@ -1,11 +1,14 @@
 package com.fitksin.server.survey.service.Impl;
 
-import com.fitksin.server.survey.domain.*;
+import com.fitksin.server.analysis.model.TypeScore;
+import com.fitksin.server.analysis.service.AnalysisService;
+import com.fitksin.server.survey.domain.IndexDto;
+import com.fitksin.server.survey.domain.SurveyForm;
+import com.fitksin.server.survey.domain.SurveyResult;
 import com.fitksin.server.survey.repository.ResultRepository;
 import com.fitksin.server.survey.repository.SurveyFormRepository;
 import com.fitksin.server.survey.service.SurveyService;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -23,10 +25,16 @@ public class SurveyServiceImpl implements SurveyService {
 
     private final SurveyFormRepository surveyFormRepository;
     private final ResultRepository resultRepository;
+    private final AnalysisService analysisService;
+
     @Autowired
-    public SurveyServiceImpl(SurveyFormRepository surveyFormRepository , ResultRepository resultRepository){
+    public SurveyServiceImpl(
+            SurveyFormRepository surveyFormRepository ,
+            ResultRepository resultRepository,
+            AnalysisService analysisService){
         this.surveyFormRepository = surveyFormRepository;
         this.resultRepository = resultRepository;
+        this.analysisService = analysisService;
     }
 
     @Override
@@ -62,13 +70,15 @@ public class SurveyServiceImpl implements SurveyService {
 
             // sex
             log.info("Confirm sex");
-            if(resultJson.get("sex").toString().equals("true")) sex = true;
-            moisturizing+=1;
-            sebum+=1;
-            sensitivity+=1;
-            elasticity+=1;
-            pigmentation+=1;
-            trouble+=1;
+            if(resultJson.get("sex").toString().equals("true")) {
+                sex = true;
+                moisturizing += 1;
+                sebum += 1;
+                sensitivity += 1;
+                elasticity += 1;
+                pigmentation += 1;
+                trouble += 1;
+            }
 
             // age
             log.info("Confirm Age");
@@ -351,34 +361,8 @@ public class SurveyServiceImpl implements SurveyService {
                 }
 
                 log.info("Confirm how dry");
-                valueType = resultJson.get("how_dry").toString().split("-")[1];
-                for (String val:
-                        valueType.split(",")) {
-                    val = val.trim();
-                    val = val.trim();
-                    String index = val.split("_")[0];
-                    int index_score = Integer.parseInt(val.split("_")[1]);
-                    switch (index) {
-                        case "Moisturizing" :
-                            moisturizing+=index_score;
-                            break;
-                        case "sebum" :
-                            sebum+=index_score;
-                            break;
-                        case "pigmentation" :
-                            pigmentation+=index_score;
-                            break;
-                        case "elasticity" :
-                            elasticity+=index_score;
-                            break;
-                        case "sensitivity" :
-                            sensitivity+=index_score;
-                            break;
-                        case "trouble" :
-                            trouble+=index_score;
-                            break;
-                    }
-                }
+                valueType = resultJson.get("dry").toString();
+                moisturizing+=Integer.parseInt(valueType);
 
                 log.info("Confirm skin worrris");
                 // skin_worry
@@ -415,9 +399,6 @@ public class SurveyServiceImpl implements SurveyService {
                 }
             }
 
-
-
-
             // look_pore
             log.info("Confirm look pore");
             sebum+=Integer.parseInt(resultJson.get("look_pore").toString().split("_")[1]);
@@ -431,35 +412,9 @@ public class SurveyServiceImpl implements SurveyService {
 
             // wrinkle
             log.info("Confirm look wrinkle");
-            valueType = resultJson.get("wrinkle").toString().split("-")[1];
-            for (String val:
-                    valueType.split(",")) {
-                val = val.trim();
-                val = val.trim();
-                String index = val.split("_")[0];
-                int index_score = Integer.parseInt(val.split("_")[1]);
-                switch (index) {
-                    case "Moisturizing" :
-                        moisturizing+=index_score;
-                        break;
-                    case "sebum" :
-                        sebum+=index_score;
-                        break;
-                    case "pigmentation" :
-                        pigmentation+=index_score;
-                        break;
-                    case "elasticity" :
-                        elasticity+=index_score;
-                        break;
-                    case "sensitivity" :
-                        sensitivity+=index_score;
-                        break;
-                    case "trouble" :
-                        trouble+=index_score;
-                        break;
-                }
-            }
-
+            valueType = resultJson.get("wrinkle").toString();
+            elasticity+=Integer.parseInt(valueType);
+            
             if(makeupTimes == 1 || makeupTimes == 2) {
                 sensitivity *= 1.1;
                 trouble *= 1.1;
@@ -471,7 +426,24 @@ public class SurveyServiceImpl implements SurveyService {
                 pigmentation *=0.9;
             }
 
-            SurveyResult surveyResult = this.resultRepository.save( new SurveyResult(email,sex,age,moisturizing,sebum
+            String type = this.analysisService.getType(sex,makeupTimes > 1 ? true : false);
+            TypeScore typeScore = this.analysisService.getTypeScore(type);
+
+            int my = moisturizing + sebum + sensitivity + elasticity + pigmentation + trouble;
+            int standard = typeScore.getMoisturizing() + typeScore.getSebum() + typeScore.getSensitivity() +
+                    typeScore.getElasticity() + typeScore.getPigmentation() + typeScore.getTrouble();
+
+            int total = getScore(my, standard);
+
+            moisturizing    = getScore(moisturizing, typeScore.getMoisturizing());
+            sebum           = getScore(sebum, typeScore.getSebum());
+            sensitivity     = getScore(sensitivity, typeScore.getSensitivity());
+            elasticity      = getScore(elasticity, typeScore.getElasticity());
+            pigmentation    = getScore(pigmentation, typeScore.getPigmentation());
+            trouble         = getScore(trouble, typeScore.getTrouble());
+
+            SurveyResult surveyResult = this.resultRepository.save(
+                    new SurveyResult(email,sex,age,total,moisturizing,sebum
                     ,sensitivity,elasticity,pigmentation,trouble));
 
             return surveyResult.getId();
@@ -481,6 +453,9 @@ public class SurveyServiceImpl implements SurveyService {
         }
     }
 
+    private int getScore(int value , int index){
+        return  (int)((((float)index - (float)value) / (float)index) * 100);
+    }
     @Override
     public JSONArray selectResult(UUID id){
         try{
@@ -489,6 +464,7 @@ public class SurveyServiceImpl implements SurveyService {
             JSONArray series = new JSONArray();
             JSONObject myResult = new JSONObject();
             myResult.put("name" , "you");
+            myResult.put("total",result.getTotal());
             int[] myResult_score = {
                     result.getMoisturizing(),
                     result.getSebum(),
@@ -498,30 +474,52 @@ public class SurveyServiceImpl implements SurveyService {
                     result.getTrouble()};
             myResult.put("data" , myResult_score);
 
-            JSONObject sexAvg = new JSONObject();
-
-            if(result.isSex()) {
-                sexAvg.put("name" , "여성 평균");}
-            else {
-                sexAvg.put("name" , "남성 평균");
-            }
-            int[] sexAvg_score = {10, 14, 17, 10, 8, 19};
-            sexAvg.put("data" , sexAvg_score);
-
-            JSONObject ageAvg = new JSONObject();
-            ageAvg.put("name" , result.getAge()/10 + "0대 평균");
-            int[] ageAvg_score = {12, 8, 10, 24, 6, 14};
-            ageAvg.put("data" , ageAvg_score);
-
             series.add(myResult);
-            series.add(sexAvg);
-            series.add(ageAvg);
+            series.add(getSexScore(result.isSex()));
+            series.add(getScoreByAGE(result.getAge()/10));
             return series;
         }
         catch (Exception ex){
             return null;
         }
     }
+
+    private JSONObject getSexScore(boolean sex){
+        JSONObject sexAvg = new JSONObject();
+
+        IndexDto sexScore = this.resultRepository.selectAverageScoreBySex(sex);
+
+        sexAvg.put("data", new int[] {
+                sexScore.getMoisturizing(),
+                sexScore.getSebum(),
+                sexScore.getSensitivity(),
+                sexScore.getElasticity(),
+                sexScore.getPigmentation(),
+                sexScore.getTrouble()});
+
+        if(sex) sexAvg.put("name","여성 평균");
+        else sexAvg.put("name","남성 평균");
+
+        return sexAvg;
+    }
+    private JSONObject getScoreByAGE(int age){
+        JSONObject ageAvg = new JSONObject();
+
+        IndexDto sexScore = this.resultRepository.selectAverageScoreByAge(age*10 , (age+1)*10);
+
+        ageAvg.put("data", new int[] {
+                sexScore.getMoisturizing(),
+                sexScore.getSebum(),
+                sexScore.getSensitivity(),
+                sexScore.getElasticity(),
+                sexScore.getPigmentation(),
+                sexScore.getTrouble()});
+
+        ageAvg.put("name" , age + "0대 평균");
+
+        return ageAvg;
+    }
+
 
     public JSONArray selectResultAll(String email){
 
@@ -531,6 +529,7 @@ public class SurveyServiceImpl implements SurveyService {
         for (SurveyResult result:
              results) {
             JSONObject survey = new JSONObject();
+            survey.put("total",result.getTotal());
             survey.put("date",result.getCreatedAt());
             survey.put("moisturizing",result.getMoisturizing());
             survey.put("sebum",result.getSebum());
@@ -543,5 +542,4 @@ public class SurveyServiceImpl implements SurveyService {
         }
         return allSurvey;
     }
-
 }

@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Resources ###
+src/main/resources/

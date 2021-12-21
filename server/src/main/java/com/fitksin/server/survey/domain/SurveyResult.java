@@ -2,6 +2,7 @@ package com.fitksin.server.survey.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class SurveyResult {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Nullable
     private String email;
 
     @NotBlank
@@ -30,6 +32,9 @@ public class SurveyResult {
 
     @NotBlank
     private int age;
+
+    @Nullable
+    private int total;
 
     @NotBlank
     private int moisturizing;
@@ -49,14 +54,15 @@ public class SurveyResult {
     @NotBlank
     private int trouble;
 
-    @NotBlank
+    @Nullable
     private LocalDateTime createdAt;
 
     @Builder
-    public SurveyResult(String email, @NotBlank boolean sex, @NotBlank int age, @NotBlank int moisturizing, @NotBlank int sebum, @NotBlank int sensitivity, @NotBlank int elasticity, @NotBlank int pigmentation, @NotBlank int trouble) {
+    public SurveyResult(String email, @NotBlank boolean sex, @NotBlank int age,@NotBlank int total ,@NotBlank int moisturizing, @NotBlank int sebum, @NotBlank int sensitivity, @NotBlank int elasticity, @NotBlank int pigmentation, @NotBlank int trouble) {
         this.email = email;
         this.sex = sex;
         this.age = age;
+        this.total = total;
         this.moisturizing = moisturizing;
         this.sebum = sebum;
         this.sensitivity = sensitivity;
@@ -64,6 +70,15 @@ public class SurveyResult {
         this.pigmentation = pigmentation;
         this.trouble = trouble;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public SurveyResult(int moisturizing, int sebum, int sensitivity, int elasticity, int pigmentation, int trouble) {
+        this.moisturizing = moisturizing;
+        this.sebum = sebum;
+        this.sensitivity = sensitivity;
+        this.elasticity = elasticity;
+        this.pigmentation = pigmentation;
+        this.trouble = trouble;
     }
 
 }

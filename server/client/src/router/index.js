@@ -1,84 +1,92 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import MainGrid from "../views/MainGrid";
-import Home from "../views/Home.vue";
-import MyProduct from "../views/MyProduct.vue";
-import SurveyComponent from "../components/SurveyComponent";
-import SkinReport from "../views/SkinReport";
-import Login from "../components/Login";
-import Register from "../components/Register";
-import ProductSearch from "../views/ProductSearch";
+// Imports
+import Vue from 'vue'
+import Router from 'vue-router'
 
-Vue.use(VueRouter);
+Vue.use(Router)
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: MainGrid,
-    meta: {
-      title: "Fitskin",
-    },
-    children: [
-      {
-        path: "/",
-        name: "home",
-        component: Home,
-      },
-      {
-        path: "/product/my",
-        name: "MyProduct",
-        component: MyProduct,
-      },
-      {
-        path: "/customer_profile/skin_analysis/:id",
-        name: "SkinReport",
-        component: SkinReport,
-      },
-      {
-        path: "/profile",
-        name: "profile",
-        // lazy-loaded
-        component: () => import("@/components/Profile.vue"),
-      },
-      {
-        path: "/product",
-        name: "ProductSearch",
-        component: ProductSearch,
-      },
-    ],
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-
-  {
-    path: "/survey",
-    name: "SURVEY",
-    component: SurveyComponent,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-  },
-];
-
-const router = new VueRouter({
-  mode: "history",
+const router = new Router({
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  scrollBehavior: (to, from, savedPosition) => {
+    if (to.hash) return { selector: to.hash }
+    if (savedPosition) return savedPosition
 
-export default router;
+    return { x: 0, y: 0 }
+  },
+  routes: [
+    {
+      path: '/survey',
+      name: '피부 비타민 추천',
+      component: () => import('@/views/sections/Survey.vue'),
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/login/Login.vue'),
+    },
+    {
+      path: '/kakaologin',
+      name: 'Signup',
+      component: () => import('@/views/login/Signup.vue'),
+    },
+    {
+      path: '/',
+      component: () => import('@/layouts/base/Index.vue'),
+      children: [
+        {
+          path: '',
+          name: 'Home',
+          component: () => import('@/views/home/Index.vue'),
+        },
+        {
+          path: 'about',
+          name: 'About',
+          component: () => import('@/views/about/Index.vue'),
+        },
+        {
+          path: 'services',
+          name: 'Services',
+          component: () => import('@/views/services/Index.vue'),
+        },
+        {
+          path: 'dna',
+          name: '유전자검사',
+          component: () => import('@/views/not-found/Index.vue'),
+        },
+        {
+          path: 'project/:id',
+          name: 'ProjectDetail',
+          props: true,
+          component: () => import('@/views/portfolio/Detail.vue'),
+        },
+        {
+          path: 'blog',
+          name: 'Store',
+          component: () => import('@/views/not-found/Index.vue'),
+        },
+        {
+          path: 'contact',
+          name: 'Contact',
+          component: () => import('@/views/contact/Index.vue'),
+        },
+        {
+          path: 'sink',
+          name: 'Sink',
+          component: () => import('@/views/sink/Index.vue'),
+        },
+        {
+          path: 'skin_analysis/:id',
+          name: 'Analysis',
+          component: () => import('@/views/sections/Analysis.vue'),
+        },
+        {
+          path: '*',
+          name: 'NotFound',
+          component: () => import('@/views/not-found/Index.vue'),
+        },
+      ],
+    },
+  ],
+})
+
+export default router

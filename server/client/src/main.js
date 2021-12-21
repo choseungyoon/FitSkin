@@ -1,38 +1,20 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import vuetify from "./plugins/vuetify";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import VueApexChart from "vue-apexcharts";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import VeeValidate from "vee-validate";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faHome,
-  faUser,
-  faUserPlus,
-  faSignInAlt,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import vuetify from './plugins/vuetify'
+import './plugins'
+import appData from './mixins/app-data'
+import '@/assets/login/styles.scss'
+import store from './store'
 
-Vue.config.productionTip = false;
+window.Kakao.init('73975ad30e810c26b2acbec57717d536')
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
-
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
-Vue.use(VueApexChart);
-Vue.use(VeeValidate);
-
-Vue.component("apexchart", VueApexChart);
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.mixin(appData)
+Vue.config.productionTip = false
 
 new Vue({
-  vuetify,
   router,
+  vuetify,
   store,
-  render: (h) => h(App),
-}).$mount("#app");
+  render: h => h(App),
+}).$mount('#app')

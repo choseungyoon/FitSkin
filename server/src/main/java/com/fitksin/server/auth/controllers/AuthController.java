@@ -1,12 +1,5 @@
 package com.fitksin.server.auth.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
 import com.fitksin.server.auth.models.ERole;
 import com.fitksin.server.auth.models.Role;
 import com.fitksin.server.auth.models.User;
@@ -18,6 +11,7 @@ import com.fitksin.server.auth.repository.RoleRepository;
 import com.fitksin.server.auth.repository.UserRepository;
 import com.fitksin.server.auth.security.jwt.JwtUtils;
 import com.fitksin.server.auth.security.services.UserDetailsImpl;
+import com.fitksin.server.auth.services.KakaoLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,11 +19,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -51,9 +48,14 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    private final KakaoLoginService kakaoLoginService;
+    public AuthController(KakaoLoginService kakaoLogin){
+        this.kakaoLoginService = kakaoLogin;
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+        System.out.println(loginRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -127,4 +129,9 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @GetMapping("/klogin")
+    public HashMap<String,String> kakaoLogin(@RequestParam String authorize_code){
+        String access_token = kakaoLoginService.getAccessToken(authorize_code);
+        return  kakaoLoginService.getUserInfo(access_token);
+    }
 }

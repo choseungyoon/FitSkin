@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -23,5 +24,37 @@ public class Ingredient {
 
     @Column(name = "name")
     private String name;
+
+    @Nullable
+    @Column(name = "description")
+    private String description;
+
+    @Nullable
+    @Column(name = "icon")
+    private String icon;
+
+    @Nullable
+    @Column(name="moisturizing")
+    private int moisturizing;
+
+    @Nullable
+    @Column(name="sebum")
+    private int sebum;
+
+    @Nullable
+    @Column(name="sensitivity")
+    private int sensitivity;
+
+    @Nullable
+    @Column(name="elasticity")
+    private int elasticity;
+
+    @Nullable
+    @Column(name="pigmentation")
+    private int pigmentation;
+
+    @Nullable
+    @Column(name="trouble")
+    private int trouble;
 
 }
