@@ -456,9 +456,18 @@
           console.log(this.analysisScore)
 
           for (var score in this.analysisScore.data) {
+            const title = this.chartOptions.xaxis.categories[score]
+            let icon = ''
+            if (title === '보습') {
+              icon = 'mdi-water-plus'
+            } else if (title === '민감성') {
+              icon = 'mdi-hand-wave'
+            } else {
+              icon = 'icon'
+            }
             this.features.push({
-              icon: 'mdi-flash',
-              title: this.chartOptions.xaxis.categories[score],
+              icon: icon,
+              title: title,
               text: this.analysisScore.data[score].toString() + '점',
             })
             this.pieseries.push(this.analysisScore.data[score])
