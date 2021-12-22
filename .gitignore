@@ -2,7 +2,6 @@
 server/src/main/resources/static/
 server/build/
 clientNew/node_module/
-client/
 
 # Compiled class file
 *.class

@@ -1,0 +1,395 @@
+{
+    "title": "Personalizing",
+    "pages": [
+      {
+       "name": "mainSurvey",
+       "elements": [
+        {
+         "type": "boolean",
+         "name": "sex",
+        "title": "성별이 어떻게 되시나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "여성",
+        "labelFalse": "남성"
+       },
+       {
+        "type": "radiogroup",
+        "name": "makeup_times",
+        "title": "일주일에 화장 빈도가 어떻게 되시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-all_0",
+          "text": "전혀하지 않음"
+         },
+         {
+          "value": "2-all_1",
+          "text": "주1회 이하"
+         },
+         {
+          "value": "3-all_2",
+          "text": "주 2~3회"
+         },
+         {
+          "value": "4-all_3",
+          "text": "주 4~5회"
+         },
+         {
+          "value": "5-all_4",
+          "text": "매일"
+         }
+        ]
+       },
+       {
+        "type": "text",
+        "name": "age",
+        "title": "나이가 어떻게 되시나요?",
+        "isRequired": true,
+        "inputType": "number",
+        "min": "0",
+        "max": "150"
+       },
+       {
+        "type": "boolean",
+        "name": "pregnant",
+        "visibleIf": "{sex} = true",
+        "title": "임신 혹은 임신 이력이 있으신가요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "있어요",
+        "labelFalse": "없어요",
+        "valueTrue": "all_3",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "boolean",
+        "name": "Symptom_menstruation",
+        "visibleIf": "{sex} = true",
+        "title": "생리 전 증후군이 있나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "있어요",
+        "labelFalse": "없어요",
+        "valueTrue": "all_2",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "boolean",
+        "name": "lactation",
+        "visibleIf": "{sex} = true",
+        "title": "수유중이신가요??",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "맞아요",
+        "labelFalse": "아니요",
+        "valueTrue": "all_1",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "radiogroup",
+        "name": "skintype",
+        "title": "평소 피부타입이 어떻다고 느끼시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-Moisturizing_2",
+          "text": "건성"
+         },
+         {
+          "value": "2-Moisturizing_2, sebum_2",
+          "text": "중성"
+         },
+         {
+          "value": "3-sebum_4",
+          "text": "지성"
+         },
+         {
+          "value": "4-Moisturizing_4, sebum_4",
+          "text": "복합성"
+         },
+         {
+          "value": "5-trouble_4",
+          "text": "민감성"
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "outActivity",
+        "title": "하루에 야외활동 정도가 어떻게 되시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-pigmentation_5, elasticity_5",
+          "text": "일상생활 대부분"
+         },
+         {
+          "value": "2-pigmentation_4, elasticity_4",
+          "text": "3시간 이상"
+         },
+         {
+          "value": "3-pigmentation_3, elasticity_3",
+          "text": "2시간 이상"
+         },
+         {
+          "value": "4-pigmentation_2, elasticity_2",
+          "text": "1시간 이상"
+         },
+         {
+          "value": "5-pigmentation_1, elasticity_1",
+          "text": "1시간 이하"
+         },
+         {
+          "value": "6-all_0",
+          "text": "거의 없음"
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "sleep",
+        "title": "평소 수면시간이 어떻게 되시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "all_3",
+          "text": "1~4시간"
+         },
+         {
+          "value": "all_1",
+          "text": "5~7시간"
+         },
+         {
+          "value": "all_0",
+          "text": "8시간 이상"
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "skinAge",
+        "title": "피부 나이는 어느 정도로 보이시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-Moisturizing_5, elasticity_5",
+          "text": "5년 이상 더 들어 보인다"
+         },
+         {
+          "value": "2-Moisturizing_3, elasticity_3",
+          "text": "1~3년 더 들어 보인다"
+         },
+         {
+          "value": "3-Moisturizing_2, elasticity_2",
+          "text": "실제 나이대로 보이는 것 같다"
+         },
+         {
+          "value": "4-Moisturizing_1, elasticity_1",
+          "text": "1~3년 더 어려 보인다"
+         },
+         {
+          "value": "5-all_0",
+          "text": "5년이상 더 어려 보인다"
+         }
+        ]
+       },
+       {
+        "type": "checkbox",
+        "name": "makeupTool",
+        "visibleIf": "{makeup_times} <> '1-all_0'",
+        "title": "피부화장을 한다면 어떤 것을 사용하나요? (중복선택 가능)",
+        "choices": [
+         {
+          "value": "1-sensitivity_1, trouble_1",
+          "text": "선크림"
+         },
+         {
+          "value": "2-sensitivity_2, trouble_2",
+          "text": "베이스"
+         },
+         {
+          "value": "3-sensitivity_3, trouble_3",
+          "text": "파운데이션"
+         },
+         {
+          "value": "4-sensitivity_4, trouble_4",
+          "text": "비비크림"
+         }
+        ]
+       },
+       {
+        "type": "boolean",
+        "name": "smoke",
+        "title": "흡연 하시나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "하고 있어요",
+        "labelFalse": "비흡연이에요",
+        "valueTrue": "all_5",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "checkbox",
+        "name": "eatinghabits",
+        "isRequired": true,
+        "title": "평소 식습관에 해당되면 골라주세요(복수선택 가능)",
+        "choices": [
+         {
+          "value": "1-Moisturizing_3",
+          "text": "음주(주2회이상)"
+         },
+         {
+          "value": "2-sebum_3, sensitivity_3",
+          "text": "규칙적인 식사(하루 3끼)를 하지 못함"
+         },
+         {
+          "value": "3-sebum_3, trouble_3",
+          "text": "패스트푸드 섭취빈도 높음"
+         },
+         {
+          "value": "4-all_0",
+          "text": "없다"
+         }
+        ]
+       },
+       {
+        "type": "radiogroup",
+        "name": "troubleTimes",
+        "title": "여드름 또는 트러블이 얼마나 발생하시나요?",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-sebum_5, trouble_5",
+          "text": "월 1회 이상"
+         },
+         {
+          "value": "2-sebum_3, trouble_3",
+          "text": "격주에 1회 이상"
+         },
+         {
+          "value": "3-sebum_2, trouble_2",
+          "text": "주 1회 이상"
+         },
+         {
+          "value": "4-sebum_1, trouble_1",
+          "text": "없음"
+         }
+        ]
+       },
+       {
+        "type": "boolean",
+        "name": "pigmentation",
+        "visibleIf": "{makeup_times} <> 0",
+        "title": "최근 얼굴이나 피부에 점이나 갈색반점이 생긴적 있나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "있어요",
+        "labelFalse": "없어요",
+        "valueTrue": "pigmentation_5",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "boolean",
+        "name": "makeup_side_effect",
+        "visibleIf": "{makeup_times} <> '1-all_0'",
+        "title": "클렌저, 보습제, 색조화장품, 기타 다른 화장품이 얼굴피부를 돋아 오르게 하거나 발진, 가려움증 혹은 따끔거리는 증상 등을 유발했던 경험이 있나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "있어요",
+        "labelFalse": "없어요",
+        "valueTrue": "trouble_5, sebum_3",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "rating",
+        "title": "세안 후 크림이나 미스트를 사용하지 않았을 때 고객님의 얼굴 상태는 어떻습니까?",
+        "name": "dry",
+        "isRequired": true,
+        "minRateDescription": "윤기가 흐르며, 세안 직후에도 당기지 않는다",
+        "maxRateDescription": "매우 건조한 편이다",
+        "rateMax": 5
+       },
+       {
+        "type": "checkbox",
+        "name": "skin_worry",
+        "visibleIf": "{makeup_times} <> '1-all_0'",
+        "title": "가장 큰 피부 고민은 무엇인가요? (복수선택 가능)",
+        "isRequired": true,
+        "choices": [
+         {
+          "value": "1-Moisturizing_5, sensitivity_5",
+          "text": "각질"
+         },
+         {
+          "value": "2-elasticity_5",
+          "text": "탄력"
+         },
+         {
+          "value": "3-elasticity_5,pigmentation_5",
+          "text": "주름"
+         },
+         {
+          "value": "4-sebum_5",
+          "text": "모공"
+         },
+         {
+          "value": "5-Moisturizing_5,sensitivity_5",
+          "text": "건조함"
+         },
+         {
+          "value": "6-sensitivity_5, trouble_5",
+          "text": "잦은 트러블"
+         },
+         {
+          "value": "7-trouble_5,sebum_5",
+          "text": "여드름"
+         },
+         {
+          "value": "8-Moisturizing_5",
+          "text": "입술 갈라짐"
+         }
+        ],
+        "colCount": 4
+       },
+       {
+        "type": "boolean",
+        "name": "look_pore",
+        "title": "현재 거울을 봤을 때 모공이 눈에 띄게 보이나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "있어요",
+        "labelFalse": "없어요",
+        "valueTrue": "sebum_3",
+        "valueFalse": "all_0"
+       },
+       {
+        "type": "boolean",
+        "name": "look_old",
+        "title": "지금 거울을 봤을 때 피부상태가 현재 나이보다 더 늙어보이나요?",
+        "correctAnswer": true,
+        "isRequired": true,
+        "labelTrue": "맞아요",
+        "labelFalse": "아니요"
+       },
+       {
+        "type": "rating",
+        "title": "얼굴에 주름이 어느 정도로 있는 편인가요?",
+        "name": "wrinkle",
+        "isRequired": true,
+        "minRateDescription": "거의 없는 편이다",
+        "maxRateDescription": "확연히 눈에 띄는 편이다",
+        "rateMax": 5
+       }
+      ]
+     }
+    ],
+    "showCompletedPage": false,
+    "showQuestionNumbers": "off",
+    "showProgressBar": "top",
+    "goNextPageAutomatic": false,
+    "startSurveyText": "Next",
+    "requiredText": "",
+    "questionsOnPageMode": "questionPerPage",
+    "showPreviewBeforeComplete": "showAnsweredQuestions"
+}
