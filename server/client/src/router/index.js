@@ -51,7 +51,7 @@ const router = new Router({
         {
           path: 'dna',
           name: '유전자검사',
-          component: () => import('@/views/not-found/Index.vue'),
+          component: () => import('@/views/dna/Index.vue'),
         },
         {
           path: 'project/:id',
@@ -62,7 +62,9 @@ const router = new Router({
         {
           path: 'blog',
           name: 'Store',
-          component: () => import('@/views/not-found/Index.vue'),
+          beforeEnter () {
+            window.open('https://smartstore.naver.com/likepharm', '_blank')
+          },
         },
         {
           path: 'contact',

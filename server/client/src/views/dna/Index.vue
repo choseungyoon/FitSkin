@@ -8,12 +8,14 @@
   export default {
     name: 'Dna',
 
-    metaInfo: { title: 'Dna' },
+    metaInfo: { title: '유전자 검사' },
 
     extends: View,
 
     mixins: [
       LoadSections([
+        'ready-service',
+        'info',
       ]),
     ],
 

@@ -56,7 +56,7 @@
         width="300px"
         color="white"
         class="primary--text font-weight-bold text-none mr-4 mb-1"
-        href="https://sell.smartstore.naver.com/#/home/about"
+        href="https://smartstore.naver.com/likepharm"
         target="_blank"
       >
         <span v-text="`FitSkin 인증제품 구경하기`" />

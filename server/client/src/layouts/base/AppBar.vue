@@ -24,10 +24,11 @@
         background-color="transparent"
         v-bind="tabAttrs"
       >
+
         <v-tab
           v-for="item in items"
           :key="item.name"
-          :to="{ name: item.name }"
+          :to="{ name: item.link }"
           :exact="item.name === 'Home'"
           :ripple="false"
           active-class="primary--text"
@@ -86,12 +87,12 @@
       return {
         drawer: false,
         items: [
-          { name: 'Home', icon: 'mdi-home' },
-          { name: '피부 비타민 추천', icon: 'mdi-google-analytics' },
-          { name: '유전자검사', icon: 'mdi-dna' },
-          { name: 'Store', icon: 'mdi-store' },
-          { name: 'Contact', icon: 'mdi-phone' },
-          { name: 'Login', icon: 'mdi-login-variant' },
+          { name: 'Home', icon: 'mdi-home', link: 'Home' },
+          { name: '피부 비타민 추천', icon: 'mdi-google-analytics', link: '피부 비타민 추천' },
+          { name: '유전자검사', icon: 'mdi-dna', link: '유전자검사' },
+          { name: 'Store', icon: 'mdi-store', link: 'Store' },
+          { name: 'Contact', icon: 'mdi-phone', link: 'Contact' },
+          { name: 'Login', icon: 'mdi-login-variant', link: 'Login' },
         ],
       }
     },
