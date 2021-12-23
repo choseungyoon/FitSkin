@@ -387,7 +387,7 @@
     "showCompletedPage": false,
     "showQuestionNumbers": "off",
     "showProgressBar": "top",
-    "goNextPageAutomatic": false,
+    "goNextPageAutomatic": true,
     "startSurveyText": "Next",
     "requiredText": "",
     "questionsOnPageMode": "questionPerPage",
