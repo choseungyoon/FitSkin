@@ -25,7 +25,7 @@ const router = new Router({
       component: () => import('@/views/login/Login.vue'),
     },
     {
-      path: '/kakaologin',
+      path: '/signup',
       name: 'Signup',
       component: () => import('@/views/login/Signup.vue'),
     },

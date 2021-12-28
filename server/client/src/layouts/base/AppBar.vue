@@ -6,16 +6,21 @@
     :color="color || 'white'"
     :height="$vuetify.breakpoint.mdAndUp ? '150px' : '60px'"
   >
-    <router-link :to="{ name: 'Home' }">
-      <v-img
-        class="hidden-sm-and-down"
-        :max-width="$vuetify.breakpoint.mdAndUp ? '260px' : '400px'"
-        max-height="70px"
-        min-height="90px"
-        :src="require('@/assets/fitskin-img/fitskin_logo.png')"
+    <v-img
+      class="hidden-sm-and-down"
+      :max-width="$vuetify.breakpoint.mdAndUp ? '120px' : '100px'"
+      max-height="120px"
+      min-height="120px"
+      :src="require('@/assets/fitskin-img/logo.png')"
+    />
+    <v-toolbar-title class="headline">
+      <router-link
+        :to="{ name: 'Home' }"
+        tag="h4"
+        style="cursor: pointer"
+        v-text="appData.title"
       />
-    </router-link>
-
+    </v-toolbar-title>
     <v-spacer />
     <div v-if="$vuetify.breakpoint.mdAndUp">
       <v-tabs

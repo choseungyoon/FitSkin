@@ -78,7 +78,12 @@
             </div>
             <dir><br></dir>
             <div class="text-center">
-              Don't have an account? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="">Sign up</a>
+              Don't have an account? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <router-link
+                to="/signup"
+              >
+                Sign up
+              </router-link>
             </div>
           </v-form>
         </validation-observer>
@@ -134,7 +139,7 @@
       },
       loginWithKakao () {
         const params = {
-          redirectUri: 'http://34.64.253.121:9000/kakaologin',
+          redirectUri: 'http://34.64.253.121:9000/signup',
         }
         window.Kakao.Auth.authorize(params)
       },

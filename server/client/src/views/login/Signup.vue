@@ -142,8 +142,8 @@
             this.form.email = res.data.email
             this.form.password = res.data.id
             if (this.form.password === undefined) {
-              alert('올바르지 못한 접근입니다')
-              this.$router.push('/')
+              // alert('올바르지 못한 접근입니다')
+              // this.$router.push('/')
             } else {
               alert('Email : ' + this.form.email)
               this.login()
@@ -151,6 +151,7 @@
           })
       },
       handleRegister () {
+        alert('ddd')
         this.message = ''
         this.submitted = true
         this.$validator.validate().then((isValid) => {

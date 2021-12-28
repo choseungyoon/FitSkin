@@ -21,7 +21,7 @@
       >
       <div class="justify-center align-center">
         <base-heading
-          title="필요성분 추천 결과"
+          title="FITSKIN 피부진단 결과"
           align="center"
         />
         <base-divider
@@ -139,11 +139,13 @@
             cols="12"
             md="6"
           >
-            <base-body
-              class="font-weight-bold"
-              text="6가지 항목중 --- 의 점수가 가장 낮아요 등등 설명 필요"
-              align="left"
-            />
+            <span class="text-h6 font-weight-black">
+                  나의 피부 종합점수는 {{total}}점이에요
+            </span>
+            <br><br>
+            <span class="text-h6 font-weight-black">
+                  {{analysisMsg}}
+            </span>
           </v-col>
         </v-row>
         <v-row>
@@ -409,7 +411,7 @@
         products: [],
         chartOptions2: {
           chart: {
-            height: 350,
+            height: 300,
             type: 'radialBar',
           },
           plotOptions: {
@@ -443,6 +445,7 @@
           image: '',
           score: 0,
         },
+        analysisMsg: '',
       }
     },
     created: function () {
@@ -453,7 +456,7 @@
           this.series = response.data.data
           this.total = response.data.data[0].total
           this.analysisScore = this.series[0]
-          console.log(this.analysisScore)
+          console.log(this.series)
 
           for (var score in this.analysisScore.data) {
             const title = this.chartOptions.xaxis.categories[score]
@@ -461,9 +464,15 @@
             if (title === '보습') {
               icon = 'mdi-water-plus'
             } else if (title === '민감성') {
-              icon = 'mdi-hand-wave'
-            } else {
-              icon = 'icon'
+              icon = 'mdi-cancel'
+            } else if (title === '피지분비') {
+              icon = 'mdi-shimmer'
+            } else if (title === '피부탄력') {
+              icon = 'mdi-wall'
+            } else if (title === '색소침착') {
+              icon = 'mdi-face-woman-shimmer-outline'
+            } else if (title === '트러블') {
+              icon = 'mdi-allergy'
             }
             this.features.push({
               icon: icon,
@@ -481,7 +490,6 @@
         this.worstIndex.name = response.data.data.skinIndex
         this.worstIndex.image = response.data.data.image
         this.worstIndex.score = response.data.data.score
-
         ProductService.recommendIngredient(this.worstIndex.name)
           .then((response) => {
             ref.recommendIndex = response.data
@@ -492,6 +500,7 @@
                 text: response.data[ingredient].description,
               })
             }
+            this.getAnalysisMessage()
           })
           .catch((err) => {
             console.log(err)
@@ -516,6 +525,27 @@
       })
     },
     methods: {
+      getAnalysisMessage () {
+        let avgScore
+        if (this.worstIndex.name === '피부보습') {
+          avgScore = this.series[2].data[0]
+        } else if (this.worstIndex.name === '피지분비') {
+          avgScore = this.series[2].data[1]
+        } else if (this.worstIndex.name === '민감성') {
+          avgScore = this.series[2].data[2]
+        } else if (this.worstIndex.name === '피부탄력') {
+          avgScore = this.series[2].data[3]
+        } else if (this.worstIndex.name === '색소침착') {
+          avgScore = this.series[2].data[4]
+        } else if (this.worstIndex.name === '트러블') {
+          avgScore = this.series[2].data[5]
+        }
+        if (avgScore <= this.worstIndex.score) {
+          this.analysisMsg = '가장 낮은 피부지표는 ' + this.worstIndex.name + '이지만 ' + this.series[2].name + '보다 높은편으로 평소에 관리를 잘 하신것 같아요! 아래 도움되는 성분과 제품으로 지금처럼 꾸준히 유지해주세요!'
+        } else {
+          this.analysisMsg = this.worstIndex.name + ' 점수가 ' + this.series[2].name + '보다 낮은 편이라 관리가 필요해요. ' + '아래 도움되는 성분과 Fitskin 추천제품으로 꾸준히 관리하시면 좋을것 같아요'
+        }
+      },
       exportToPDF () {
         html2pdf(this.$refs.document, {
           margin: 0,
