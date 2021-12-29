@@ -68,6 +68,12 @@
       value: { type: Boolean, default: false },
       items: { type: Array, default: () => ([]) },
     },
+    methods: {
+      logOut () {
+        this.$store.dispatch('auth/logout')
+        this.$router.push('/login')
+      },
+    },
   }
 </script>
 

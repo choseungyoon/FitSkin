@@ -138,7 +138,7 @@
         axios
           .get('http://34.64.253.121:9000/api/auth/klogin?authorize_code=' + this.codes)
           .then((res) => {
-            console.log(res.data.email)
+            console.log(res.data)
             this.form.email = res.data.email
             this.form.password = res.data.id
             if (this.form.password === undefined) {

@@ -21,7 +21,7 @@
         v-text="appData.title"
       />
     </v-toolbar-title>
-    <v-spacer />
+    <v-spacer></v-spacer>
     <div v-if="$vuetify.breakpoint.mdAndUp">
       <v-tabs
         hide-slider
@@ -29,7 +29,6 @@
         background-color="transparent"
         v-bind="tabAttrs"
       >
-
         <v-tab
           v-for="item in items"
           :key="item.name"
@@ -49,6 +48,71 @@
             v-text="item.icon"
           />
         </v-tab>
+      <div
+        v-if="!currentUser"
+        class="navbar-nav ml-auto"
+        >
+        <v-tabs
+          hide-slider
+          optional
+          background-color="transparent"
+          v-bind="tabAttrs"
+        >
+         <v-tab
+              to = "Login"
+              active-class="primary--text"
+              class="font-weight-medium text-none"
+              min-width="120px"
+              text
+            >
+                Login
+              <v-icon
+                small
+                right
+              >mdi-login-variant</v-icon>
+        </v-tab>
+        </v-tabs>
+      </div>
+      <div
+        v-if="currentUser"
+        class="navbar-nav ml-auto"
+      >
+        <v-tabs
+          hide-slider
+          optional
+          background-color="transparent"
+          v-bind="tabAttrs"
+        >
+          <v-tab
+              active-class="primary--text"
+              class="font-weight-medium text-none"
+              min-width="120px"
+              text
+            >
+                {{ currentUser.username }}
+              <v-icon
+                small
+                right
+              >mdi-account-settings
+              </v-icon>
+          </v-tab>
+          <v-tab
+              active-class="primary--text"
+              class="font-weight-medium text-none"
+              min-width="120px"
+              text
+              @click.prevent="logOut"
+            >
+              LogOut
+              <v-icon
+                small
+                right
+              >
+                mdi-logout
+              </v-icon>
+          </v-tab>
+        </v-tabs>
+      </div>
       </v-tabs>
     </div>
     <div v-else>
@@ -97,7 +161,6 @@
           { name: '유전자검사', icon: 'mdi-dna', link: '유전자검사' },
           { name: 'Store', icon: 'mdi-store', link: 'Store' },
           { name: 'Contact', icon: 'mdi-phone', link: 'Contact' },
-          { name: 'Login', icon: 'mdi-login-variant', link: 'Login' },
         ],
       }
     },
@@ -108,11 +171,19 @@
         if (this.block) attrs.height = '150px'
         return attrs
       },
+      currentUser () {
+        return this.$store.state.auth.user
+      },
     },
-
     watch: {
       '$route.name' (val) {
         this.drawer = false
+      },
+    },
+    methods: {
+      logOut () {
+        this.$store.dispatch('auth/logout')
+        this.$router.push('/login')
       },
     },
   }
