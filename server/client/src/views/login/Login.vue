@@ -59,23 +59,15 @@
               <v-btn
                 class="signin-btn"
                 type="submit"
-                rounded
                 color="white"
                 dark
+                width="60%"
               >
-                Sign In
+                로그인
               </v-btn>
-              <div><br></div>
-              <a
-                id="custom-login-btn"
-                v-on:click="loginWithKakao()"
-              >
-                <img
-                  src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
-                  width="240"
-                />
-              </a>
             </div>
+            <dir><br></dir>
+            <v-divider></v-divider>
             <dir><br></dir>
             <div class="text-center">
               Don't have an account? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -84,7 +76,18 @@
               >
                 Sign up
               </router-link>
+              <div><br></div>
+              <a
+                id="custom-login-btn"
+                v-on:click="loginWithKakao()"
+              >
+                <img
+                  src="@/assets/login/kakao_login_large_wide.png"
+                  width="60%"
+                />
+              </a>
             </div>
+
           </v-form>
         </validation-observer>
       </v-col>
@@ -139,7 +142,7 @@
       },
       loginWithKakao () {
         const params = {
-          redirectUri: 'http://34.64.253.121:9000/signup',
+          redirectUri: 'http://fitskin.co.kr/signup',
         }
         window.Kakao.Auth.authorize(params)
       },

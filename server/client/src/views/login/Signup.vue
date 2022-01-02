@@ -22,7 +22,6 @@
               <label for="username">Username</label>
               <input
                 v-model="user.username"
-                v-validate="'required|min:3|max:20'"
                 type="text"
                 class="form-control"
                 name="username"
@@ -38,7 +37,6 @@
               <label for="email">Email</label>
               <input
                 v-model="user.email"
-                v-validate="'required|email|max:50'"
                 type="email"
                 class="form-control"
                 name="email"
@@ -54,7 +52,6 @@
               <label for="password">Password</label>
               <input
                 v-model="user.password"
-                v-validate="'required|min:6|max:40'"
                 type="password"
                 class="form-control"
                 name="password"
@@ -92,6 +89,40 @@
           </div>
         </form>
       </v-col>
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+
+        <v-card-text>
+          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Disagree
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-row>
   </section>
 </template>
@@ -117,6 +148,7 @@
           uname: '',
         },
         show: true,
+        dialog: false,
       }
     },
     computed: {
@@ -132,46 +164,65 @@
     methods: {
       create () {
         this.codes = this.$route.query.code
-        this.getToken()
+        console.log(this.codes)
+        if (this.codes != null) {
+          this.getToken()
+        }
       },
       getToken () {
         axios
-          .get('http://34.64.253.121:9000/api/auth/klogin?authorize_code=' + this.codes)
+          .get('http://fitskin.co.kr/api/auth/klogin?authorize_code=' + this.codes)
           .then((res) => {
-            console.log(res.data)
-            this.form.email = res.data.email
-            this.form.password = res.data.id
+            this.user.email = res.data.email
+            this.user.password = res.data.id
+            this.user.username = res.data.username
+            console.log(res.data.email)
+            console.log(res.data.id)
+            console.log(res.data.username)
             if (this.form.password === undefined) {
-              // alert('올바르지 못한 접근입니다')
+              alert('올바르지 못한 접근입니다')
               // this.$router.push('/')
             } else {
-              alert('Email : ' + this.form.email)
               this.login()
             }
           })
       },
+      login () {
+        this.$store.dispatch('auth/login', this.user).then(
+          () => {
+            this.$router.push('/')
+          },
+          (error) => {
+            this.loading = false
+            this.message =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString()
+          },
+        )
+      },
       handleRegister () {
-        alert('ddd')
         this.message = ''
         this.submitted = true
-        this.$validator.validate().then((isValid) => {
-          if (isValid) {
-            this.$store.dispatch('auth/register', this.user).then(
-              (data) => {
-                this.message = data.message
-                this.successful = true
-                this.$router.push('/login')
-              },
-              (error) => {
-                this.message =
-                  (error.response && error.response.data) ||
-                  error.message ||
-                  error.toString()
-                this.successful = false
-              },
-            )
-          }
-        })
+        console.log(this.user)
+
+        this.$store.dispatch('auth/register', this.user).then(
+          (data) => {
+            this.message = data.message
+            alert(this.message)
+            this.successful = true
+            // this.$router.push('/login')
+          },
+          (error) => {
+            this.message =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString()
+            console.log(this.message)
+            this.successful = false
+            alert(this.message.message)
+          },
+        )
       },
     },
   }

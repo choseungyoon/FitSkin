@@ -125,6 +125,7 @@ public class AuthController {
 
     @GetMapping("/klogin")
     public HashMap<String,String> kakaoLogin(@RequestParam String authorize_code){
+        System.out.println("Execute kakao Login");
         String access_token = kakaoLoginService.getAccessToken(authorize_code);
         return  kakaoLoginService.getUserInfo(access_token);
     }

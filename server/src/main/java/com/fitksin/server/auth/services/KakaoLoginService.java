@@ -18,8 +18,6 @@ public class KakaoLoginService {
         String reqURL = "https://kauth.kakao.com/oauth/token";
 
         try{
-
-
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -30,7 +28,7 @@ public class KakaoLoginService {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("grant_type=authorization_code");
             stringBuilder.append("&client_id=51e8bf8a063e8c574cdb3f45b548ed6a");
-            stringBuilder.append("&redirect_uri=http://34.64.253.121:9000/kakaologin");
+            stringBuilder.append("&redirect_uri=http://fitskin.co.kr/signup");
             stringBuilder.append("&code=" + authorize_code);
             bufferedWriter.write(stringBuilder.toString());
             bufferedWriter.flush();
@@ -88,6 +86,9 @@ public class KakaoLoginService {
                 email = kakao_account.getAsJsonObject().get("email").getAsString();
                 userInfo.put("id",id);
                 userInfo.put("email",email);
+            }
+            if(kakao_account.getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString() != null){
+                userInfo.put("username",kakao_account.getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString());
             }
         }
         catch (IOException ex){
