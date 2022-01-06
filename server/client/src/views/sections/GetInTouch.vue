@@ -14,15 +14,6 @@
           title="GET IN TOUCH"
           align="left"
         />
-        <base-body
-          text="주민중한테 연락 기기"
-          align="left"
-        />
-        <base-subheading
-          title="Contact Information"
-          class="primary--text"
-          align="left"
-        />
         <base-subtitle
           title="Company"
           weight="bold"
