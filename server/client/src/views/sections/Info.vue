@@ -57,7 +57,7 @@
           >
             <base-body
               space="2"
-              text="사업자정보확인링크 "
+              text="사업자정보확인"
             />
           </a>
         </v-col>
