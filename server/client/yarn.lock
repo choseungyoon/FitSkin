@@ -796,6 +796,13 @@
     "lodash" "^4.17.13"
     "to-fast-properties" "^2.0.0"
 
+"@cld-apis/utils@^0.1.0":
+  "integrity" "sha512-e50vj4qE6PLYrado/ypwH+AVHwMRCevvpAz8sqDhRMow9MPiWNTuY9+jnLU8K/ewmX7rgdBsxxqBpMtF/OwhIw=="
+  "resolved" "https://registry.npmjs.org/@cld-apis/utils/-/utils-0.1.3.tgz"
+  "version" "0.1.3"
+  dependencies:
+    "lodash.snakecase" "^4.1.1"
+
 "@fortawesome/fontawesome-common-types@^0.2.36":
   "integrity" "sha512-a/7BiSgobHAgBWeN7N0w+lAhInrGxksn13uK7231n2m8EDPE3BMCl9NZLTGrj9ZXfCmC6LM0QLqXidIizVQ6yg=="
   "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.36.tgz"
@@ -819,6 +826,11 @@
   "integrity" "sha512-V3vT3flY15AKbUS31aZOP12awQI3aAzkr2B1KnqcHLmwrmy51DW3pwyBczKdypV8QxBZ8U68Hl2XxK2nudTxpg=="
   "resolved" "https://registry.npmjs.org/@fortawesome/vue-fontawesome/-/vue-fontawesome-2.0.6.tgz"
   "version" "2.0.6"
+
+"@glidejs/glide@^3.3.0":
+  "integrity" "sha512-7jGciNJ2bQ4eZLSNlSZ+VAyW63kALf420CvkEpK4lEsUfWJq9odqimci0YCiyNyMUFB+pWHwLYyNc57dijYsCg=="
+  "resolved" "https://registry.npmjs.org/@glidejs/glide/-/glide-3.5.2.tgz"
+  "version" "3.5.2"
 
 "@hapi/address@2.x.x":
   "integrity" "sha512-QD1PhQk+s31P1ixsX0H0Suoupp3VMXzIVMSwobR3F3MSUO2YCV0B7xqLcUw/Bh8yuvd3LhpyqLQWTNcRmp6IdQ=="
@@ -865,6 +877,11 @@
     "cssnano" "^4.0.0"
     "cssnano-preset-default" "^4.0.0"
     "postcss" "^7.0.0"
+
+"@juggle/resize-observer@^3.3.1":
+  "integrity" "sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw=="
+  "resolved" "https://registry.npmjs.org/@juggle/resize-observer/-/resize-observer-3.3.1.tgz"
+  "version" "3.3.1"
 
 "@mdi/font@^5.0.45":
   "integrity" "sha512-7H1UMwUpEp8mthdPlpAi7bhEyvTbvtK1TlA89scc0cXMpQy0UFygdkaf+6fveIxpBcRNgw0gnGSEonlsfYocXg=="
@@ -1042,6 +1059,31 @@
     "error-stack-parser" "^2.0.0"
     "string-width" "^2.0.0"
 
+"@storefront-ui/shared@0.11.5":
+  "integrity" "sha512-VjPP9kPIyBKtypDjPeQpkaoR0f7Afkv12gMlubr2LCCd/0eHm+x7R9Ve2nuCjCEuSvnb1a5A2S+4qpSxBWl2ag=="
+  "resolved" "https://registry.npmjs.org/@storefront-ui/shared/-/shared-0.11.5.tgz"
+  "version" "0.11.5"
+
+"@storefront-ui/vue@^0.11.5":
+  "integrity" "sha512-bevOM1oAtXFGQBRZYJ0i5n9xIDl5eeOi0blGW/pTVYbjxtAzJCC2JE/hmLTmV2wx98sY6xyEi1VbpM24kpkO+A=="
+  "resolved" "https://registry.npmjs.org/@storefront-ui/vue/-/vue-0.11.5.tgz"
+  "version" "0.11.5"
+  dependencies:
+    "@glidejs/glide" "^3.3.0"
+    "@storefront-ui/shared" "0.11.5"
+    "body-scroll-lock" "^3.0.1"
+    "cloudinary-build-url" "^0.1.1"
+    "core-js" "^3.6.5"
+    "glob" "^7.1.4"
+    "hammerjs" "^2.0.8"
+    "leaflet" "^1.5.1"
+    "nouislider" "^15.2.0"
+    "sass" "^1.32.13"
+    "sass-loader" "^10.0.3"
+    "simplebar-vue" "^1.4.0"
+    "vue" "^2.6.12"
+    "vue2-leaflet" "^2.5.2"
+
 "@szmarczak/http-timer@^1.1.2":
   "integrity" "sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA=="
   "resolved" "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-1.1.2.tgz"
@@ -1076,6 +1118,11 @@
   "resolved" "https://registry.npmjs.org/@types/events/-/events-3.0.0.tgz"
   "version" "3.0.0"
 
+"@types/geojson@*":
+  "integrity" "sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA=="
+  "resolved" "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.8.tgz"
+  "version" "7946.0.8"
+
 "@types/glob@^7.1.1":
   "integrity" "sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w=="
   "resolved" "https://registry.npmjs.org/@types/glob/-/glob-7.1.1.tgz"
@@ -1101,6 +1148,13 @@
   "version" "3.1.1"
   dependencies:
     "@types/node" "*"
+
+"@types/leaflet@^1.5.7":
+  "integrity" "sha512-prZwhmUznkwTYCTZVGTR4U1GzgPP3PAWYYQ3wDgVkIoiuQTheWoycsXx4Rz9ARYhlDTl0Ycd8lvhH2/rNSkqIg=="
+  "resolved" "https://registry.npmjs.org/@types/leaflet/-/leaflet-1.7.8.tgz"
+  "version" "1.7.8"
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/minimatch@*":
   "integrity" "sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA=="
@@ -2160,6 +2214,11 @@
     "raw-body" "2.4.0"
     "type-is" "~1.6.17"
 
+"body-scroll-lock@^3.0.1":
+  "integrity" "sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg=="
+  "resolved" "https://registry.npmjs.org/body-scroll-lock/-/body-scroll-lock-3.1.5.tgz"
+  "version" "3.1.5"
+
 "bonjour@^3.5.0":
   "integrity" "sha1-jokKGD2O6aI5OzhExpGkK897yfU="
   "resolved" "https://registry.npmjs.org/bonjour/-/bonjour-3.5.0.tgz"
@@ -2555,6 +2614,11 @@
   "resolved" "https://registry.npmjs.org/camelcase/-/camelcase-5.3.1.tgz"
   "version" "5.3.1"
 
+"can-use-dom@^0.1.0":
+  "integrity" "sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo="
+  "resolved" "https://registry.npmjs.org/can-use-dom/-/can-use-dom-0.1.0.tgz"
+  "version" "0.1.0"
+
 "caniuse-api@^3.0.0":
   "integrity" "sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw=="
   "resolved" "https://registry.npmjs.org/caniuse-api/-/caniuse-api-3.0.0.tgz"
@@ -2825,6 +2889,13 @@
   "integrity" "sha1-2jCcwmPfFZlMaIypAheco8fNfH4="
   "resolved" "https://registry.npmjs.org/clone/-/clone-1.0.4.tgz"
   "version" "1.0.4"
+
+"cloudinary-build-url@^0.1.1":
+  "integrity" "sha512-SlCdVyHC9THzMsMc4FnXDW6UA/N0CbgPeDoIHjTPUFxXosgPUC7Jio2uD+rc8SF/YNevPwaRzjIRhGMTznO0jA=="
+  "resolved" "https://registry.npmjs.org/cloudinary-build-url/-/cloudinary-build-url-0.1.1.tgz"
+  "version" "0.1.1"
+  dependencies:
+    "@cld-apis/utils" "^0.1.0"
 
 "coa@^2.0.2":
   "integrity" "sha512-q5/jG+YQnSy4nRTV4F7lPepBJZ8qBNJJDBuJdoejDyLXgmL7IEo+Le2JDZudFTFt7mrCqIRaSjws4ygRCTCAXA=="
@@ -3269,7 +3340,7 @@
     "browserslist" "^4.8.5"
     "semver" "7.0.0"
 
-"core-js@^3.6.0", "core-js@^3.6.4", "core-js@^3.8.3":
+"core-js@^3.0.1", "core-js@^3.6.0", "core-js@^3.6.4", "core-js@^3.6.5", "core-js@^3.8.3":
   "integrity" "sha512-LeLBMgEGSsG7giquSzvgBrTS7V5UL6ks3eQlUSbN8dJStlLFiRzUm5iqsRyzUB8carhfKjkJ2vzKqE6z1Vga9g=="
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.19.3.tgz"
   "version" "3.19.3"
@@ -5364,6 +5435,11 @@
     "duplexer" "^0.1.1"
     "pify" "^4.0.1"
 
+"hammerjs@^2.0.8":
+  "integrity" "sha1-BO93hiz/K7edMPdpIJWTAiK/YPE="
+  "resolved" "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
+  "version" "2.0.8"
+
 "handle-thing@^2.0.0":
   "integrity" "sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg=="
   "resolved" "https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz"
@@ -6670,6 +6746,11 @@
   dependencies:
     "invert-kv" "^2.0.0"
 
+"leaflet@^1.3.4", "leaflet@^1.5.1":
+  "integrity" "sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw=="
+  "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.7.1.tgz"
+  "version" "1.7.1"
+
 "leven@^3.1.0":
   "integrity" "sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A=="
   "resolved" "https://registry.npmjs.org/leven/-/leven-3.1.0.tgz"
@@ -6795,6 +6876,11 @@
   "resolved" "https://registry.npmjs.org/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz"
   "version" "3.0.0"
 
+"lodash.debounce@^4.0.8":
+  "integrity" "sha1-gteb/zCmfEAF/9XiUVMArZyk168="
+  "resolved" "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
+  "version" "4.0.8"
+
 "lodash.defaults@^4.2.0":
   "integrity" "sha1-0JF4cW/+pN3p5ft7N/bwgCJ0WAw="
   "resolved" "https://registry.npmjs.org/lodash.defaults/-/lodash.defaults-4.2.0.tgz"
@@ -6845,6 +6931,11 @@
   "resolved" "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz"
   "version" "4.1.2"
 
+"lodash.snakecase@^4.1.1":
+  "integrity" "sha1-OdcUo1NXFHg3rv1ktdy7Fr7Nj40="
+  "resolved" "https://registry.npmjs.org/lodash.snakecase/-/lodash.snakecase-4.1.1.tgz"
+  "version" "4.1.1"
+
 "lodash.template@^4.0.2":
   "integrity" "sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A=="
   "resolved" "https://registry.npmjs.org/lodash.template/-/lodash.template-4.5.0.tgz"
@@ -6859,6 +6950,11 @@
   "version" "4.2.0"
   dependencies:
     "lodash._reinterpolate" "^3.0.0"
+
+"lodash.throttle@^4.1.1":
+  "integrity" "sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ="
+  "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
+  "version" "4.1.1"
 
 "lodash.transform@^4.6.0":
   "integrity" "sha1-EjBkIvYzJK7YSD0/ODMrX2cFR6A="
@@ -7595,6 +7691,11 @@
     "prepend-http" "^1.0.0"
     "query-string" "^4.1.0"
     "sort-keys" "^1.0.0"
+
+"nouislider@^15.2.0":
+  "integrity" "sha512-p0Rn0a4XzrBJ+JZRhNDYpRYr6sDPkajsjbvEQoTp/AZlNI3NirO15s1t11D25Gk3zVyvNJAzc1DO48cq/KX5Sw=="
+  "resolved" "https://registry.npmjs.org/nouislider/-/nouislider-15.5.0.tgz"
+  "version" "15.5.0"
 
 "npm-bundled@^1.0.1":
   "version" "1.1.1"
@@ -9558,7 +9659,7 @@
   "resolved" "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   "version" "2.1.2"
 
-"sass-loader@^10.0.0":
+"sass-loader@^10.0.0", "sass-loader@^10.0.3":
   "integrity" "sha512-kUceLzC1gIHz0zNJPpqRsJyisWatGYNFRmv2CKZK2/ngMJgLqxTbXwe/hJ85luyvZkgqU3VlJ33UVF2T/0g6mw=="
   "resolved" "https://registry.npmjs.org/sass-loader/-/sass-loader-10.2.0.tgz"
   "version" "10.2.0"
@@ -9569,7 +9670,7 @@
     "schema-utils" "^3.0.0"
     "semver" "^7.3.2"
 
-"sass@^1.3.0", "sass@~1.32.0":
+"sass@^1.3.0", "sass@^1.32.13", "sass@~1.32.0":
   "integrity" "sha512-dEgI9nShraqP7cXQH+lEXVf73WOPCse0QlFzSD8k+1TcOxCMwVXfQlr0jtoluZysQOyJGnfr21dLvYKDJq8HkA=="
   "resolved" "https://registry.npmjs.org/sass/-/sass-1.32.13.tgz"
   "version" "1.32.13"
@@ -9830,6 +9931,26 @@
   "version" "0.2.2"
   dependencies:
     "is-arrayish" "^0.3.1"
+
+"simplebar-vue@^1.4.0":
+  "integrity" "sha512-rykHqyDxeylI3z2NOAsiD+rhcx+cfiOrfnIotDJFC8FqoO4jyJMEN8Q+61PTMOfVJA0oSWFZySlagCH6lG+5qQ=="
+  "resolved" "https://registry.npmjs.org/simplebar-vue/-/simplebar-vue-1.6.8.tgz"
+  "version" "1.6.8"
+  dependencies:
+    "core-js" "^3.0.1"
+    "simplebar" "^5.3.6"
+
+"simplebar@^5.3.6":
+  "integrity" "sha512-FJUMbV+hNDd/m+1/fvD41TXKd5mSdlI5zgBygkaQIV3SffNbcLhSbJT6ufTs8ZNRLJ6i+qc/KCFMqWmvlGWMhA=="
+  "resolved" "https://registry.npmjs.org/simplebar/-/simplebar-5.3.6.tgz"
+  "version" "5.3.6"
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
+    "can-use-dom" "^0.1.0"
+    "core-js" "^3.0.1"
+    "lodash.debounce" "^4.0.8"
+    "lodash.memoize" "^4.1.2"
+    "lodash.throttle" "^4.1.1"
 
 "slash@^1.0.0":
   "integrity" "sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU="
@@ -11195,10 +11316,15 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2.0.0", "vue@^2.1.10", "vue@^2.5.18", "vue@^2.6.12", "vue@^2.6.4", "vue@~2":
+"vue@^2.0.0", "vue@^2.1.10", "vue@^2.5.17", "vue@^2.5.18", "vue@^2.6.12", "vue@^2.6.4", "vue@~2":
   "integrity" "sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"
   "version" "2.6.12"
+
+"vue2-leaflet@^2.5.2":
+  "integrity" "sha512-K7HOlzRhjt3Z7+IvTqEavIBRbmCwSZSCVUlz9u4Rc+3xGCLsHKz4TAL4diAmfHElCQdPPVdZdJk8wPUt2fu6WQ=="
+  "resolved" "https://registry.npmjs.org/vue2-leaflet/-/vue2-leaflet-2.7.1.tgz"
+  "version" "2.7.1"
 
 "vuetify-loader@^1.7.0":
   "integrity" "sha512-1Kt6Rfvuw3i9BBlxC9WTMnU3WEU7IBWQmDX+fYGAVGpzWCX7oHythUIwPCZGShHSYcPMKSDbXTPP8UvT5RNw8Q=="

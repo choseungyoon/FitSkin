@@ -9,6 +9,7 @@
     "postversion": "node scripts/postversion.js"
   },
   "dependencies": {
+    "@storefront-ui/vue": "^0.11.5",
     "apexcharts": "^3.32.0",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",

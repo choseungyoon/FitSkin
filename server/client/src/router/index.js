@@ -60,11 +60,9 @@ const router = new Router({
           component: () => import('@/views/portfolio/Detail.vue'),
         },
         {
-          path: 'blog',
+          path: 'store',
           name: 'Store',
-          beforeEnter () {
-            window.open('https://smartstore.naver.com/likepharm', '_blank')
-          },
+          component: () => import('@/views/store/Index.vue'),
         },
         {
           path: 'contact',

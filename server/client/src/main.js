@@ -9,6 +9,7 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faBan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import '@storefront-ui/vue/styles.scss'
 
 window.Kakao.init('73975ad30e810c26b2acbec57717d536')
 
