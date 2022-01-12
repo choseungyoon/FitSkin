@@ -183,7 +183,7 @@
         <sf-pagination
           class="products__pagination"
           :current="currentPage"
-          :total="4"
+          :total="5"
           :visible="5"
           @click="
             (page) => {
@@ -426,6 +426,7 @@
 
 </template>
 <script>
+  import ProductService from '@/services/ProductService'
   import {
     SfHeading,
     SfSidebar,
@@ -510,96 +511,7 @@
           },
         ],
         showOnPage: ['20', '40', '60'],
-        products: [
-          {
-            title: 'SAMPLE ITEM',
-            id: 1,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 5 },
-            reviewsCount: 8,
-            isInWishlist: true,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 2,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 3,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productC.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 4,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 5,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 6,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productC.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 7,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productA.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 6,
-            isInWishlist: false,
-          },
-          {
-            title: 'SAMPLE ITEM',
-            id: 8,
-            description:
-              'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-            image: 'assets/storybook/Home/productB.jpg',
-            price: { regular: '10,000' },
-            rating: { max: 5, score: 4 },
-            reviewsCount: 8,
-            isInWishlist: false,
-          },
-        ],
+        products: [],
         filters: {
           collection: [
             {
@@ -691,6 +603,30 @@
       toggleWishlist (index) {
         this.products[index].isInWishlist = !this.products[index].isInWishlist
       },
+      getProduct () {
+        var ref = this
+        ProductService.getProductAll().then((response) => {
+          ref.products = []
+          var idx = 1
+          response.data.forEach(function (element) {
+            ref.products.push({
+              title: element.name,
+              id: idx,
+              description:
+                'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
+              image: element.image,
+              price: { regular: element.price },
+              rating: { max: 5, score: 4 },
+              reviewsCount: 8,
+              isInWishlist: false,
+            })
+            idx = idx + 1
+          })
+        })
+      },
+    },
+    created: function () {
+      this.getProduct()
     },
   }
   </script>
