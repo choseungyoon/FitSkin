@@ -109,7 +109,7 @@
           class="products__grid"
         >
           <sf-product-card
-            v-for="(product, i) in products"
+            v-for="(product, i) in paginatedData"
             :key="product.id"
             :style="{ '--index': i }"
             :title="product.title"
@@ -134,7 +134,7 @@
           class="products__list"
         >
           <sf-product-card-horizontal
-            v-for="(product, i) in products"
+            v-for="(product, i) in paginatedData"
             :key="product.id"
             :style="{ '--index': i }"
             :title="product.title"
@@ -180,30 +180,41 @@
             </template>
           </sf-product-card-horizontal>
         </transition-group>
-        <sf-pagination
-          class="products__pagination"
-          :current="currentPage"
-          :total="5"
-          :visible="5"
-          @click="
-            (page) => {
-              currentPage = page;
-            }
-          "
-        />
-        <div class="products__show-on-page desktop-only">
-          <span class="products__show-on-page__label">Show on page:</span>
-          <sf-select class="products__items-per-page">
-            <sf-select-option
-              v-for="option in showOnPage"
-              :key="option"
-              :value="option"
-              class="products__items-per-page__option"
-            >
-              {{ option }}
-            </sf-select-option>
-          </sf-select>
+        <div>
+          <br>
         </div>
+        <div
+          class="btn-cover"
+          align="center"
+        >
+          <button
+            :aria-disabled="false"
+            type="button"
+            @click="prevPage"
+            aria-label="Arrow label"
+          >
+          <sf-icon
+            class="sf-arrow__icon"
+            icon="arrow_left"
+            size="14px"
+            viewBox="0 0 24 12"
+          />
+        </button>
+          <span class="page-count"> {{ currentPage + 1 }} / {{ pageCount }} 페이지 </span>
+        <button
+          :aria-disabled="false"
+          type="button"
+           @click="nextPage"
+          aria-label="Arrow label"
+        >
+          <sf-icon
+            class="sf-arrow__icon"
+            icon="arrow_right"
+            size="14px"
+            viewBox="0 0 24 12"
+          />
+        </button>
+      </div>
       </div>
     </div>
     <sf-sidebar
@@ -286,22 +297,6 @@
         />
       </div>
       <sf-accordion class="filters smartphone-only">
-        <sf-accordion-item
-          header="Show on page"
-          class="filters__accordion-item"
-        >
-          <template #additional-info>
-            <span class="filters__chosen"> {{ displayOnPage }} items </span>
-          </template>
-          <sf-radio
-            v-for="value in showOnPage"
-            :key="value"
-            v-model="displayOnPage"
-            :value="value"
-            :label="value"
-            class="filters__item"
-          />
-        </sf-accordion-item>
         <sf-accordion-item
           header="Sort by"
           class="filters__accordion-item"
@@ -437,13 +432,11 @@
     SfFilter,
     SfProductCard,
     SfProductCardHorizontal,
-    SfPagination,
     SfAccordion,
     SfComponentSelect,
     SfColor,
     SfProperty,
     SfRadio,
-    SfSelect,
   } from '@storefront-ui/vue'
   export default {
     name: 'Category',
@@ -457,22 +450,19 @@
       SfFilter,
       SfProductCard,
       SfProductCardHorizontal,
-      SfPagination,
       SfAccordion,
       SfComponentSelect,
       SfColor,
       SfProperty,
       SfRadio,
-      SfSelect,
     },
     data () {
       return {
-        currentPage: 1,
+        currentPage: 0,
         sortBy: 'Latest',
         isFilterSidebarOpen: false,
         isGridView: true,
         category: 'Clothing',
-        displayOnPage: '40',
         sortByOptions: [
           {
             value: 'Latest',
@@ -510,7 +500,6 @@
             ],
           },
         ],
-        showOnPage: ['20', '40', '60'],
         products: [],
         filters: {
           collection: [
@@ -623,6 +612,30 @@
             idx = idx + 1
           })
         })
+      },
+      nextPage () {
+        if (this.currentPage === this.pageTotal) {
+          return
+        }
+        this.currentPage += 1
+      },
+      prevPage () {
+        if (this.currentPage === 0) {
+          return
+        }
+        this.currentPage -= 1
+      },
+    },
+    computed: {
+      pageCount () {
+        var pageTotal = Math.floor(this.products.length / 8)
+        if (this.products.length % 8 > 0) pageTotal += 1
+        return pageTotal
+      },
+      paginatedData () {
+        var start = (this.currentPage) * 8
+        var end = start + 8
+        return this.products.slice(start, end)
       },
     },
     created: function () {
