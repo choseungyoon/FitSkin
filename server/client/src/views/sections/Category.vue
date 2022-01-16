@@ -13,7 +13,7 @@
         />
       </div>
       <div class="navbar__main">
-        <sf-button
+ <!--       <sf-button
           class="sf-button--text navbar__filters-button"
           aria-label="Filters"
           @click="isFilterSidebarOpen = true"
@@ -25,7 +25,7 @@
             class="navbar__filters-icon"
           />
           Filters
-        </sf-button>
+        </sf-button> -->
         <div class="navbar__sort desktop-only">
           <span class="navbar__label">Sort by:</span>
           <sf-component-select
@@ -78,14 +78,14 @@
           :open="sidebarAccordion[0].header"
           :show-chevron="true"
         >
-          <sf-accordion-item
+          <sf-accordionItem
             v-for="(accordion, i) in sidebarAccordion"
             :key="i"
             :header="accordion.header"
           >
             <template>
               <sf-list class="list">
-                <sf-list-item
+                <sf-listItem
                   v-for="(item, j) in accordion.items"
                   :key="j"
                   class="list__item"
@@ -94,10 +94,10 @@
                     :label="item.label"
                     :count="item.count"
                   />
-                </sf-list-item>
+                </sf-listItem>
               </sf-list>
             </template>
-          </sf-accordion-item>
+          </sf-accordionItem>
         </sf-accordion>
       </div>
       <div class="products">
