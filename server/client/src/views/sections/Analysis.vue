@@ -146,11 +146,26 @@
             <span class="text-h6 font-weight-black">
                   {{analysisMsg}}
             </span>
+            <br><br>
+            <span class="text-h6 font-weight-black">
+                  아래 생활습관을 통해 {{worstIndex.name}} 관리 시작해보세요
+            </span>
+            <br><br>
+              <li
+                style="list-style: none;"
+                v-for="(value) in recommendHabits"
+                v-bind:key="value"
+                >
+                <v-icon left>
+                  mdi-checkbox-outline
+                </v-icon>
+                <span class="text-h6 font-weight-black">
+                {{ value.title }}
+                </span>
+              </li>
           </v-col>
         </v-row>
-        <v-row>
-          <br>
-        </v-row>
+        <v-row><br><br></v-row>
         <v-row
           justify="center"
           align="center"
@@ -173,6 +188,7 @@
                 참고해서 꾸준히 관리하면 더 좋아질 거에요!
             </span>
           </div>
+          <br>
           </v-col>
         </v-row>
         <v-divider />
@@ -249,6 +265,7 @@
               >
                 <v-img
                   :src="feature.image"
+                  max-width="30%"
                 ></v-img>
 
                 <v-card-title>
@@ -346,6 +363,8 @@
     },
     data () {
       return {
+        length: 3,
+        window: 0,
         total: 0,
         series: [],
         pieseries: [],
@@ -446,6 +465,7 @@
           score: 0,
         },
         analysisMsg: '',
+        recommendHabits: [],
       }
     },
     created: function () {
@@ -501,6 +521,7 @@
               })
             }
             this.getAnalysisMessage()
+            this.getRecommnedHabit()
           })
           .catch((err) => {
             console.log(err)
@@ -525,6 +546,17 @@
       })
     },
     methods: {
+      getRecommnedHabit () {
+        SurveyService.getRecommendHabits(this.worstIndex.name)
+          .then((response) => {
+            for (var habit in response.data.data) {
+              this.recommendHabits.push({
+                title: response.data.data[habit].title,
+                text: response.data.data[habit].value,
+              })
+            }
+          })
+      },
       getAnalysisMessage () {
         let avgScore
         if (this.worstIndex.name === '피부보습') {
@@ -541,9 +573,9 @@
           avgScore = this.series[2].data[5]
         }
         if (avgScore <= this.worstIndex.score) {
-          this.analysisMsg = '가장 낮은 피부지표는 ' + this.worstIndex.name + '이지만 ' + this.series[2].name + '보다 높은편으로 평소에 관리를 잘 하신것 같아요! 아래 도움되는 성분과 제품으로 지금처럼 꾸준히 유지해주세요!'
+          this.analysisMsg = '가장 낮은 피부지표는 ' + this.worstIndex.name + '이지만 ' + this.series[2].name + '보다 높은편으로 평소에 관리를 잘 하신것 같아요'
         } else {
-          this.analysisMsg = this.worstIndex.name + ' 점수가 ' + this.series[2].name + '보다 낮은 편이라 관리가 필요해요. ' + '아래 도움되는 성분과 Fitskin 추천제품으로 꾸준히 관리하시면 좋을것 같아요'
+          this.analysisMsg = this.worstIndex.name + ' 점수가 ' + this.series[2].name + '보다 낮은 편이라 관리가 필요해요'
         }
       },
       exportToPDF () {

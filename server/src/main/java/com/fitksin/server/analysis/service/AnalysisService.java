@@ -3,6 +3,8 @@ package com.fitksin.server.analysis.service;
 import com.fitksin.server.analysis.model.SkinIndex;
 import com.fitksin.server.analysis.model.TypeScore;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface AnalysisService {
@@ -17,4 +19,5 @@ public interface AnalysisService {
 
     boolean insertSkinIndex(SkinIndex skinIndex);
 
+    List<Map<String,String>> recommendHabits(String skinIndex);
 }

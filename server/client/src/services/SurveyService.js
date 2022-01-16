@@ -24,6 +24,10 @@ class SurveyService {
   getWorstIndex (data) {
     return http.get(`/analysis/index/worst?id=${data}`)
   }
+
+  getRecommendHabits (data) {
+    return http.get(`/analysis/habits?index=${data}`)
+  }
 }
 
 export default new SurveyService()

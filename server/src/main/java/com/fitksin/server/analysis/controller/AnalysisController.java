@@ -42,8 +42,11 @@ public class AnalysisController {
         return returnResult;
     }
 
-    public void recommendProduct(){
-
+    @GetMapping("/habits")
+    public Result recommendHabits(@RequestParam String index){
+        Result returnResult = Result.successInstance();
+        returnResult.setData(this.analysisService.recommendHabits(index));
+        return returnResult;
     }
 
 }

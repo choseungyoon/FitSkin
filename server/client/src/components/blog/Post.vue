@@ -1,14 +1,5 @@
 <template>
   <v-row no-gutters>
-    <v-col class="shrink">
-      <base-avatar
-        :key="`post-date`"
-        color="grey"
-        tile
-        size="100"
-        class="ma-2"
-      />
-    </v-col>
     <v-col class="pl-2">
       <base-title
         :title="post.title"
@@ -47,6 +38,7 @@
             v-text="'comments'"
           />
         </template>
+        <br>
       </div>
     </v-col>
   </v-row>

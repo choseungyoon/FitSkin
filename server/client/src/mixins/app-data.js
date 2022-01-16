@@ -25,22 +25,20 @@ export default {
         ],
         blogPosts: [
           {
-            title: 'Lorem ipsum dolor sit amet',
+            title: '물 많이 마시기 (수분 섭취 많이하기)',
             text: 'Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima. Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima.',
-            date: new Date().toLocaleDateString(),
-            to: { name: 'Home' },
           },
           {
-            title: 'Lorem ipsum dolor sit amet',
+            title: '가습기를 틀어서 실내습도 유지하기',
             text: 'Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima. Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima.',
-            date: new Date(Date.now() - 1000 * 60 * 60 * 24).toLocaleDateString(),
-            to: { name: 'Home' },
           },
           {
-            title: 'Lorem ipsum dolor sit amet',
+            title: '마스크팩 후 크림 꼼꼼히 바르기',
             text: 'Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima. Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima.',
-            date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toLocaleDateString(),
-            to: { name: 'Home' },
+          },
+          {
+            title: '너무 뜨거운 물로 세안하지 않기',
+            text: 'Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima. Ut enim ad minima veniam, quis nostrum exercitatio ut enim ad minima.',
           },
         ],
         recentPosts: [

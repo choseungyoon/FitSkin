@@ -135,4 +135,124 @@ public class AnalysisServiceImpl implements AnalysisService {
                 return null;
         }
     }
+
+    @Override
+    public  List<Map<String,String>> recommendHabits(String skinIndex){
+        List<Map<String,String>> ans = new ArrayList<>();
+        Map<String,String> item1 = new HashMap<>();
+        Map<String,String> item2 = new HashMap<>();
+        Map<String,String> item3 = new HashMap<>();
+        Map<String,String> item4 = new HashMap<>();
+
+        switch (skinIndex){
+            case "피부보습" :
+                item1.put("title","물 많이 마시기 (수분 섭취 많이하기)");
+                item1.put("value","하루에 2L 정도의 물을 마시는 습관을 가지는게 좋아요");
+                ans.add(item1);
+
+                item2.put("title","가습기를 틀어서 실내습도 유지하기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","마스크팩 후 크림 꼼꼼히 바르기");
+                item3.put("value","주 2~3회 수면 전 마스크팩과 수분크림을 꾸준히 하는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","너무 뜨거운 물로 세안하지 않기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+                break;
+            case "피지분비" :
+                item1.put("title","물 많이 마시기 (수분 섭취 많이하기)");
+                item1.put("value","하루에 2L 정도의 물을 마시는 습관을 가지는게 좋아요");
+                ans.add(item1);
+
+                item2.put("title","기름기 많은 정크푸드 줄이기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","저자극 클렌저 사용하기");
+                item3.put("value","주 2~3회 수면 전 마스크팩과 수분크림을 꾸준히 하는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","충분한 휴식으로 스트레스 줄이기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+                break;
+            case "피부민감성" :
+                item1.put("title","피부가 민감하게 반응하는 요소 찾기");
+                item1.put("value","햇빛, 메이크업, 냉난방을 주의해주세요");
+                ans.add(item1);
+
+                item2.put("title","자외선에 민감하다면 실내에서도 SPF 함유된 제품 사용하기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","보습제품 사용하여 유수분 밸런스 맞춰주기");
+                item3.put("value","주 2~3회 수면 전 마스크팩과 수분크림을 꾸준히 하는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","충분한 휴식으로 스트레스 줄이기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+                break;
+            case "피부탄력" :
+                item1.put("title","야외활동시 자외선 차단제 바르기");
+                item1.put("value","햇빛, 메이크업, 냉난방을 주의해주세요");
+                ans.add(item1);
+
+                item2.put("title","가습기를 틀어서 실내습도 유지하기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","물 많이 마시기 (수분 섭취 많이하기)");
+                item3.put("value","하루에 2L 정도의 물을 마시는 습관을 가지는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","탄력관리 제품 & 이너뷰티 사용하기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+
+                break;
+            case "색소침착" :
+                item1.put("title","평상시 자외선 차단제 꼼꼼히 발라주기");
+                item1.put("value","햇빛, 메이크업, 냉난방을 주의해주세요");
+                ans.add(item1);
+
+                item2.put("title","충분한 휴식으로 스트레스 줄이기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","음주와 흡연 자제하기");
+                item3.put("value","하루에 2L 정도의 물을 마시는 습관을 가지는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","비타민이 풍부한 제철과일 섭취하기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+
+                break;
+            case "트러블" :
+                item1.put("title","트러블 유발하는 원인 알아두기");
+                item1.put("value","기름진 음식, 자외선, 마스크사용 등은 트러블을 유발하기 좋아요");
+                ans.add(item1);
+
+                item2.put("title","잘못된 클렌징 습관 고치기");
+                item2.put("value","실내 습도 40~70%로 유지해주는 것이 중요해요");
+                ans.add(item2);
+
+                item3.put("title","기름진 음식 피하기");
+                item3.put("value","하루에 2L 정도의 물을 마시는 습관을 가지는게 좋아요");
+                ans.add(item3);
+
+                item4.put("title","얼굴 만지는 행동 삼가기");
+                item4.put("value","뜨거운 물은 수분을 빼앗아 갈 수 있어요. 미온수로 천천히 세안해주는게 좋아요");
+                ans.add(item4);
+                break;
+            default:
+                return null;
+        }
+        return ans;
+    }
+
 }
