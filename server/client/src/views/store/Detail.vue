@@ -6,14 +6,21 @@
   import LoadSections from '@/mixins/load-sections'
 
   export default {
-    name: 'Store',
-    metaInfo: { title: 'Store' },
+    name: 'ProjectDetail',
+
+    metaInfo: { title: '상품정보' },
+
     extends: View,
+
     mixins: [
       LoadSections([
-        'category',
+        'productDetail',
         'info',
       ]),
     ],
+
+    props: {
+      id: [Number, String],
+    },
   }
 </script>

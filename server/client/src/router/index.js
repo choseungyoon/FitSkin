@@ -65,6 +65,11 @@ const router = new Router({
           component: () => import('@/views/store/Index.vue'),
         },
         {
+          path: 'store/:id',
+          name: 'ProductDetail',
+          component: () => import('@/views/store/Detail.vue'),
+        },
+        {
           path: 'contact',
           name: 'Contact',
           component: () => import('@/views/contact/Index.vue'),

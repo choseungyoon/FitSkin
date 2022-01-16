@@ -44,8 +44,8 @@
         </div>
         <div class="navbar__counter">
           <span class="navbar__label desktop-only">Products found: </span>
-          <span class="desktop-only">280</span>
-          <span class="navbar__label smartphone-only">280 Items</span>
+          <span class="desktop-only">{{foundItems}}</span>
+          <span class="navbar__label smartphone-only">{{foundItems}} Items</span>
         </div>
         <div class="navbar__view">
           <span class="navbar__view-label desktop-only">View</span>
@@ -122,63 +122,11 @@
             :score-rating="product.rating.score"
             :is-in-wishlist="product.isInWishlist"
             :show-add-to-cart-button="true"
+            :code="product.code"
             class="products__product-card"
             @click:wishlist="toggleWishlist(i)"
+            @click="productDetail(i)"
           />
-        </transition-group>
-        <transition-group
-          v-else
-          appear
-          name="products__slide"
-          tag="div"
-          class="products__list"
-        >
-          <sf-product-card-horizontal
-            v-for="(product, i) in paginatedData"
-            :key="product.id"
-            :style="{ '--index': i }"
-            :title="product.title"
-            :description="product.description"
-            :image="product.image"
-            :regular-price="product.price.regular"
-            :special-price="product.price.special"
-            :max-rating="product.rating.max"
-            :reviews-count="product.reviewsCount"
-            :score-rating="product.rating.score"
-            :is-in-wishlist="product.isInWishlist"
-            class="products__product-card-horizontal"
-            @click:wishlist="toggleWishlist(i)"
-          >
-            <template #configuration>
-              <sf-property
-                class="desktop-only"
-                name="Size"
-                value="XS"
-                style="margin: 0 0 1rem 0"
-              />
-              <sf-property
-                class="desktop-only"
-                name="Color"
-                value="white"
-              />
-            </template>
-            <template #actions>
-              <sf-button
-                class="sf-button--text desktop-only"
-                style="margin: 0 0 1rem auto; display: block"
-                @click="$emit('click:add-to-wishlist')"
-              >
-                Save for later
-              </sf-button>
-              <sf-button
-                class="sf-button--text desktop-only"
-                style="margin: 0 0 0 auto; display: block"
-                @click="$emit('click:add-to-compare')"
-              >
-                Add to compare
-              </sf-button>
-            </template>
-          </sf-product-card-horizontal>
         </transition-group>
         <div>
           <br>
@@ -431,11 +379,9 @@
     SfMenuItem,
     SfFilter,
     SfProductCard,
-    SfProductCardHorizontal,
     SfAccordion,
     SfComponentSelect,
     SfColor,
-    SfProperty,
     SfRadio,
   } from '@storefront-ui/vue'
   export default {
@@ -449,16 +395,15 @@
       SfMenuItem,
       SfFilter,
       SfProductCard,
-      SfProductCardHorizontal,
       SfAccordion,
       SfComponentSelect,
       SfColor,
-      SfProperty,
       SfRadio,
     },
     data () {
       return {
         currentPage: 0,
+        foundItems: 0,
         sortBy: 'Latest',
         isFilterSidebarOpen: false,
         isGridView: true,
@@ -580,7 +525,7 @@
       }
     },
     methods: {
-      clearAllFilters () {
+      /* clearAllFilters () {
         const filters = Object.keys(this.filters)
         filters.forEach((name) => {
           const prop = this.filters[name]
@@ -588,21 +533,24 @@
             value.selected = false
           })
         })
-      },
+      }, */
       toggleWishlist (index) {
         this.products[index].isInWishlist = !this.products[index].isInWishlist
       },
+      productDetail (id) {
+        this.$router.push({ name: 'ProductDetail', params: { id: this.paginatedData[id].id } })
+      },
       getProduct () {
+        this.products = []
         var ref = this
         ProductService.getProductAll().then((response) => {
-          ref.products = []
           var idx = 1
           response.data.forEach(function (element) {
+            console.log(element.id)
             ref.products.push({
               title: element.name,
-              id: idx,
-              description:
-                'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
+              id: element.id,
+              description: 'Product description',
               image: element.image,
               price: { regular: element.price },
               rating: { max: 5, score: 4 },
@@ -611,16 +559,19 @@
             })
             idx = idx + 1
           })
+          this.foundItems = this.products.length
         })
       },
       nextPage () {
-        if (this.currentPage === this.pageTotal) {
+        if (this.currentPage === this.pageCount - 1) {
+          this.currentPage = 0
           return
         }
         this.currentPage += 1
       },
       prevPage () {
         if (this.currentPage === 0) {
+          this.currentPage = this.pageCount - 1
           return
         }
         this.currentPage -= 1
