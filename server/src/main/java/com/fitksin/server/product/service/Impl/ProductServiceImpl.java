@@ -8,6 +8,7 @@ import com.fitksin.server.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -140,4 +141,52 @@ public class ProductServiceImpl implements ProductService{
         return this.ingredientRepository.findTop3ByCodeContains(index);
 
     }
+
+    @Override
+    public void makeProductFile(){
+        List<Product> allProduct = this.productRepository.findAll();
+        File file = new File("/Users/seungyuncho/Project/FitSkin-backend/crawler/product.txt");
+        String str = "Hello world!";
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+            for (Product product:
+                    allProduct) {
+                writer.write(product.getName()+'\n');
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateProductImage(){
+        String filePath = "/Users/seungyuncho/Project/FitSkin-backend/crawler/output.txt";
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String str;
+            while ((str = reader.readLine()) != null) {
+                String name = str.split(",")[0];
+                String image = str.split(",")[1];
+
+                List<Product> products = this.productRepository.findByName(name);
+
+                for (Product product:
+                     products) {
+                    if(image != null){
+                        product.setImage(image);
+                    }
+                    this.productRepository.save(product);
+                }
+                System.out.println(str);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

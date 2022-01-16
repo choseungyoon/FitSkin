@@ -82,4 +82,13 @@ public class ProductController {
         return result;
     }
 
+    @GetMapping(value = "/file")
+    public void makeProductFile(){
+        this.productService.makeProductFile();
+    }
+
+    @GetMapping(value = "/file/image/update")
+    public void updateProductImage(){
+        this.productService.updateProductImage();
+    }
 }

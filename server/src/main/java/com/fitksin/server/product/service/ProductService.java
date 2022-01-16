@@ -14,4 +14,6 @@ public interface ProductService {
     List<Product> getProductByIndex(String index);
     List<Ingredient> getIngredientAll();
     List<Ingredient> getIngredientByCode(String index);
+    void makeProductFile();
+    void updateProductImage();
 }
