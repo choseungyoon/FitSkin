@@ -546,7 +546,6 @@
         ProductService.getProductAll().then((response) => {
           var idx = 1
           response.data.forEach(function (element) {
-            console.log(element.id)
             ref.products.push({
               title: element.name,
               id: element.id,

@@ -24,7 +24,7 @@
           />
         </div>
         <div class="product__price-and-rating">
-          <sf-price :regular="product.price" />
+          <sf-price :regular="product.price | comma" />
           <div>
             <div class="product__rating">
               <sf-rating
@@ -55,32 +55,6 @@
           <sf-button class="sf-button--text desktop-only product__guide">
             Size guide
           </sf-button>
-          <sf-select
-            v-model="selectedSize"
-            label="Size"
-            class="sf-select--underlined product__select-size"
-            :reqired="true"
-          >
-            <sf-select-option
-              v-for="(size, key) in product.sizes"
-              :key="key"
-              :value="size"
-            >
-              {{ size }}
-            </sf-select-option>
-          </sf-select>
-          <div class="product__colors desktop-only">
-            <p class="product__color-label">Color:</p>
-            <sf-color
-              v-for="(color, i) in product.colors"
-              :key="i"
-              :aria-label="color.name"
-              :color="color.color"
-              :selected="color.selected"
-              class="product__color"
-              @click="selectColor(i)"
-            />
-          </div>
           <sf-add-to-cart
             v-model="qty"
             class="product__add-to-cart"
@@ -172,6 +146,7 @@
   </div>
 </template>
 <script>
+  import ProductService from '@/services/ProductService'
   import {
     SfGallery,
     SfHeading,
@@ -183,13 +158,17 @@
     SfButton,
     SfReview,
     SfAddToCart,
-    SfColor,
-    SfSelect,
     SfBreadcrumbs,
     SfNotification,
   } from '@storefront-ui/vue'
   export default {
     name: 'Product',
+    props: {
+      id: {
+        type: String,
+        default: '',
+      },
+    },
     components: {
       SfGallery,
       SfHeading,
@@ -201,8 +180,6 @@
       SfButton,
       SfReview,
       SfAddToCart,
-      SfColor,
-      SfSelect,
       SfBreadcrumbs,
       SfNotification,
     },
@@ -213,66 +190,15 @@
         selectedSize: undefined,
         qty: 1,
         product: {
-          name: 'Cashmere Sweater',
-          description:
-            'Find stunning women cocktail and party dresses. Stand out in lace and metallic cocktail dresses and party dresses from all your favorite brands.',
-          images: [
-            {
-              mobile: { url: 'assets/storybook/Product/productA.png' },
-              desktop: { url: 'assets/storybook/Product/productA.png' },
-              big: { url: 'assets/storybook/Product/productA.png' },
-              alt: 'Product A',
-            },
-            {
-              mobile: { url: 'assets/storybook/Product/productB.jpg' },
-              desktop: { url: 'assets/storybook/Product/productB.jpg' },
-              big: { url: 'assets/storybook/Product/productB.jpg' },
-              alt: 'Product B',
-            },
-            {
-              mobile: { url: 'assets/storybook/Product/productA.png' },
-              desktop: { url: 'assets/storybook/Product/productA.png' },
-              big: { url: 'assets/storybook/Product/productA.png' },
-              alt: 'Product A',
-            },
-            {
-              mobile: { url: 'assets/storybook/Product/productB.jpg' },
-              desktop: { url: 'assets/storybook/Product/productB.jpg' },
-              big: { url: 'assets/storybook/Product/productB.jpg' },
-              alt: 'Product B',
-            },
-          ],
-          price: '$50.00',
-          colors: [
-            { color: '#EDCBB9', name: 'beige', selected: true },
-            { color: '#ABD9D8', name: 'mint1', selected: false },
-            { color: '#DB5593', name: 'pink1', selected: false },
-            { color: '#ABD9D8', name: 'mint2', selected: false },
-            { color: '#DB5593', name: 'pink2', selected: false },
-          ],
+          name: '',
+          description: '',
+          images: [],
+          price: '',
           rating: {
             rate: 4,
             max: 5,
           },
-          details: [
-            {
-              name: 'Product Code',
-              value: 435435,
-            },
-            {
-              name: 'Material',
-              value: 'Cotton',
-            },
-            {
-              name: 'Category',
-              value: 'Pants',
-            },
-            {
-              name: 'Country',
-              value: 'Poland',
-            },
-          ],
-          sizes: ['32', '34', '36', '38', '40', '42'],
+          details: [],
           careInstructions: 'Do not wash!',
           brand:
             'Brand name is the perfect pairing of quality and design. This label creates major everyday vibes with its collection of modern brooches, silver and gold jewellery, or clips it back with hair accessories in geo styles.',
@@ -302,7 +228,7 @@
         tabs: [
           {
             title: 'Description',
-            content: 'The Karissa V-Neck Tee features a semi-fitted shape that flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common problem areas. Find stunning womens cocktail dresses and party dresses.',
+            content: 'Need to add product descrirption',
           },
           {
             title: 'Read reviews',
@@ -314,29 +240,15 @@
           },
         ],
         selected: false,
-        breadcrumbs: [
-          {
-            text: 'Home',
-            route: {
-              link: '#',
-            },
-          },
-          {
-            text: 'Category',
-            route: {
-              link: '#',
-            },
-          },
-          {
-            text: 'Pants',
-            route: {
-              link: '#',
-            },
-          },
-        ],
+        breadcrumbs: [],
         isOpenNotification: false,
         openTab: 1,
       }
+    },
+    filters: {
+      comma (val) {
+        return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      },
     },
     methods: {
       addToCart () {
@@ -358,6 +270,38 @@
           .scrollIntoView({ behavior: 'smooth', block: 'end' })
         this.openTab = tabNumber
       },
+      getProdcutDetail (id) {
+        ProductService.getProduct(id).then((response) => {
+          this.product.name = response.data.data.name
+          this.product.description = response.data.data.etc
+          this.product.price = response.data.data.price
+          this.product.images.push({
+            desktop: { url: response.data.data.image },
+            mobile: { url: response.data.data.image },
+            big: { url: response.data.data.image },
+            alt: response.data.data.name,
+          })
+          this.product.details.push({
+            name: 'Product code',
+            value: response.data.data.id,
+          })
+          this.product.details.push({
+            name: '주원료 생산지',
+            value: response.data.data.origin,
+          })
+          this.product.details.push({
+            name: '용량',
+            value: response.data.data.perContent + response.data.data.unit,
+          })
+          this.product.details.push({
+            name: '제형',
+            value: response.data.data.formulation,
+          })
+        })
+      },
+    },
+    created () {
+      this.getProdcutDetail(this.$route.params.id)
     },
   }
 </script>
