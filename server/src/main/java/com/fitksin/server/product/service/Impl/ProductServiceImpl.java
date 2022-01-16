@@ -40,7 +40,22 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getProductAll(){
-        return this.productRepository.findAll();
+
+        List<Product> allProduct = this.productRepository.findAll();
+        List<Product> products = new ArrayList<>();
+        int i = 0;
+        for (Product product:
+                allProduct) {
+            if(i<8) {
+                products.add(product);
+                i++;
+            }
+            else{
+                break;
+            }
+        }
+
+        return allProduct;
     }
 
     @Override
@@ -93,7 +108,7 @@ public class ProductServiceImpl implements ProductService{
             index = "";
         }
 
-        return this.productRepository.findTop5ByIngredientCodeContains(index);
+        return this.productRepository.findTop5ByMainCodeContains(index);
     }
 
     @Override

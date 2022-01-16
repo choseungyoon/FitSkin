@@ -1,11 +1,15 @@
 package com.fitksin.server.product.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
-import javax.lang.model.element.Name;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Setter
@@ -17,49 +21,55 @@ import java.util.Date;
 public class Product {
 
     @Id
-    @Column(name = "productId")
-    private String productId;
+    @Column(name = "id")
+    private String id;
 
+    @Nullable
     @Column(name = "name")
     private String name;
 
-    @Column(name = "ingredientCode")
-    private String ingredientCode;
+    @Nullable
+    @Column(name = "main_code")
+    private String mainCode;
 
-    //@Column(name = "subIngredient")
-    //private String subIngredient;
-
+    @Nullable
     @Column(name = "formulation")
     private String formulation;
 
-    @Column(name = "registeredDate")
-    private Date registeredDate;
+    @Nullable
+    @Column(name = "certification_date")
+    private Date certificationDate;
 
+    @Nullable
     @Column(name = "origin")
     private String origin;
 
-    @Column(name = "perContent")
-    private double perContent;
+    @Nullable
+    @Column(name = "per_content")
+    private Double perContent;
 
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "totalVolume")
-    private int totalVolume;
-
-    @Column(name = "dayVolume")
-    private int dayVolume;
-
-    @Column(name = "image" ,columnDefinition = "LONGTEXT")
-    private String image;
-
-    //@Column(name = "etcIngredient")
-    //private String etcIngredient;
-
-    @Column(name = "description")
-    private String description;
-
+    @Nullable
     @Column(name ="unit")
     private String unit;
+
+    @Nullable
+    @Column(name = "price")
+    private Integer price;
+
+    @Nullable
+    @Column(name = "total_volume")
+    private Integer totalVolume;
+
+    @Nullable
+    @Column(name = "day_volume")
+    private Integer dayVolume;
+
+    @Nullable
+    @Column(name = "etc")
+    private String etc;
+
+    @Nullable
+    @Column(name = "image" ,columnDefinition = "LONGTEXT")
+    private String image;
 
 }

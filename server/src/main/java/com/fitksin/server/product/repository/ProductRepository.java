@@ -11,5 +11,5 @@ public interface ProductRepository extends JpaRepository<Product,String> {
 
     List<Product> findByNameContaining(String name);
 
-    List<Product> findTop5ByIngredientCodeContains(String code);
+    List<Product> findTop5ByMainCodeContains(String code);
 }
