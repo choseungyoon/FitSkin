@@ -13,19 +13,16 @@
         />
       </div>
       <div class="navbar__main">
- <!--       <sf-button
-          class="sf-button--text navbar__filters-button"
-          aria-label="Filters"
-          @click="isFilterSidebarOpen = true"
-        >
-          <sf-icon
-            size="24px"
-            color="#43464E"
-            icon="filter2"
-            class="navbar__filters-icon"
+        <div class="navbar__search desktop-only">
+          <sf-search-bar
+            placeholder="Search for items"
+            v-model="searchText"
+            :value="0"
+            :icon='{"size":"1.25rem","color":"#43464E"}'
+            aria-label="Search"
+            @keyup.enter="search"
           />
-          Filters
-        </sf-button> -->
+        </div>
         <div class="navbar__sort desktop-only">
           <span class="navbar__label">Sort by:</span>
           <sf-component-select
@@ -46,29 +43,6 @@
           <span class="navbar__label desktop-only">Products found: </span>
           <span class="desktop-only">{{foundItems}}</span>
           <span class="navbar__label smartphone-only">{{foundItems}} Items</span>
-        </div>
-        <div class="navbar__view">
-          <span class="navbar__view-label desktop-only">View</span>
-          <sf-icon
-            class="navbar__view-icon"
-            :color="'#43464E'"
-            icon="tiles"
-            size="12px"
-            role="button"
-            aria-label="Change to grid view"
-            :aria-pressed="isGridView"
-            @click="isGridView = true"
-          />
-          <sf-icon
-            class="navbar__view-icon"
-            :color="'#43464E'"
-            icon="list"
-            size="12px"
-            role="button"
-            aria-label="Change to list view"
-            :aria-pressed="!isGridView"
-            @click="isGridView = false"
-          />
         </div>
       </div>
     </div>
@@ -124,7 +98,6 @@
             :score-rating="product.rating.score"
             :is-in-wishlist="product.isInWishlist"
             :show-add-to-cart-button="true"
-            :code="product.code"
             class="products__product-card"
             @click:wishlist="toggleWishlist(i)"
             @click="productDetail(i)"
@@ -180,6 +153,7 @@
     SfProductCard,
     SfAccordion,
     SfComponentSelect,
+    SfSearchBar,
   } from '@storefront-ui/vue'
   export default {
     name: 'Category',
@@ -191,12 +165,14 @@
       SfProductCard,
       SfAccordion,
       SfComponentSelect,
+      SfSearchBar,
     },
     data () {
       return {
         currentPage: 0,
         foundItems: 0,
         sortBy: 'Latest',
+        searchText: '',
         isFilterSidebarOpen: false,
         isGridView: true,
         category: 'Clothing',
@@ -316,6 +292,27 @@
           })
         })
       }, */
+      search () {
+        this.products = []
+        var ref = this
+        ProductService.searchProduct(this.searchText).then((response) => {
+          var idx = 1
+          response.data.forEach(function (element) {
+            ref.products.push({
+              title: element.name,
+              id: element.id,
+              description: element.etc,
+              image: element.image,
+              price: { regular: element.price },
+              rating: { max: 5, score: 4 },
+              reviewsCount: 8,
+              isInWishlist: false,
+            })
+            idx = idx + 1
+          })
+          this.foundItems = this.products.length
+        })
+      },
       getProductByIndex (data) {
         this.products = []
         var ref = this
@@ -325,7 +322,7 @@
             ref.products.push({
               title: element.name,
               id: element.id,
-              description: 'Product description',
+              description: element.etc,
               image: element.image,
               price: { regular: element.price },
               rating: { max: 5, score: 4 },
@@ -342,27 +339,6 @@
       },
       productDetail (id) {
         this.$router.push({ name: 'ProductDetail', params: { id: this.paginatedData[id].id } })
-      },
-      getProduct () {
-        this.products = []
-        var ref = this
-        ProductService.getProductAll().then((response) => {
-          var idx = 1
-          response.data.forEach(function (element) {
-            ref.products.push({
-              title: element.name,
-              id: element.id,
-              description: 'Product description',
-              image: element.image,
-              price: { regular: element.price },
-              rating: { max: 5, score: 4 },
-              reviewsCount: 8,
-              isInWishlist: false,
-            })
-            idx = idx + 1
-          })
-          this.foundItems = this.products.length
-        })
       },
       nextPage () {
         if (this.currentPage === this.pageCount - 1) {
@@ -392,7 +368,7 @@
       },
     },
     created: function () {
-      this.getProduct()
+      this.getProductByIndex('전체')
     },
   }
   </script>
