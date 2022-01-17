@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://34.64.253.121:9000/api/product'
-// const API_URL = 'http://localhost:9000/api/product'
+// const API_URL = 'http://34.64.253.121:9000/api/product'
+const API_URL = 'http://localhost:9000/api/product'
 
 class ProductService {
   insertProduct (data) {

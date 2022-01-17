@@ -75,8 +75,9 @@
     <div class="main section">
       <div class="sidebar desktop-only">
         <sf-accordion
-          :open="sidebarAccordion[0].header"
-          :show-chevron="true"
+          open="all"
+          transition=""
+          :showChevron="true"
         >
           <sf-accordionItem
             v-for="(accordion, i) in sidebarAccordion"
@@ -85,7 +86,7 @@
           >
             <template>
               <sf-list class="list">
-                <sf-listItem
+                <sf-list-item
                   v-for="(item, j) in accordion.items"
                   :key="j"
                   class="list__item"
@@ -93,8 +94,9 @@
                   <sf-menu-item
                     :label="item.label"
                     :count="item.count"
+                    @click="getProductByIndex(item.label)"
                   />
-                </sf-listItem>
+                </sf-list-item>
               </sf-list>
             </template>
           </sf-accordionItem>
@@ -165,206 +167,6 @@
       </div>
       </div>
     </div>
-    <sf-sidebar
-      :visible="isFilterSidebarOpen"
-      title="Filters"
-      class="sidebar-filters"
-      @close="isFilterSidebarOpen = false"
-    >
-      <div class="filters desktop-only">
-        <sf-heading
-          :level="4"
-          title="Collection"
-          class="filters__title sf-heading--left"
-        />
-        <sf-filter
-          v-for="filter in filters.collection"
-          :key="filter.value"
-          :label="filter.label"
-          :count="filter.count"
-          :selected="filter.selected"
-          class="filters__item"
-          @change="filter.selected = !filter.selected"
-        />
-        <sf-heading
-          :level="4"
-          title="Color"
-          class="filters__title sf-heading--left"
-        />
-        <div class="filters__colors">
-          <sf-color
-            v-for="filter in filters.color"
-            :key="filter.value"
-            :color="filter.color"
-            :selected="filter.selected"
-            class="filters__color"
-            @click="filter.selected = !filter.selected"
-          />
-        </div>
-        <sf-heading
-          :level="4"
-          title="Size"
-          class="filters__title sf-heading--left"
-        />
-        <sf-filter
-          v-for="filter in filters.size"
-          :key="filter.value"
-          :label="filter.label"
-          :count="filter.count"
-          :selected="filter.selected"
-          class="filters__item"
-          @change="filter.selected = !filter.selected"
-        />
-        <sf-heading
-          :level="4"
-          title="Price"
-          class="filters__title sf-heading--left"
-        />
-        <sf-filter
-          v-for="filter in filters.price"
-          :key="filter.value"
-          :label="filter.label"
-          :count="filter.count"
-          :selected="filter.selected"
-          class="filters__item"
-          @change="filter.selected = !filter.selected"
-        />
-        <sf-heading
-          :level="4"
-          title="Material"
-          class="filters__title sf-heading--left"
-        />
-        <sf-filter
-          v-for="filter in filters.material"
-          :key="filter.value"
-          :value="filter.value"
-          :label="filter.label"
-          :selected="filter.selected"
-          class="filters__item"
-          @change="filter.selected = !filter.selected"
-        />
-      </div>
-      <sf-accordion class="filters smartphone-only">
-        <sf-accordion-item
-          header="Sort by"
-          class="filters__accordion-item"
-        >
-          <template #additional-info>
-            <span class="filters__chosen">
-              {{ sortBy }}
-            </span>
-          </template>
-          <sf-radio
-            v-for="sort in sortByOptions"
-            :key="sort.value"
-            v-model="sortBy"
-            :value="sort.value"
-            :label="sort.label"
-            class="filters__item"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Category"
-          class="filters__accordion-item"
-        >
-          <template #additional-info>
-            <span class="filters__chosen">
-              {{ category }}
-            </span>
-          </template>
-          <sf-radio
-            v-for="cat in sidebarAccordion"
-            :key="cat.header"
-            v-model="category"
-            :value="cat.header"
-            :label="cat.header"
-            class="filters__item"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Collection"
-          class="filters__accordion-item"
-        >
-          <sf-filter
-            v-for="filter in filters.collection"
-            :key="filter.value"
-            :label="filter.label"
-            :count="filter.count"
-            :selected="filter.selected"
-            class="filters__item"
-            @change="filter.selected = !filter.selected"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Color"
-          class="filters__accordion-item"
-        >
-          <sf-filter
-            v-for="filter in filters.color"
-            :key="filter.value"
-            :label="filter.label"
-            :color="filter.color"
-            :selected="filter.selected"
-            class="filters__item"
-            @change="filter.selected = !filter.selected"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Size"
-          class="filters__accordion-item"
-        >
-          <sf-filter
-            v-for="filter in filters.size"
-            :key="filter.value"
-            :label="filter.label"
-            :count="filter.count"
-            :selected="filter.selected"
-            class="filters__item"
-            @change="filter.selected = !filter.selected"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Price"
-          class="filters__accordion-item"
-        >
-          <sf-filter
-            v-for="filter in filters.price"
-            :key="filter.value"
-            :label="filter.label"
-            :count="filter.count"
-            :selected="filter.selected"
-            class="filters__item"
-            @change="filter.selected = !filter.selected"
-          />
-        </sf-accordion-item>
-        <sf-accordion-item
-          header="Material"
-          class="filters__accordion-item"
-        >
-          <sf-filter
-            v-for="filter in filters.material"
-            :key="filter.value"
-            :value="filter.value"
-            :label="filter.label"
-            :selected="filter.selected"
-            class="filters__item"
-            @change="filter.selected = !filter.selected"
-          />
-        </sf-accordion-item>
-      </sf-accordion>
-      <template #content-bottom>
-        <div class="filters__buttons">
-          <sf-button
-            class="sf-button--full-width"
-            @click="isFilterSidebarOpen = false"
-            >Done</sf-button>
-          <sf-button
-            class="sf-button--full-width filters__button-clear"
-            @click="clearAllFilters"
-            >Clear all</sf-button>
-        </div>
-      </template>
-    </sf-sidebar>
   </base-section>
 
 </template>
@@ -372,33 +174,23 @@
   import ProductService from '@/services/ProductService'
   import {
     SfHeading,
-    SfSidebar,
-    SfButton,
     SfList,
     SfIcon,
     SfMenuItem,
-    SfFilter,
     SfProductCard,
     SfAccordion,
     SfComponentSelect,
-    SfColor,
-    SfRadio,
   } from '@storefront-ui/vue'
   export default {
     name: 'Category',
     components: {
       SfHeading,
-      SfSidebar,
-      SfButton,
       SfList,
       SfIcon,
       SfMenuItem,
-      SfFilter,
       SfProductCard,
       SfAccordion,
       SfComponentSelect,
-      SfColor,
-      SfRadio,
     },
     data () {
       return {
@@ -424,24 +216,14 @@
         ],
         sidebarAccordion: [
           {
-            header: 'Skin Type',
+            header: '피부 주요성분',
             items: [
-              { label: 'All', count: '280' },
-              { label: '지성', count: '23' },
-              { label: '건성', count: '54' },
-              { label: '복합성', count: '34' },
-              { label: '중성', count: '56' },
-            ],
-          },
-          {
-            header: 'Main Index',
-            items: [
-              { label: '수분', count: '280' },
-              { label: '민강성', count: '23' },
-              { label: '색소침착', count: '54' },
-              { label: '트러블', count: '34' },
-              { label: '민감성', count: '56' },
-              { label: '피지분비', count: '7' },
+              { label: '전체' },
+              { label: '수분' },
+              { label: '민감성' },
+              { label: '색소침착' },
+              { label: '트러블' },
+              { label: '탄력' },
             ],
           },
         ],
@@ -534,6 +316,27 @@
           })
         })
       }, */
+      getProductByIndex (data) {
+        this.products = []
+        var ref = this
+        ProductService.getProductByIndex(data).then((response) => {
+          var idx = 1
+          response.data.forEach(function (element) {
+            ref.products.push({
+              title: element.name,
+              id: element.id,
+              description: 'Product description',
+              image: element.image,
+              price: { regular: element.price },
+              rating: { max: 5, score: 4 },
+              reviewsCount: 8,
+              isInWishlist: false,
+            })
+            idx = idx + 1
+          })
+          this.foundItems = this.products.length
+        })
+      },
       toggleWishlist (index) {
         this.products[index].isInWishlist = !this.products[index].isInWishlist
       },

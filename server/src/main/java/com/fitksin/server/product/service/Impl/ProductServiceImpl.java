@@ -89,27 +89,28 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getProductByIndex(String index){
-        if(index.equals("피부보습")){
+        if(index.equals("전체")){
+            return this.productRepository.findAll();
+        }
+        else if(index.equals("수분")){
             index = "M";
         }
-        else if(index.equals("피부 색소침착")){
+        else if(index.equals("색소침착")){
             index = "P";
         }
-        else if(index.equals("피부민감성")){
-            //index = "R";
-            index = "";
+        else if(index.equals("민감성")){
+            index = "R";
         }
-        else if(index.equals("피부 트러블빈도")){
+        else if(index.equals("트러블")){
             index = "T";
         }
-        else if(index.equals("피부탄력")){
+        else if(index.equals("탄력")){
             index = "W";
         }
-        else{
+        else if(index.equals("피지분비")){
             index = "";
         }
-
-        return this.productRepository.findTop5ByMainCodeContains(index);
+        return this.productRepository.findByMainCodeContains(index);
     }
 
     @Override
