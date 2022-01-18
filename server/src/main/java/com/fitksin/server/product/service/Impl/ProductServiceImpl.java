@@ -114,6 +114,33 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> recommendProduct(String index){
+        if(index.equals("전체")){
+            return this.productRepository.findAll();
+        }
+        else if(index.equals("수분")){
+            index = "M";
+        }
+        else if(index.equals("색소침착")){
+            index = "P";
+        }
+        else if(index.equals("민감성")){
+            index = "R";
+        }
+        else if(index.equals("트러블")){
+            index = "T";
+        }
+        else if(index.equals("탄력")){
+            index = "W";
+        }
+        else if(index.equals("피지분비")){
+            index = "";
+        }
+        return this.productRepository.findTop10ByMainCodeContains(index);
+
+    }
+
+    @Override
     public List<Ingredient> getIngredientAll(){
         return this.ingredientRepository.findAll();
     }

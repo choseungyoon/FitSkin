@@ -225,71 +225,36 @@
             cols="12"
             md="12"
           >
-          <div>
-            <center>
-                <span class="text-h4 font-weight-black">
-                  당신에게 필요한 제품을 FitSkin이 추천해드려요
-                 </span>
-            </center>
+            <div class="match-with-it">
+            <p class="match-with-it__paragraph">Match with it</p>
+            <sf-button class="sf-button--text smartphone-only">See all</sf-button>
           </div>
-          </v-col>
-        </v-row>
-        <v-row
-          justify="center"
-          align="center"
-          class="px-3"
-        >
-          <v-sheet
-              class="mx-auto"
-              elevation="0"
-              max-width="100%"
-          >
-            <v-slide-group
-              class="pa-4"
-              show-arrows
-            >
-              <template v-slot:next>
-                <v-icon large>mdi-arrow-right-bold-circle-outline</v-icon>
-              </template>
-                  <template v-slot:prev>
-                <v-icon  large>mdi-arrow-left-bold-circle-outline</v-icon>
-              </template>
-            <v-slide-item
-                v-for="(feature, i) in products"
-                :key="i"
-            >
-              <v-card
-                class="ma-4"
-                max-width="100%"
-                elevation="0"
+          <sf-carousel>
+            <sf-carousel-item>
+              <sf-carousel-item
+                v-for="(product, index) in paginatedData"
+                :key="index"
+                class="carousel__item"
               >
-                <v-img
-                  :src="feature.image"
-                  max-width="30%"
-                ></v-img>
-
-                <v-card-title>
-                  {{feature.name}}
-                </v-card-title>
-
-                <v-card-subtitle>
-                    {{feature.price.toLocaleString()}}원
-                </v-card-subtitle>
-
-                <v-card-actions>
-                  <v-btn
-                    color="orange lighten-2"
-                    text
-                  >
-                    자세히보기
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-slide-item>
-            </v-slide-group>
-          </v-sheet>
-
+                <sf-product-card
+                  :image="product.image"
+                  :title="product.title"
+                  :regular-price="product.price.regular"
+                  :special-price="product.price.special"
+                  :score-rating="product.rating.score"
+                  :max-rating="product.rating.max"
+                  :is-in-wishlist="product.isInWishlist"
+                  :show-add-to-cart-button="true"
+                  :reviews-count="product.reviews"
+                  :badge-label="product.badgeLabel"
+                  :badge-color="product.badgeColor"
+                  @click:wishlist="toggleWishlist(index)"
+                  @click="productDetail(index)"
+                />
+              </sf-carousel-item>
+            </sf-carousel-item>
+          </sf-carousel>
+          </v-col>
         </v-row>
         <v-row>
           <br><br>
@@ -350,6 +315,11 @@
 </template>
 
 <script>
+  import {
+    SfCarousel,
+    SfButton,
+    SfProductCard,
+  } from '@storefront-ui/vue'
   import VueApexCharts from 'vue-apexcharts'
   import SurveyService from '@/services/SurveyService'
   import ProductService from '@/services/ProductService'
@@ -360,9 +330,13 @@
     metaInfo: { title: 'Skin Report' },
     components: {
       apexcharts: VueApexCharts,
+      SfCarousel,
+      SfButton,
+      SfProductCard,
     },
     data () {
       return {
+        recommendProduct: [],
         length: 3,
         window: 0,
         total: 0,
@@ -476,8 +450,6 @@
           this.series = response.data.data
           this.total = response.data.data[0].total
           this.analysisScore = this.series[0]
-          console.log(this.series)
-
           for (var score in this.analysisScore.data) {
             const title = this.chartOptions.xaxis.categories[score]
             let icon = ''
@@ -527,15 +499,20 @@
             console.log(err)
           })
 
-        ProductService.getProductByIndex(this.worstIndex.name)
+        ProductService.recommendProduct(this.worstIndex.name)
           .then((response) => {
-            ref.recommendProduct = response.data
-            for (var product in response.data) {
-              ref.products.push({
-                name: response.data[product].name,
-                image: response.data[product].image,
-                price: response.data[product].price,
-                show: false,
+            ref.recommendProduct = []
+            for (var productIdex in response.data) {
+              ref.recommendProduct.push({
+                id: response.data[productIdex].id,
+                title: response.data[productIdex].name,
+                image: response.data[productIdex].image,
+                price: { regular: response.data[productIdex].price + '원' },
+                rating: { max: 5, score: 4 },
+                isInWishlist: true,
+                reviews: 8,
+                badgeLabel: '',
+                badgeColor: 'color-primary',
               })
             }
             console.log(ref.recommendProduct)
@@ -545,7 +522,15 @@
           })
       })
     },
+    computed: {
+      paginatedData () {
+        return this.recommendProduct.slice(0, 3)
+      },
+    },
     methods: {
+      productDetail (id) {
+        this.$router.push({ name: 'ProductDetail', params: { id: this.paginatedData[id].id } })
+      },
       getRecommnedHabit () {
         SurveyService.getRecommendHabits(this.worstIndex.name)
           .then((response) => {
@@ -641,3 +626,33 @@
     },
   }
 </script>
+<style lang="scss" scoped>
+@import "~@storefront-ui/vue/styles";
+.match-with-it {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: var(--spacer-xl);
+  font-size: var(--h3-font-size);
+  font-family: var(--font-family--secondary);
+  font-weight: var(--font-weight--bold);
+  border-bottom: solid 1px var(--c-light);
+  &__paragraph {
+    margin-bottom: var(--spacer-xs);
+  }
+  @include for-desktop {
+    border: none;
+    justify-content: center;
+    font-weight: var(--font-weight--semibold);
+  }
+}
+.carousel {
+  margin: 0 calc(-1 * var(--spacer-sm)) 0 0;
+  @include for-desktop {
+    margin: 0;
+  }
+  &__item {
+    margin: 1.9375rem 0 2.4375rem 0;
+  }
+}
+</style>

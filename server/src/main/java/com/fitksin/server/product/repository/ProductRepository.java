@@ -13,5 +13,7 @@ public interface ProductRepository extends JpaRepository<Product,String> {
 
     List<Product> findByMainCodeContains(String code);
 
+    List<Product> findTop10ByMainCodeContains(String code);
+
     List<Product> findByName(String name);
 }

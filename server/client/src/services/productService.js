@@ -67,7 +67,11 @@ class ProductService {
 
   recommendIngredient (data) {
     return axios.get(API_URL + `/ingredient/recommend?index=${data}`)
- }
+  }
+
+  recommendProduct (data) {
+    return axios.get(API_URL + `/product/recommend?index=${data}`)
+  }
 }
 
 export default new ProductService()

@@ -12,6 +12,7 @@ public interface ProductService {
     List<Product> getProductAll();
     Product getProduct(String id);
     List<Product> getProductByIndex(String index);
+    List<Product> recommendProduct(String index);
     List<Ingredient> getIngredientAll();
     List<Ingredient> getIngredientByCode(String index);
     void makeProductFile();

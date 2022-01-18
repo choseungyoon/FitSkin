@@ -38,6 +38,11 @@ public class ProductController {
         return this.productService.getProductByIndex(index);
     }
 
+    @GetMapping(value = "/product/recommend")
+    public List<Product> recommendProduct(@RequestParam String index){
+        return this.productService.recommendProduct(index);
+    }
+
     @GetMapping(value = "/ingredient/recommend")
     public List<Ingredient> recommendIngredient(@RequestParam String index){
         return this.productService.getIngredientByCode(index);
