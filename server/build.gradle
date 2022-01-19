@@ -42,6 +42,7 @@ dependencies {
 	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.0.0'
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+	implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }

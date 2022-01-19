@@ -118,7 +118,7 @@ public class ProductServiceImpl implements ProductService{
         if(index.equals("전체")){
             return this.productRepository.findAll();
         }
-        else if(index.equals("수분")){
+        else if(index.equals("피부보습")){
             index = "M";
         }
         else if(index.equals("색소침착")){
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService{
         else if(index.equals("트러블")){
             index = "T";
         }
-        else if(index.equals("탄력")){
+        else if(index.equals("피부탄력")){
             index = "W";
         }
         else if(index.equals("피지분비")){
