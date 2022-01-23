@@ -84,6 +84,7 @@
           v-bind="tabAttrs"
         >
           <v-tab
+              to = "Profile"
               active-class="primary--text"
               class="font-weight-medium text-none"
               min-width="120px"

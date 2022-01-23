@@ -39,6 +39,12 @@ const router = new Router({
           component: () => import('@/views/home/Index.vue'),
         },
         {
+          path: 'profile',
+          name: 'Profile',
+          // lazy-loaded
+          component: () => import('@/views/sections/Profile.vue'),
+        },
+        {
           path: 'about',
           name: 'About',
           component: () => import('@/views/about/Index.vue'),

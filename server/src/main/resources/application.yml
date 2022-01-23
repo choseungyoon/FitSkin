@@ -8,6 +8,18 @@ spring:
     password: changeme
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cho31250
+    password: cheeze1174!
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
   # mysql 사용
   jpa:
     database: mysql

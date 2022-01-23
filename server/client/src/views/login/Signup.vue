@@ -158,7 +158,7 @@
     },
     mounted () {
       if (this.loggedIn) {
-        this.$router.push('/profile')
+        this.$router.push('/')
       }
     },
     methods: {
@@ -211,7 +211,7 @@
             this.message = data.message
             alert(this.message)
             this.successful = true
-            // this.$router.push('/login')
+            this.$router.push('/login')
           },
           (error) => {
             this.message =
