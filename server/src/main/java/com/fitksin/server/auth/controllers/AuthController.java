@@ -55,7 +55,10 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        System.out.println("Login request");
         System.out.println(loginRequest.getEmail());
+        System.out.println(loginRequest.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -66,15 +69,28 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        System.out.println("userDetails");
+        System.out.println(userDetails.getPassword());
+        System.out.println(userDetails.getEmail());
+        System.out.println(userDetails.getUsername());
+        System.out.println(userDetails.getId());
+        System.out.println(roles);
+
+        ResponseEntity<?> ans = ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles));
+
+        System.out.println("return  : " + ans);
+
+        return ans;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+        System.out.println("Sign UP");
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
@@ -86,6 +102,8 @@ public class AuthController {
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
+        System.out.println("Email : " + user.getEmail());
+        System.out.println("UserName: " + user.getUsername());
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -124,16 +142,34 @@ public class AuthController {
     }
 
     @GetMapping("/klogin")
-    public HashMap<String,String> kakaoLogin(@RequestParam String authorize_code){
+    public ResponseEntity<?> kakaoLogin(@RequestParam String authorize_code){
         System.out.println("Execute kakao Login");
         String access_token = kakaoLoginService.getAccessToken(authorize_code);
-        return  kakaoLoginService.getUserInfo(access_token);
+
+        HashMap<String,String> userInfoFromKakao = kakaoLoginService.getUserInfo(access_token);
+        System.out.println("Check existed user from kakao info");
+        if (!userRepository.existsByEmail(userInfoFromKakao.get("email"))) {
+            System.out.println("Execute Sign up");
+            SignupRequest signupRequest = new SignupRequest();
+            signupRequest.setEmail(userInfoFromKakao.get("email"));
+            signupRequest.setUsername(userInfoFromKakao.get("username"));
+            signupRequest.setPassword(userInfoFromKakao.get("id"));
+            registerUser(signupRequest);
+        }
+
+        System.out.println("Execute Sign in");
+
+        return this.authenticateUser(
+                new LoginRequest(userInfoFromKakao.get("email"),userInfoFromKakao.get("id")));
+
     }
 
     @PutMapping("/update/account")
     public ResponseEntity<?> updateAccount(@Valid @RequestBody User user){
         User updatedUser = this.userRepository.findById(user.getId()).get();
         updatedUser.setUsername(user.getUsername());
+
+
         return ResponseEntity.ok(new MessageResponse("User info is updated successfully!"));
 
     }

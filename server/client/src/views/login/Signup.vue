@@ -128,7 +128,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import User from '@/models/user'
   export default {
     name: 'Register',
@@ -149,6 +148,7 @@
         },
         show: true,
         dialog: false,
+        loading: false,
       }
     },
     computed: {
@@ -170,25 +170,8 @@
         }
       },
       getToken () {
-        axios
-          .get('http://fitskin.co.kr/api/auth/klogin?authorize_code=' + this.codes)
-          .then((res) => {
-            this.user.email = res.data.email
-            this.user.password = res.data.id
-            this.user.username = res.data.username
-            console.log(res.data.email)
-            console.log(res.data.id)
-            console.log(res.data.username)
-            if (this.form.password === undefined) {
-              alert('올바르지 못한 접근입니다')
-              // this.$router.push('/')
-            } else {
-              this.login()
-            }
-          })
-      },
-      login () {
-        this.$store.dispatch('auth/login', this.user).then(
+        console.log('Start get Token')
+        this.$store.dispatch('auth/loginByKakao', this.codes).then(
           () => {
             this.$router.push('/')
           },
@@ -204,8 +187,6 @@
       handleRegister () {
         this.message = ''
         this.submitted = true
-        console.log(this.user)
-
         this.$store.dispatch('auth/register', this.user).then(
           (data) => {
             this.message = data.message

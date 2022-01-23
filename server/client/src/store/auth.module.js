@@ -45,6 +45,24 @@ export const auth = {
         },
       )
     },
+    loginByKakao ({ commit }, codes) {
+      console.log('auth.modules')
+      console.log('codes : ' + codes)
+      return AuthService.loginByKakao(codes).then(
+        (user) => {
+          console.log('auth.modules - login success')
+          console.log('user : ' + user)
+          commit('loginSuccess', user)
+          return Promise.resolve(user)
+        },
+        (error) => {
+          console.log('auth.modules - login fail')
+          console.log('error :' + error)
+          commit('loginFailure')
+          return Promise.reject(error)
+        },
+      )
+    },
   },
   mutations: {
     loginSuccess (state, user) {
