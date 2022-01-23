@@ -129,4 +129,12 @@ public class AuthController {
         String access_token = kakaoLoginService.getAccessToken(authorize_code);
         return  kakaoLoginService.getUserInfo(access_token);
     }
+
+    @PutMapping("/update/account")
+    public ResponseEntity<?> updateAccount(@Valid @RequestBody User user){
+        User updatedUser = this.userRepository.findById(user.getId()).get();
+        updatedUser.setUsername(user.getUsername());
+        return ResponseEntity.ok(new MessageResponse("User info is updated successfully!"));
+
+    }
 }

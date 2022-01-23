@@ -37,6 +37,14 @@ export const auth = {
         },
       )
     },
+    update ({ commit }, user) {
+      return AuthService.updateAccount(user).then(
+        (response) => {
+          commit('updateSuccess', user)
+          return Promise.resolve(user)
+        },
+      )
+    },
   },
   mutations: {
     loginSuccess (state, user) {
@@ -56,6 +64,10 @@ export const auth = {
     },
     registerFailure (state) {
       state.status.loggedIn = false
+    },
+    updateSuccess (state, user) {
+      state.status.loggedIn = true
+      state.user = user
     },
   },
 }

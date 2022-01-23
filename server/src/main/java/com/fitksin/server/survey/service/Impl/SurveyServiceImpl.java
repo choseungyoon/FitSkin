@@ -526,7 +526,7 @@ public class SurveyServiceImpl implements SurveyService {
 
 
     public JSONArray selectResultAll(String email){
-
+        System.out.println(email);
         List<SurveyResult> results = this.resultRepository.findByEmailOrderByCreatedAtAsc(email);
         JSONArray allSurvey = new JSONArray();
 

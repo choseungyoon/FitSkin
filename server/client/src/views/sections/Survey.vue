@@ -67,6 +67,9 @@
         })
         return survyeModel
       },
+      currentUser () {
+        return this.$store.state.auth.user
+      },
     },
     methods: {
       completedSurvey: function (resultData) {
