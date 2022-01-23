@@ -59,7 +59,7 @@
           v-bind="tabAttrs"
         >
          <v-tab
-              to = "Login"
+              :to ="{ name: 'Login'}"
               active-class="primary--text"
               class="font-weight-medium text-none"
               min-width="120px"
@@ -84,7 +84,7 @@
           v-bind="tabAttrs"
         >
           <v-tab
-              to = "Profile"
+              :to ="{ name: 'Profile'}"
               active-class="primary--text"
               class="font-weight-medium text-none"
               min-width="120px"

@@ -22,7 +22,7 @@
          <sf-order-history :orders="account.orders" />
         </sf-content-page>
         <sf-content-page title="유전자 검사 결과">
-          <sf-my-newsletter />
+            <error></error>
         </sf-content-page>
       </sf-content-category>
     </sf-content-pages>
@@ -33,16 +33,16 @@
   import {
     SfContentPages,
     SfMyProfile,
-    SfMyNewsletter,
     SfOrderHistory,
   } from '@storefront-ui/vue'
+  import Error from '@storefront-ui/vue/src/components/pages/error/Error.vue'
 
   export default {
     name: 'Profile',
     components: {
       SfContentPages,
       SfMyProfile,
-      SfMyNewsletter,
+      Error,
       SfOrderHistory,
     },
     data () {
