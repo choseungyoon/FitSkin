@@ -52,20 +52,6 @@
           <p class="product__description desktop-only">
             {{ product.description }}
           </p>
-          <sf-button class="sf-button--text desktop-only product__guide">
-            Size guide
-          </sf-button>
-          <sf-add-to-cart
-            v-model="qty"
-            class="product__add-to-cart"
-            @click="addToCart"
-          />
-          <sf-button class="sf-button--text desktop-only product__save">
-            Save for later
-          </sf-button>
-          <sf-button class="sf-button--text desktop-only product__compare">
-            Add to compare
-          </sf-button>
         </div>
         <sf-tabs
           id="tabs"
@@ -116,16 +102,7 @@
               v-else-if="tab.title === 'Additional Information'"
               class="product__additional-info"
             >
-              <p class="product__additional-info__title">Brand</p>
-              <p>{{ product.brand }}</p>
-              <p class="product__additional-info__title">Take care of me</p>
-              <p class="product__additional-info__paragraph">
-                Just here for the care instructions?
-              </p>
-              <p class="product__additional-info__paragraph">
-                Yeah, we thought so
-              </p>
-              <p>{{ product.careInstructions }}</p>
+              <p class="product__additional-info__title">복용 시 주의사항</p>
             </div>
           </sf-tab>
         </sf-tabs>
@@ -157,7 +134,6 @@
     SfProperty,
     SfButton,
     SfReview,
-    SfAddToCart,
     SfBreadcrumbs,
     SfNotification,
   } from '@storefront-ui/vue'
@@ -179,7 +155,6 @@
       SfProperty,
       SfButton,
       SfReview,
-      SfAddToCart,
       SfBreadcrumbs,
       SfNotification,
     },
@@ -201,7 +176,7 @@
           details: [],
           careInstructions: 'Do not wash!',
           brand:
-            'Brand name is the perfect pairing of quality and design. This label creates major everyday vibes with its collection of modern brooches, silver and gold jewellery, or clips it back with hair accessories in geo styles.',
+            '.',
           reviews: [
             {
               author: 'Jane D.Smith',
@@ -228,7 +203,7 @@
         tabs: [
           {
             title: 'Description',
-            content: 'Need to add product descrirption',
+            content: '',
           },
           {
             title: 'Read reviews',

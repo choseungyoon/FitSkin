@@ -2,7 +2,44 @@
   <base-section
     id="survey"
   >
-    <div class="justify-center align-center">
+    <div
+      v-if="loading"
+      class="justify-center align-center"
+    >
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-col
+          cols="10"
+          md="12"
+        >
+          <center>
+            <ring-loader
+              class="custom-class"
+              :active="loading"
+              :indeterminate="loading"
+              color='#bada55'
+              size=250
+              sizeUnit="px"
+              align="center"
+              justify="center"
+            />
+            <br><br>
+            <base-heading
+              class="font-weight-black"
+              title="FitSkin 알고리즘 분석중..."
+              align="center"
+            />
+          </center>
+        </v-col>
+      </v-row>
+
+    </div>
+    <div
+      v-else
+      class="justify-center align-center"
+    >
       <v-row
         align="center"
         justify="center"
@@ -46,6 +83,7 @@
   import 'survey-vue/modern.css'
   import '@/assets/survey/css/index.css'
   import SurveyService from '@/services/SurveyService'
+  import { RingLoader } from '@saeris/vue-spinners'
 
   SurveyVue.StylesManager.applyTheme('modern')
 
@@ -56,6 +94,12 @@
     metaInfo: { title: 'FikSkin-피부진단' },
     components: {
       Survey,
+      RingLoader,
+    },
+    data () {
+      return {
+        loading: false,
+      }
     },
     computed: {
       surveyModel () {
@@ -75,13 +119,15 @@
       completedSurvey: function (resultData) {
         SurveyService.insertResult(resultData, this.currentUser != null ? this.currentUser.email : 'none')
           .then((response) => {
-            this.$router.push({
-              path: `/skin_analysis/${response.data.data}`,
-            })
+            this.loading = true
+            setTimeout(() => this.$router.push({ path: `/skin_analysis/${response.data.data}` }), 3000)
           })
           .catch((err) => {
             console.log(err)
           })
+      },
+      activate () {
+        setTimeout(() => (this.loading = false), 30000)
       },
     },
   }
