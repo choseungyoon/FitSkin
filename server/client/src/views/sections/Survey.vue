@@ -127,7 +127,7 @@
           })
       },
       activate () {
-        setTimeout(() => (this.loading = false), 30000)
+        setTimeout(() => (this.loading = false), 35000)
       },
     },
   }
