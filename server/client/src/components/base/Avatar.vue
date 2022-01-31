@@ -104,7 +104,7 @@
     methods: {
       getIconColor () {
         const INTENSITY_THRESHOLD = 145
-        const defaultColor = this.color === 'primary' ? 'white' : 'primary'
+        const defaultColor = 'white'
         const el = this.$refs.avatar?.$el
         if (!el) {
           return defaultColor

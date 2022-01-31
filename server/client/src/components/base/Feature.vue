@@ -17,7 +17,7 @@
         class="text-center flex-column"
       >
         <base-subheading
-          class="title primary--text mt-4"
+          class="title black--text mt-4"
           align="center"
           :title="title"
         />
@@ -50,11 +50,11 @@
       },
       text: {
         type: String,
-        default: '',
+        default: '#000000',
       },
       avatarColor: {
         type: String,
-        default: 'primary',
+        default: '#14D19DFF',
       },
       outlined: Boolean,
       outlineColor: String,

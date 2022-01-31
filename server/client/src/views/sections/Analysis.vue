@@ -198,7 +198,7 @@
         <v-row
           justify="center"
           align="center"
-          class="px-10"
+          class="px-12"
         >
           <template v-for="(feature, i) in ingredients">
             <v-col
@@ -386,7 +386,7 @@
             },
           },
           markers: {
-            size: 4,
+            size: 6,
             colors: ['#fff'],
             strokeColor: '#B3E5FC',
             strokeWidth: 2,
