@@ -1,4 +1,4 @@
-<template>
+d<template>
   <component
     :is="tag"
     :class="classes"

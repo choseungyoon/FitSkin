@@ -178,35 +178,11 @@
           brand:
             '.',
           reviews: [
-            {
-              author: 'Jane D.Smith',
-              date: 'April 2019',
-              message:
-                'I was looking for a bright light for the kitchen but wanted some item more modern than a strip light. this one is perfect, very bright and looks great. I can comment on interlation as I had an electrition instal it. Would recommend.',
-              rating: {
-                max: 5,
-                rate: 4,
-              },
-            },
-            {
-              author: 'Jane D.Smith',
-              date: 'April 2019',
-              message:
-                'I was looking for a bright light for the kitchen but wanted some item more modern than a strip light. this one is perfect, very bright and looks great. I can comment on interlation as I had an electrition instal it. Would recommend.',
-              rating: {
-                max: 5,
-                rate: 4,
-              },
-            },
           ],
         },
         tabs: [
           {
             title: 'Description',
-            content: '',
-          },
-          {
-            title: 'Read reviews',
             content: '',
           },
           {

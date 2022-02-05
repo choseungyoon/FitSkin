@@ -1,8 +1,274 @@
 <template>
-  <div
-    ref="document"
-    class="justify-center align-center"
-  >
+  <div>
+     <vue-html2pdf
+        :show-layout="false"
+        :float-layout="true"
+        :enable-download="false"
+        :preview-modal="true"
+        :paginate-elements-by-height="1400"
+        filename="fitskin_report.pdf"
+        :pdf-quality="2"
+        :manual-pagination="true"
+        pdf-format="a4"
+        pdf-orientation="landscape"
+        pdf-content-width="100%"
+        ref="html2Pdf"
+
+        @beforeDownload="beforeDownload($event)"
+    >
+        <pdf-content slot="pdf-content">
+            <v-app>
+              <base-section>
+              <v-row
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  cols="12"
+                >
+                <div class="justify-center align-center">
+                  <base-heading
+                    title="FITSKIN 피부진단 결과"
+                    align="center"
+                  />
+                  <base-divider
+                    color="primary"
+                    align="center"
+                  />
+                </div>
+                <v-row
+                  justify="center"
+                  align="center"
+                >
+                  <v-col
+                    cols="12"
+                    md="5"
+                  >
+                    <apexcharts
+                      type="radar"
+                      width="400px"
+                      height="400px"
+                      align="center"
+                      :options="chartOptions"
+                      :series="series"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    md="7"
+                  >
+                    <v-row>
+                      <v-col cols="12">
+                        <v-row
+                          align="center"
+                          justify="center"
+                          class="px-10"
+                        >
+                          <template v-for="(feature, i) in features">
+                            <v-col
+                              :key="i"
+                              cols="6"
+                              md="4"
+                            >
+                              <base-feature
+                                class="pa-2"
+                                v-bind="feature"
+                              />
+                            </v-col>
+                          </template>
+                        </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <br>
+                </v-row>
+                <div class="justify-center align-center">
+                  <v-row>
+                    <br>
+                  </v-row>
+                  <v-row align="start">
+                    <v-col
+                      cols="12"
+                      sm="12"
+                      class="px-12"
+                    >
+                      <div>
+                          <span class="text-h4 font-weight-black">
+                            당신의
+                          </span>
+                          <span class="text-h4 font-weight-black pink--text text--lighten-3">
+                            {{ worstIndex.name }}
+                          </span>
+                          <span class="text-h4 font-weight-black">
+                            점수는
+                          </span>
+                          <span class="text-h3 font-weight-black pink--text text--lighten-3">
+                            {{ worstIndex.score }}
+                          </span>
+                          <span class="text-h4 font-weight-black">
+                            점이에요
+                          </span>
+                      </div>
+                      <div>
+                          <span class="text-h6 font-weight-black">
+                            6가지 피부 주요 성분중 가장 점수가 낮아요
+                          </span>
+                      </div>
+                      <div>
+                        <br>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <v-divider />
+                  <v-row>
+                    <br>
+                  </v-row>
+                  <v-row
+                    justify="center"
+                    align="center"
+                    class="px-3"
+                  >
+                    <v-col
+                      cols="12"
+                      md="6"
+                    >
+                      <apexcharts
+                        type="radialBar"
+                        height="350"
+                        :options="chartOptions2"
+                        :series="pieseries"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="6"
+                    >
+                      <span class="text-h6 font-weight-black">
+                            나의 피부 종합점수는 {{total}}점이에요
+                      </span>
+                      <br><br>
+                      <span class="text-h6 font-weight-black">
+                            {{analysisMsg}}
+                      </span>
+                      <br><br>
+                      <span class="text-h6 font-weight-black">
+                            아래 생활습관을 통해 {{worstIndex.name}} 관리 시작해보세요
+                      </span>
+                      <br><br>
+                        <li
+                          style="list-style: none;"
+                          v-for="(value) in recommendHabits"
+                          v-bind:key="value"
+                          >
+                          <v-icon left>
+                            mdi-checkbox-outline
+                          </v-icon>
+                          <span class="text-h6 font-weight-black">
+                          {{ value.title }}
+                          </span>
+                        </li>
+                    </v-col>
+                  </v-row>
+                  <v-row><br><br></v-row>
+                  <v-row
+                    justify="center"
+                    align="center"
+                    class="px-3"
+                  >
+                    <v-col
+                      cols="12"
+                      md="12"
+                    >
+                    <div>
+                      <span class="text-h4 font-weight-black pink--text text--lighten-3">
+                          {{ worstIndex.name }}
+                      </span>
+                      <span class="text-h4 font-weight-black">
+                          에 도움되는 성분이에요
+                      </span>
+                    </div>
+                    <div>
+                      <span class="text-h6 font-weight-black">
+                          참고해서 꾸준히 관리하면 더 좋아질 거에요!
+                      </span>
+                    </div>
+                    <br>
+                    </v-col>
+                  </v-row>
+                  <v-divider />
+                  <v-row>
+                    <br>
+                  </v-row>
+                  <v-row
+                    justify="center"
+                    align="center"
+                    class="px-12"
+                  >
+                    <template v-for="(feature, i) in ingredients">
+                      <v-col
+                        :key="i"
+                        cols="12"
+                        md="4"
+                      >
+                        <base-feature
+                          class="pa-2"
+                          v-bind="feature"
+                        />
+                      </v-col>
+                    </template>
+                  </v-row>
+                  <v-row>
+                    <br>
+                  </v-row>
+                  <v-row
+                    justify="center"
+                    align="center"
+                    class="px-3"
+                  >
+                    <v-col
+                      cols="12"
+                      md="12"
+                    >
+                      <div class="match-with-it">
+                      <p class="match-with-it__paragraph">Match with it</p>
+                      <sf-button class="sf-button--text smartphone-only">See all</sf-button>
+                    </div>
+                    <sf-carousel>
+                      <sf-carousel-item>
+                        <sf-carousel-item
+                          v-for="(product, index) in paginatedData"
+                          :key="index"
+                          class="carousel__item"
+                        >
+                          <sf-product-card
+                            :image="product.image"
+                            :title="product.title"
+                            :regular-price="product.price.regular"
+                            :special-price="product.price.special"
+                            :score-rating="product.rating.score"
+                            :max-rating="product.rating.max"
+                            :is-in-wishlist="product.isInWishlist"
+                            :show-add-to-cart-button="true"
+                            :reviews-count="product.reviews"
+                            :badge-label="product.badgeLabel"
+                            :badge-color="product.badgeColor"
+                            @click:wishlist="toggleWishlist(index)"
+                            @click="productDetail(index)"
+                          />
+                        </sf-carousel-item>
+                      </sf-carousel-item>
+                    </sf-carousel>
+                    </v-col>
+                  </v-row>
+                </div>
+                </v-col>
+              </v-row>
+              </base-section>
+            </v-app>
+        </pdf-content>
+    </vue-html2pdf>
     <base-section
       id="analysis-report"
     >
@@ -270,7 +536,7 @@
             color="white"
             class="primary--text font-weight-bold text-none mr-4 mb-1"
             target="_blank"
-            @click="exportToPDF"
+            @click="generateReport"
           >
             <span v-text="`PDF로 다운로드 받기`" />
           </base-btn>
@@ -323,7 +589,7 @@
   import VueApexCharts from 'vue-apexcharts'
   import SurveyService from '@/services/SurveyService'
   import ProductService from '@/services/ProductService'
-  import html2pdf from 'html2pdf.js'
+  import VueHtml2pdf from 'vue-html2pdf'
 
   export default {
     name: 'Analysis',
@@ -333,9 +599,17 @@
       SfCarousel,
       SfButton,
       SfProductCard,
+      VueHtml2pdf,
     },
     data () {
       return {
+        htmlToPdfOptions: {
+          enableLinks: false,
+          image: {
+            type: 'jpeg',
+            quality: 0.98,
+          },
+        },
         recommendProduct: [],
         length: 3,
         window: 0,
@@ -563,35 +837,10 @@
           this.analysisMsg = this.worstIndex.name + ' 점수가 ' + this.series[2].name + '보다 낮은 편이라 관리가 필요해요'
         }
       },
-      exportToPDF () {
-        html2pdf(this.$refs.document, {
-          margin: 0,
-          filename: 'fitskin-report.pdf',
-          image: { type: 'jpeg', quality: 0.95 },
-          html2canvas: {
-            scrollY: 0,
-            scale: 1,
-            dpi: 300,
-            letterRendering: true,
-            allowTaint: true,
-            ignoreElements: function (element) {
-              if (element.id === 'pdf-button-area') {
-                return true
-              }
-            },
-          },
-          jsPDF: {
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4',
-            compressPDF: true,
-          },
-        })
-      },
       kakaoLink () {
-        const mainUrl = 'http://34.64.253.121:9000'
-        const surveyUrl = 'http://34.64.253.121:9000/survey'
-        const resultUrl = 'http://34.64.253.121:9000' + window.location.pathname
+        const mainUrl = 'http://fitskin.co.kr'
+        const surveyUrl = 'http://fitskin.co.kr/survey'
+        const resultUrl = 'http://fitskin.co.kr' + window.location.pathname
         window.Kakao.Link.sendDefault({
           objectType: 'feed',
           content: {
@@ -622,6 +871,20 @@
             },
           ],
         })
+      },
+      async beforeDownload ({ html2pdf, options, pdfContent }) {
+        await html2pdf().set(options).from(pdfContent).toPdf().get('pdf').then((pdf) => {
+          const totalPages = pdf.internal.getNumberOfPages()
+          for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i)
+            pdf.setFontSize(10)
+            pdf.setTextColor(150)
+            pdf.text('Page ' + i + ' of ' + totalPages, (pdf.internal.pageSize.getWidth() * 0.88), (pdf.internal.pageSize.getHeight() - 0.3))
+          }
+        }).save()
+      },
+      generateReport () {
+        this.$refs.html2Pdf.generatePdf()
       },
     },
   }

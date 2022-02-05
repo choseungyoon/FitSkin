@@ -62,7 +62,6 @@
           {
             icon: 'mdi-numeric-6',
             outlined: true,
-            avatarColor: '#0077b5',
             title: '6가지 주요 성분',
             text: '보습 , 수분, 피지분비 , 민감성 , 색소침착 , 트러블 관련 주요 피부 지표를 통해 알맞은 제품을 추천합니다',
           },

@@ -73,7 +73,7 @@
       },
       avatarColor: {
         type: String,
-        default: 'primary',
+        default: '#14D19DFF',
       },
       outlined: Boolean,
       outlineColor: String,
