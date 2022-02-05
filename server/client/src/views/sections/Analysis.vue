@@ -13,7 +13,7 @@
         pdf-orientation="landscape"
         pdf-content-width="100%"
         ref="html2Pdf"
-
+        :htmlToPdfOptions = "htmlToPdfOptions"
         @beforeDownload="beforeDownload($event)"
     >
         <pdf-content slot="pdf-content">
@@ -81,9 +81,11 @@
                     </v-row>
                   </v-col>
                 </v-row>
-                <v-row>
-                  <br>
-                </v-row>
+                <div class="html2pdf__page-break" />
+                <br>
+                <br>
+                <br>
+                <br>
                 <div class="justify-center align-center">
                   <v-row>
                     <br>
@@ -171,7 +173,11 @@
                         </li>
                     </v-col>
                   </v-row>
-                  <v-row><br><br></v-row>
+                  <div class="html2pdf__page-break" />
+                  <br>
+                  <br>
+                  <br>
+                  <br>
                   <v-row
                     justify="center"
                     align="center"
@@ -219,47 +225,40 @@
                       </v-col>
                     </template>
                   </v-row>
-                  <v-row>
-                    <br>
-                  </v-row>
+                  <div class="html2pdf__page-break" />
+                  <br>
+                  <br>
+                  <br>
+                  <br>
                   <v-row
                     justify="center"
                     align="center"
-                    class="px-3"
+                    class="px-2"
                   >
-                    <v-col
-                      cols="12"
-                      md="12"
-                    >
+                    <v-col>
                       <div class="match-with-it">
-                      <p class="match-with-it__paragraph">Match with it</p>
-                      <sf-button class="sf-button--text smartphone-only">See all</sf-button>
-                    </div>
-                    <sf-carousel>
-                      <sf-carousel-item>
-                        <sf-carousel-item
-                          v-for="(product, index) in paginatedData"
-                          :key="index"
-                          class="carousel__item"
-                        >
-                          <sf-product-card
-                            :image="product.image"
-                            :title="product.title"
-                            :regular-price="product.price.regular"
-                            :special-price="product.price.special"
-                            :score-rating="product.rating.score"
-                            :max-rating="product.rating.max"
-                            :is-in-wishlist="product.isInWishlist"
-                            :show-add-to-cart-button="true"
-                            :reviews-count="product.reviews"
-                            :badge-label="product.badgeLabel"
-                            :badge-color="product.badgeColor"
-                            @click:wishlist="toggleWishlist(index)"
-                            @click="productDetail(index)"
-                          />
+                        <p class="text-h3 font-weight-black">아래 제품들을 추천드려요</p>
+                        <sf-button class="sf-button--text smartphone-only">See all</sf-button>
+                      </div>
+                      <sf-carousel>
+                        <sf-carousel-item>
+                          <sf-carousel-item
+                            v-for="(product, index) in paginatedData"
+                            :key="index"
+                            class="carousel__item"
+                          >
+                            <sf-product-card
+                              :image="product.image"
+                              :title="product.title"
+                              :regular-price="product.price.regular"
+                              :special-price="product.price.special"
+                              :score-rating="product.rating.score"
+                              :max-rating="product.rating.max"
+                              :reviews-count="product.reviews"
+                            />
+                          </sf-carousel-item>
                         </sf-carousel-item>
-                      </sf-carousel-item>
-                    </sf-carousel>
+                      </sf-carousel>
                     </v-col>
                   </v-row>
                 </div>
@@ -492,7 +491,7 @@
             md="12"
           >
             <div class="match-with-it">
-            <p class="match-with-it__paragraph">Match with it</p>
+            <p class="text-h3 font-weight-black">아래 제품들을 추천드려요</p>
             <sf-button class="sf-button--text smartphone-only">See all</sf-button>
           </div>
           <sf-carousel>
@@ -604,10 +603,19 @@
     data () {
       return {
         htmlToPdfOptions: {
-          enableLinks: false,
           image: {
             type: 'jpeg',
-            quality: 0.98,
+            quality: 1,
+          },
+          html2canvas: {
+            dpi: 250,
+            letterRendering: true,
+            useCORS: true,
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'landscape',
           },
         },
         recommendProduct: [],

@@ -8,8 +8,12 @@ import com.fitksin.server.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,7 +118,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> recommendProduct(String index){
+    public List<Product> recommendProduct(String index) throws IOException {
         if(index.equals("전체")){
             return this.productRepository.findAll();
         }
@@ -136,8 +140,38 @@ public class ProductServiceImpl implements ProductService{
         else if(index.equals("피지분비")){
             index = "";
         }
-        return this.productRepository.findTop10ByMainCodeContains(index);
 
+        List<Product> products = this.productRepository.findTop10ByMainCodeContains(index);
+
+        for (Product product:
+             products) {
+            product.setImage(getByteArrayFromImageURL(product.getImage()));
+        }
+
+        return products;
+
+    }
+
+    private String getByteArrayFromImageURL(String exampleUrl) throws IOException {
+        // 바꾸고자 하는 url
+        URL url = new URL(exampleUrl);
+        BufferedImage img = ImageIO.read(url);
+        // URL을 통해 File 생성
+        File file = new File("downloaded.jpg");
+        ImageIO.write(img, "jpg", file);
+
+        InputStream finput = new FileInputStream(file);
+        byte[] imageBytes = new byte[(int)file.length()];
+        finput.read(imageBytes, 0, imageBytes.length);
+        finput.close();
+        String filePathName = exampleUrl.replace("file:///", "");
+        String fileExtName = filePathName.substring( filePathName.lastIndexOf(".") + 1);
+        // Base64
+        String imageStr = Base64.getEncoder().encodeToString(imageBytes);
+
+
+        // 밑에 changeString은 img 태그안에 쓰이는 용입니다. 위에만 참고하셔도 괜찮아요!
+        return  "data:image/"+ fileExtName +";base64, "+ imageStr;
     }
 
     @Override

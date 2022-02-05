@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product/recommend")
-    public List<Product> recommendProduct(@RequestParam String index){
+    public List<Product> recommendProduct(@RequestParam String index) throws IOException {
         return this.productService.recommendProduct(index);
     }
 
