@@ -262,6 +262,12 @@
         })
       },
       requestPay () {
+        if (!this.currentUser) {
+          alert('로그인이 필요합니다.')
+          this.$router.push('/login')
+          return
+        }
+
         var IMP = window.IMP
         IMP.init('imp14486674')
 
@@ -271,9 +277,9 @@
           pay_method: 'card',
           merchant_uid: 'merchant_' + new Date().getTime(),
           name: this.product.name,
-          amount: this.product.price,
-          buyer_email: 'gildong@gmail.com',
-          buyer_name: '홍길동',
+          amount: this.product.price * this.qty,
+          buyer_email: this.currentUser.email,
+          buyer_name: this.currentUser.username,
         }, rsp => { // callback
           if (rsp.success) {
             // 결제 성공 시 로직,
@@ -294,6 +300,11 @@
     },
     created () {
       this.getProdcutDetail(this.$route.params.id)
+    },
+    computed: {
+      currentUser () {
+        return this.$store.state.auth.user
+      },
     },
   }
 </script>
