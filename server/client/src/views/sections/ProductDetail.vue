@@ -49,6 +49,13 @@
           </div>
         </div>
         <div>
+          <sf-add-to-cart
+            v-model="qty"
+            class="product__add-to-cart"
+            @click="requestPay"
+          />
+        </div>
+        <div>
           <p class="product__description desktop-only">
             {{ product.description }}
           </p>
@@ -136,7 +143,9 @@
     SfReview,
     SfBreadcrumbs,
     SfNotification,
+    SfAddToCart,
   } from '@storefront-ui/vue'
+
   export default {
     name: 'Product',
     props: {
@@ -157,6 +166,7 @@
       SfReview,
       SfBreadcrumbs,
       SfNotification,
+      SfAddToCart,
     },
     data () {
       return {
@@ -203,6 +213,7 @@
     },
     methods: {
       addToCart () {
+        alert('test')
         this.isOpenNotification = true
       },
       selectColor (colorIndex) {
@@ -248,6 +259,36 @@
             name: '제형',
             value: response.data.data.formulation,
           })
+        })
+      },
+      requestPay () {
+        var IMP = window.IMP
+        IMP.init('imp14486674')
+
+        // IMP.request_pay(param, callback) 결제창 호출
+        IMP.request_pay({ // param
+          pg: 'html5_inicis',
+          pay_method: 'card',
+          merchant_uid: 'merchant_' + new Date().getTime(),
+          name: this.product.name,
+          amount: this.product.price,
+          buyer_email: 'gildong@gmail.com',
+          buyer_name: '홍길동',
+        }, rsp => { // callback
+          if (rsp.success) {
+            // 결제 성공 시 로직,
+            var msg = '결제가 완료되었습니다.'
+            msg += '고유ID : ' + rsp.imp_uid
+            msg += '상점 거래ID : ' + rsp.merchant_uid
+            msg += '결제 금액 : ' + rsp.paid_amount
+            msg += '카드 승인번호 : ' + rsp.apply_num
+            alert(msg)
+          } else {
+            // 결제 실패 시 로직,
+            msg = '결제에 실패하였습니다.'
+            msg += '에러내용 : ' + rsp.error_msg
+            alert(msg)
+          }
         })
       },
     },

@@ -146,6 +146,7 @@ public class ProductServiceImpl implements ProductService{
         for (Product product:
              products) {
             product.setImage(getByteArrayFromImageURL(product.getImage()));
+
         }
 
         return products;
